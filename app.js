@@ -131,11 +131,7 @@ app.post('/shiny-simulator', function(req, res){
 
 
 
-app.listen(8080);
-
-
-open('http://localhost:8080');
-console.log("Running at Port 8080");
+app.listen(process.env.PORT);
 
 
 
