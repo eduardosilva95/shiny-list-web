@@ -1,0 +1,327 @@
+.event-card{
+    position: relative;
+}
+
+
+.cont {
+	padding-top: 25px;
+}
+
+.hr-home {
+	border-top: 3px solid #ffd700;
+  width: 300px;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: #008CBA;
+  }
+  
+  .event-card:hover .overlay {
+    opacity: 1;
+  }
+  
+  .text {
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+  }
+
+
+
+  /* SHINY GAME */
+
+  .choose-mode-img{
+    width: 400px;
+    height: 300px;
+  }
+
+  .choose-mode-img:hover{
+    border: solid 3px #ffc109;
+  }
+
+  .choose-mode-text{
+    color: white ;
+    font-weight: bold;  
+    font-size: 20px;
+  }
+
+  .choose-mode-text:hover{
+    cursor: pointer;
+    color: #ffc109;
+  }
+
+  .back-btn{
+    font-size: 20px;
+    color: white;
+  }
+
+  .back-btn:hover{
+    color: #ffc109;
+  }
+
+  .play-btn{
+    font-size: 20px;
+    color: white;
+  }
+
+  .play-btn:hover{
+    color: #28a745;
+  }
+
+  .selected-pokemon-count-text span{
+    color: #fff; 
+    opacity: .7;  
+    font-size: 20px;
+  }
+
+
+  .event-box-btn{
+    border: none;
+    background: transparent;
+  }
+
+
+  body {
+    margin:0;
+    background: #41740e;
+  }
+  
+  #catch_screen {
+    width: 100%;
+    height: 500px;
+    padding-top: 100px;
+    background: url("https://github.com/ZeChrales/PogoAssets/blob/master/static_assets/png/Parkscene_Background.png?raw=true") center top, url("https://github.com/ZeChrales/PogoAssets/blob/master/static_assets/png/SkyDay.png?raw=true") center top / cover;
+    text-align: center;
+    user-select: none;
+  }
+  
+  .pokemon-img{
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    margin: 20px auto 5px auto;
+    cursor: pointer;
+  }
+  
+  #shiny, #sparkle { display: none; }
+  
+  #encounter { position:relative; }
+  
+  #sparkles {
+    position: absolute;
+    width: 256px;
+    height: 256px;
+    top:48px;
+    left:calc(50% - 128px);
+    pointer-events: none;
+  }
+  
+  #pokemons {
+    font-size: 16px;
+    -webkit-appearance: none;
+    padding: 10px 36px 10px 20px;
+    border-radius: 20px;
+    color: white;
+    background: url("https://github.com/ZeChrales/PogoAssets/blob/master/static_assets/png/Arrow_rounded.png?raw=true") no-repeat center right 16px / 12px 12px, rgba(0, 0, 0, 0.6);
+    border: none;
+    outline: none;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  
+  #stats, label {
+    color: white;
+    font-family: Sans-serif;
+    font-weight: 100;
+    font-size: 16px;
+    line-height: 22px;
+    margin: auto; 
+    text-align: right;
+  }
+  
+  label, input[type="checkbox"] { cursor: pointer; }
+  
+  #stats td:last-child { text-align: left; width: 50px; }
+  #stats td[colspan="2"] { text-align: center; }
+  
+  #flash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: white;
+    pointer-events:none;
+  }
+
+
+  .card-event-schedule{
+    color: #3bc1ed;
+    font-weight: bold;
+  }
+
+  .card-event-featured-pokemon-btn{
+    color: black;
+    font-weight: bold;
+  }
+
+  .card-event-featured-pokemon-btn:hover{
+    color: #ffc109;
+    text-decoration: none;
+  }
+
+  /* -------------------------------------------------------------------- */
+                          /* pokemon pick styles */
+  /* -------------------------------------------------------------------- */
+
+
+.mycard-footer {
+    height: 25px;
+    background: transparent;  
+    font-weight: bold;
+    font-size: 15px;
+    text-indent: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: white;
+   /* border-radius: 0 0px 4px 4px;*/
+}
+
+.mycard-footer a {
+  color: white;
+}
+
+.mycard-footer a:hover {
+  text-decoration: none;
+}
+
+.gallery-card-unchecked {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    background-color: #cc8484;
+    background-clip: border-box;
+    border-radius: .25rem;
+    height: 200px;
+		margin-bottom:14px;
+}
+
+.gallery-card-checked {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  background-color: #84CC84;
+  background-clip: border-box;
+  border-radius: .25rem;
+  height: 200px;
+  margin-bottom:14px;
+}
+
+
+
+
+.gallery-card-body {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    /*padding: 1.25rem;*/
+}
+#gallery-card img {
+    width: 100%;
+}
+label{
+    margin-bottom: 0 !important;
+}
+/*--checkbox--*/
+
+.block-check {
+    display: block;
+    position: relative;
+   
+   
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.block-check input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+	cursor: pointer;
+}
+
+/* On mouse-over, add a grey background color */
+.block-check:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.block-check input:checked ~ .checkmark {
+    background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.block-check input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.block-check .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}

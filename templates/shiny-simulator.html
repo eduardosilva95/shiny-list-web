@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="Nome da aplicação">
+        <meta name="author" content="Eduardo Silva">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>ShinyList</title>
+
+        <!-- Custom styles -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/v4-shims.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/style.css">
+
+        
+        <!-- Scripts -->
+        <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.bundle.min.js"></script>
+        <script type="text/javascript" src="js/shiny-game.js"></script>
+        
+    </head>
+    <body>
+        
+      <div id="catch_screen">
+        <div class="text-left" style="margin-left: 190px;">
+          <button class="btn back-btn" ><i class="fa fa-arrow-left"></i><span style="padding-left: 10px;">Back</span></button>
+        </div>
+
+        <div id="encounter" style="height: 200px;">
+          <% pokemon_data.forEach(function(pokemon) { %>
+            <img id="pokemon_<%= pokemon.id %>_normal" class="pokemon-img"/>
+            <img id="pokemon_<%= pokemon.id %>_shiny" class="pokemon-img">
+          <% }); %>
+          <canvas id="sparkles" width="256" height="256"></canvas>
+          <img src="https://github.com/ZeChrales/PogoAssets/blob/master/static_assets/png/sparkle.png?raw=true" id="sparkle"/>
+        </div>
+
+        <!--<select id="pokemons"></select>-->
+
+        <div class="row" style="padding-top: 100px; ">
+          <div class="col-md-3"></div>
+          <div class="col-md-6">
+            <table class="table table-striped" style="color: white; font-weight: bold;">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">Pokemon</th>
+                  <th scope="col">Encounters</th>
+                  <th scope="col">Shinies</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% pokemon_data.forEach(function(pokemon) { %>
+                <tr>
+                  <td><%= pokemon.name %></td>
+                  <td id="pokemon_<%= pokemon.id %>_encounters">0</td>
+                  <td id="pokemon_<%= pokemon.id %>_shinies">0</td>
+                </tr>
+                <% }); %>
+                <tr>
+                  <td>Total</td>
+                  <td id="total_encounters">0</td>
+                  <td id="total_shinies">0</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-md-3"></div>
+        </div>
+      </div>
+
+      <div id="flash"></div>
+
+
+    <!-- Scripts -->
+    <script>
+        var data = [];
+
+        '<% pokemon_data.forEach(function(pokemon) { %>'
+          data.push('<%- JSON.stringify(pokemon) %>');
+        '<% }); %>'
+
+        loadData('<%= pokemon_list %>', data, '<%- JSON.stringify(event) %>');
+    </script>
+        
+
+    </body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "shiny-pogo",
+  "private_key_id": "13484e546877ddd6e264aecb832fcbe6f5164aa0",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCue2+T9NjoY9IU\nwOZh2hPyAKan0aN+6jET47jFAYIC+v77YfWFqNdLYqc/gd9HYDXiaR2IfhmA+A+W\ndXeZokedgEwL2tvTEB0qrz6W5x2x+EOQKfjK8sAcGRHVu+mSCJeQ8wK+PK7RwPsg\nVSl1Qmp82V56r5qBmbTnjE5AhMn77bTwsLpHmcyTr5eMeobCCP8TQb1rx5+B79e+\nNq/W9hyFpZoQ2VHc4s6uSVwC7vhcNwf9uQRUrsgMNJ5mI69m7z+9AkBrnjlg+r0I\nLnUA+m8Cqk9rPJA2nmPd+uZ2XqcxP/tscJVDXHv1aSnm6qHQWFtr5ppDWRqbzTUI\n5r/6Jgn7AgMBAAECggEATUxuEBRHDB088ujKp8sfTvUu3+YmEpHaED+wmcajPILJ\n98BcL0yvpLwd8CqvKkXbWWTMKq4CynobHcMIq02TgJlYF2BsRsM6yLA+gEf/hdrA\nw9t0VyTYKxqIJjJLteCMlTCzpGfp4w8lshtIdKRp3MnH635kasoXtQUZnce2XB8l\ngo+x8yh7HtIDUleFNWteKYROrxRQKrQm1j3JF5GxArnLz3DeJldhft5QRd6JiBZb\nCAjN1Lsi3PsCNgFKl7/Q9AX/ZRspRIEpQ/kkHhkpUCRrwF2w+aqhEjNFrcvf3Bl7\ng8xsI2Ot0ZhiU3zrzTVxZ6HxXzFkAua61yFnvM3HUQKBgQDhmJBrWwHyPok0/oA7\nS4y2BJAGFZfZQGtOZNh0+qWRG4cBgx2qYLW+y04GPApUOYSAnLPcE+tIqPnELo2l\njB1BoDl8fS0Vc0oTxPtG5CxKiyHrHS3c8kCBuz0e8km0z1gPg3FDyuydJt9a+h6a\n0/5Wgyym1yj5c6KEbvqquxHDxwKBgQDF/1x0fuuhxG5nK/UvStFAiDoeApcehnc+\ngTv0T4gSDNx2Odt89Sce5DNC+hi4morb5c8yZZx53fMRyske0CFS9BNPvuB2sKvC\nxQWBh8hPhNTfojbTFdm0zsfL/FXcx8lGsumy65wIuvrYm4Iyqk4TQQuyDyREvaFW\nR1HupIRgLQKBgEotbQcvtHMfpuPa7vUQQWM0Gts1TGmt6dqsBBRquff9kiWoJB/6\njqf+l1grc8X/55aWb/lkP0/z57RfDkopyRDkCyLo0eMktm3LrkfADOQx3WQ+gu8M\nZLODinRbfGrMZosrUBnXZnfB6V0zss57+DwgA5WUV6+2GvDqwNdUjWHPAoGBAJqw\ncYlKh8mw8BiHDV3PdECYrd84YtykbZFV4oNzh3mitrNfbI3p8pB99VbEkn/Xrdkz\naHeVT3Ue5ILoDc2XChIHQvcwx6mzSd43k5+pd+Q4gR/fWjn8fkR2sT47fNGq/SPR\nMChrT1K60rRcepIe4DTGwt5wWgOiq+P+gJKT0iBZAoGBAJyzkEfUnTQsmeu1evaG\nPgP1SknMDgR1MG/o6jd9LHvLQ+3HCjY5/MiraarEA5FqZKDelShNQzpSVZU2hOoK\nZbE5amiMJuwuP9CzrIawN2EqDj7U6d3L+gZC8leSDNqkO2LmmkcU5xnHLPIjxkm5\nCjcBItsu7dYQs4i7NkQIFiMp\n-----END PRIVATE KEY-----\n",
+  "client_email": "data-transfer@shiny-pogo.iam.gserviceaccount.com",
+  "client_id": "110092204094170681210",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/data-transfer%40shiny-pogo.iam.gserviceaccount.com"
+}
