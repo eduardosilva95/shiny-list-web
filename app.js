@@ -16,7 +16,6 @@ var promise = require('promise-mysql');
 const mkdirp = require('mkdirp');
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var open = require('open');
-var storage = require('@google-cloud/storage')
 
 // FIREBASE 
 
