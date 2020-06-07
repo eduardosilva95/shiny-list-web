@@ -1,0 +1,162 @@
+<div class="container-fluid" id="events-div" style="display: none;">
+
+    <button class="btn back-btn"><i class="fa fa-arrow-left"></i><span style="padding-left: 10px;">Back</span></button>
+
+    <div class="container cont text-center">
+        <h2 style="color: white; font-weight: bold;">Events</h2>
+        <p style="color: #fff; font-size: 23px; opacity: .7">Active Events</p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-12">
+            <br>
+            <div class="row">
+                <% active_events.forEach(function(event) { %>
+                    <form action="/shiny-simulator" method="post">
+                        <div class="col-md col-12 cont">
+                            <div class="card event-card" style="width: 18rem;">
+                                <img class="card-img-top" src="<%= event.image %>" alt="Card image cap" style="height: 200px; width: 100%;">
+                                <div class="card-body">
+                                    <input name="eventID" value="<%= event.id %>" style="display: none;">
+                                    <h5 class="card-title" title="<%= event.name %>">
+                                        <%= event.name %>
+                                    </h5>
+                                    <span class="card-event-schedule"><%= event.start_date %></span>
+                                    <p class="card-event-schedule">
+                                        <%= event.end_date %>
+                                    </p>
+                                    <p>
+                                        <a class="card-event-featured-pokemon-btn" data-toggle="collapse" href="#featuredPokemon<%= event.id %>" role="button" aria-expanded="false" aria-controls="featuredPokemon<%= event.id %>">
+                                            <i class="fas fa-chevron-down"></i> <span style="padding-left: 10px;">Featured Pokemon</span>
+                                        </a>
+                                    </p>
+                                    <div class="collapse" id="featuredPokemon<%= event.id %>">
+                                        <div class="card card-body">
+                                            <ul>
+                                                <% event.pokemon.forEach(function(pokemon) { %>
+                                                    <li>
+                                                        <%= pokemon.name %>
+                                                    </li>
+                                                    <% }); %>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <button type="submit" class="btn btn-success">Play !</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                <% }); %>
+            </div>
+        </div>
+    </div>
+
+    <br><br>
+
+    <hr class="hr-home">
+
+    <div class="container cont text-center">
+    <p style="color: #fff; font-size: 23px; opacity: .7">Upcoming Events</p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-12">
+            <br>
+            <div class="row">
+                <% future_events.forEach(function(event) { %>
+                    <form action="/shiny-simulator" method="post">
+                        <div class="col-md col-12 cont">
+                            <div class="card event-card" style="width: 18rem;">
+                                <img class="card-img-top" src="<%= event.image %>" alt="Card image cap" style="height: 200px; width: 100%;">
+                                <div class="card-body">
+                                    <input name="eventID" value="<%= event.id %>" style="display: none;">
+                                    <h5 class="card-title" title="<%= event.name %>">
+                                        <%= event.name %>
+                                    </h5>
+                                    <span class="card-event-schedule"><%= event.start_date %></span>
+                                    <p class="card-event-schedule">
+                                        <%= event.end_date %>
+                                    </p>
+                                    <p>
+                                        <a class="card-event-featured-pokemon-btn" data-toggle="collapse" href="#featuredPokemon<%= event.id %>" role="button" aria-expanded="false" aria-controls="featuredPokemon<%= event.id %>">
+                                            <i class="fas fa-chevron-down"></i> <span style="padding-left: 10px;">Featured Pokemon</span>
+                                        </a>
+                                    </p>
+                                    <div class="collapse" id="featuredPokemon<%= event.id %>">
+                                        <div class="card card-body">
+                                            <ul>
+                                                <% event.pokemon.forEach(function(pokemon) { %>
+                                                    <li>
+                                                        <%= pokemon.name %>
+                                                    </li>
+                                                    <% }); %>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <% if (event.isReadOnly == "undefined" || event.isReadOnly != "true") { %>
+                                        <button type="submit" class="btn btn-success">Play !</a>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                <% }); %>
+            </div>
+        </div>
+    </div>
+
+    <br><br>
+
+    <hr class="hr-home">
+
+    <div class="container cont text-center">
+    <p style="color: #fff; font-size: 23px; opacity: .7">Past Events</p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-12">
+            <br>
+            <div class="row">
+                <% past_events.forEach(function(event) { %>
+                    <form action="/shiny-simulator" method="post">
+                        <div class="col-md col-12 cont">
+                            <div class="card event-card" style="width: 18rem;">
+                                <img class="card-img-top" src="<%= event.image %>" alt="Card image cap" style="height: 200px; width: 100%;">
+                                <div class="card-body">
+                                    <input name="eventID" value="<%= event.id %>" style="display: none;">
+                                    <h5 class="card-title" title="<%= event.name %>">
+                                        <%= event.name %>
+                                    </h5>
+                                    <span class="card-event-schedule"><%= event.start_date %></span>
+                                    <p class="card-event-schedule">
+                                        <%= event.end_date %>
+                                    </p>
+                                    <p>
+                                        <a class="card-event-featured-pokemon-btn" data-toggle="collapse" href="#featuredPokemon<%= event.id %>" role="button" aria-expanded="false" aria-controls="featuredPokemon<%= event.id %>">
+                                            <i class="fas fa-chevron-down"></i> <span style="padding-left: 10px;">Featured Pokemon</span>
+                                        </a>
+                                    </p>
+                                    <div class="collapse" id="featuredPokemon<%= event.id %>">
+                                        <div class="card card-body">
+                                            <ul>
+                                                <% event.pokemon.forEach(function(pokemon) { %>
+                                                    <li>
+                                                        <%= pokemon.name %>
+                                                    </li>
+                                                <% }); %>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <button type="submit" class="btn btn-success">Play !</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                <% }); %>
+            </div>
+        </div>
+    </div>
+</div>

@@ -16,23 +16,23 @@ var sparkling = false;
 var noflash = false;
 
 
-function loadData(list, data, event){
+function loadData(list, data, event) {
     pokemons = data;
 
-    for(var i=0 ; i < pokemons.length ; i++){
+    for (var i = 0; i < pokemons.length; i++) {
         p = JSON.parse(pokemons[i]);
         pokemon_data.push(p);
-        $("#pokemon_" + p.id + "_normal").attr("src", BASE_IMAGE_URL +  p.image.image_normal + "?raw=true");
-        $("#pokemon_" + p.id + "_shiny").attr("src", BASE_IMAGE_URL +  p.image.image_shiny + "?raw=true");
+        $("#pokemon_" + p.id + "_normal").attr("src", BASE_IMAGE_URL + p.image.image_normal + "?raw=true");
+        $("#pokemon_" + p.id + "_shiny").attr("src", BASE_IMAGE_URL + p.image.image_shiny + "?raw=true");
     }
 
-    pokemon_list = list.split(',');        
+    pokemon_list = list.split(',');
     event_data = JSON.parse(event);
 
     encounters = shinies = streak = worst_streak = 0;
 }
 
-$(function(){
+$(function() {
 
     var pokemon_selector = document.getElementById("pokemons");
     var catch_screen = document.getElementById("catch_screen");
@@ -41,20 +41,20 @@ $(function(){
 
     reveal();
 
-    $("img").mousedown(function() {
+    $("#encounter img").mousedown(function(e) {
         e.preventDefault();
         if (autostarter == null)
             autostarter = setTimeout(autocheck, 500);
     });
 
-    $("img").on('touchstart', function(){
+    $("#encounter img").on('touchstart', function(e) {
         e.preventDefault();
         if (autostarter == null)
             autostarter = setTimeout(autocheck, 500);
     });
 
-    $("img").mouseup(function() {
-        if (!autochecking && !sparkling){
+    $("#encounter img").mouseup(function() {
+        if (!autochecking && !sparkling) {
             flash.style.transition = "none";
             if (!noflash) flash.style.opacity = 0.4;
             setTimeout(reveal, 5);
@@ -66,8 +66,8 @@ $(function(){
         autostarter = null;
     });
 
-    $("img").on('touchend', function(){
-        if (!autochecking && !sparkling){
+    $("#encounter img").on('touchend', function() {
+        if (!autochecking && !sparkling) {
             flash.style.transition = "none";
             if (!noflash) flash.style.opacity = 0.4;
             setTimeout(reveal, 5);
@@ -79,11 +79,11 @@ $(function(){
         autostarter = null;
     });
 
-    $(".back-btn").on('click', function(){
-        window.location = "/";
+    $(".back-btn").on('click', function() {
+        window.history.back();
     });
 
-    document.body.onkeydown = function(e){
+    document.body.onkeydown = function(e) {
         e.preventDefault();
         if (e.keyCode == 32 && !sparkling) reveal();
     }
@@ -95,27 +95,27 @@ $(function(){
         return false;
     }*/
 
-    
 
-    function autocheck(){
+
+    function autocheck() {
         autochecking = true;
         autochecker = setInterval(reveal, 5);
     }
 
-    
+
     var sparkle = document.getElementById("sparkle");
     var sparkles = document.getElementById("sparkles");
     var ctx = sparkles.getContext("2d");
     var particles = [];
     var drawer;
 
-    function addSparkles(){
+    function addSparkles() {
         for (var i = 0; i < 8; i++) particles.push({ "scale": 1, "radius": 60, "angle": 45 * i });
     }
 
-    function drawSparkles(){
+    function drawSparkles() {
         ctx.clearRect(0, 0, 256, 256);
-        for (p of particles){
+        for (p of particles) {
             var x = 128 + p.radius * Math.cos(p.angle * Math.PI / 180);
             var y = 128 + p.radius * Math.sin(p.angle * Math.PI / 180);
             var scaled = Math.max(32 * p.scale, 0);
@@ -127,43 +127,43 @@ $(function(){
         }
     }
 
-    function stopDrawing(){
+    function stopDrawing() {
         clearInterval(drawer);
         particles = [];
         sparkling = false;
     }
 
-    function shine(){
-        if (!particles.length){
+    function shine() {
+        if (!particles.length) {
             for (var i = 0; i < 5; i++) setTimeout(addSparkles, i * 100);
             drawer = setInterval(drawSparkles, 50);
             setTimeout(stopDrawing, 1000);
         }
     }
 
-    function reveal(){
+    function reveal() {
         spawn = generateSpawn();
         pokemon_info = null;
-    
-        pokemon_data.forEach(function (elem, index) {
-            if(elem.id == spawn){
+
+        pokemon_data.forEach(function(elem, index) {
+            if (elem.id == spawn) {
                 pokemon_info = elem;
             }
         });
 
-        $("img").css("display", "none");
-    
+        $("#encounter img").css("display", "none");
+
         var odds = pokemon_info.odds;
 
-        $("#pokemon_" + spawn + "_encounters").html(parseInt($("#pokemon_" + spawn + "_encounters").html())+1);
-        $("#total_encounters").html(parseInt($("#total_encounters").html())+1);
+        $("#pokemon_" + spawn + "_encounters").html(parseInt($("#pokemon_" + spawn + "_encounters").html()) + 1);
+        $("#total_encounters").html(parseInt($("#total_encounters").html()) + 1);
 
-        if (Math.ceil(Math.random() * odds) == Math.ceil(Math.random() * odds)){
+        if (Math.ceil(Math.random() * odds) == Math.ceil(Math.random() * odds)) {
             sparkling = true;
             clearInterval(autochecker);
             $("#pokemon_" + spawn + "_shiny").css("display", "block");
-            $("#pokemon_" + spawn + "_shinies").html(parseInt($("#pokemon_" + spawn + "_shinies").html())+1);
-            $("#total_shinies").html(parseInt($("#total_shinies").html())+1);
+            $("#pokemon_" + spawn + "_shinies").html(parseInt($("#pokemon_" + spawn + "_shinies").html()) + 1);
+            $("#total_shinies").html(parseInt($("#total_shinies").html()) + 1);
             //if (best_streak > streak || best_streak == "-") best_streak = streak;
             setTimeout(shine, 1000);
         } else {
@@ -171,29 +171,27 @@ $(function(){
             //pokemon.style.display = 'block';
             //shiny.style.display = 'none';
         }
-    
-        
+
+
         flash.style.transition = "opacity 0.4s";
         flash.style.opacity = 0;
     }
-    
+
 
 });
 
 
 
-function generateSpawn(){
+function generateSpawn() {
     var min = 0;
     var max = pokemon_list.length - 1;
-    var pokemon_idx = generateRandomBetweenTwoNum(min,max); 
+    var pokemon_idx = generateRandomBetweenTwoNum(min, max);
     var pokemon = pokemon_list[pokemon_idx];
 
     return pokemon;
 
 }
 
-function generateRandomBetweenTwoNum(min, max){
+function generateRandomBetweenTwoNum(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
-
-

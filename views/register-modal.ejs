@@ -1,0 +1,35 @@
+<!-- Register Modal -->
+<div class="modal fade" id="register-modal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 400px;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Register</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: red;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-success" role="alert" >
+                    <i class="fas fa-check-circle"></i><span style="padding-left: 10px;">Looks like it's the first time you logged in on <b>Shiny List</b>. <br> Please fill the following fields to continue.</span>
+                </div>
+
+                <input type="text" style="display: none;" id="id-input" name="id">
+                <input type="text" style="display: none;" id="name-input" name="name">
+            
+                <div class="form-group">
+                    <label for="nickname-input">Nickname</label>
+                    <input type="text" class="form-control" id="nickname-input" name="nickname" placeholder="Enter nickname">
+                </div>
+                <div class="form-group">
+                    <label for="pokemon-caught-input">Pókemon Caught</label>
+                    <input type="number" min="0" class="form-control" id="pokemon-caught-input" name="pokemon_caught" placeholder="Pókemon Caught (optional)">
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button id="register-modal-cancel-btn" class="btn btn-danger" style="color: white;" data-dismiss="modal"><i class="fas fa-times-circle"></i><span style="padding-left:10px">Cancel</i></button>
+                <button id="register-modal-continue-btn" class="btn btn-success" style="color: white;"><i class="fas fa-sign-in-alt"></i><span style="padding-left:10px">Continue</i></button>
+            </div>
+        </div>
+    </div>
+</div>

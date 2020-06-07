@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Nome da aplicação">
+    <meta name="author" content="Eduardo Silva">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ShinyList</title>
+    <link rel="icon" href="img/shinylist_icon.ico">
+
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/v4-shims.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/toastr.css" />
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/shiny-list.css">
+
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="js/shiny-list.js"></script>
+    <script type="text/javascript" src="js/toastr.js"></script>
+
+</head>
+
+<body onload="loadNavbar();" style="background-color: #343a40; ">
+
+    <% include ../views/navbar.ejs %>
+
+        <div class="container cont" style="min-height: 800px;">
+
+
+            <!-- SEARCH BAR -->
+            <div class="row">
+                <div class="col-md-9 cont">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="form-group has-search">
+                                <span class="fa fa-search form-control-feedback"></span>
+                                <input type="text" id="query-search-input" class="form-control float-left" placeholder="Search" aria-describedby="searchHelp" name="query" autocomplete="off">
+                                <small id="searchHelp" class="form-text text-muted"><a class="search-filters-btn" data-toggle="modal" data-target="#search-help-modal">See search filters</a></small>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-2">
+                            <div class="form-group float-right">
+                                <button type="button" class="btn btn-outline-warning" id="btn-search-shinylist"><i class="fas fa-search"></i><span style="padding-left: 10px; ">Search</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 cont">
+                    <div class="text-right">
+                        <div class="dropdown">
+                            <button class="btn btn-outline-warning dropdown-toggle" type="button" id="sortDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-sort"></i><span style="padding-left: 10px; ">Sort</span>
+                        </button>
+                            <div class="dropdown-menu" aria-labelledby="sortDropdownMenu">
+                                <button type="button" id="sort-num-1n-btn" class="dropdown-item dropdown-sort-shinylist active" disabled><i class="fas fa-sort-numeric-down"></i><span style="padding-left: 10px;"># Pokedex (1 -> ...)</span></button>
+                                <button type="button" id="sort-num-n1-btn" class="dropdown-item dropdown-sort-shinylist"><i class="fas fa-sort-numeric-down-alt"></i><span style="padding-left: 10px;"># Pokedex (... -> 1)</span></button>
+                                <button type="button" id="sort-date-old-btn" class="dropdown-item dropdown-sort-shinylist"><i class="far fa-clock"></i><span style="padding-left: 10px;">Date (Oldest)</span></button>
+                                <button type="button" id="sort-date-new-btn" class="dropdown-item dropdown-sort-shinylist"><i class="far fa-clock"></i><span style="padding-left: 10px;">Date (Most Recent)</span></button>
+                                <button type="button" id="sort-changed-old-btn" class="dropdown-item dropdown-sort-shinylist"><i class="fas fa-clock"></i><span style="padding-left: 10px;">Changed (Oldest)</span></button>
+                                <button type="button" id="sort-changed-new-btn" class="dropdown-item dropdown-sort-shinylist"><i class="fas fa-clock"></i><span style="padding-left: 10px;">Changed (Most Recent)</span></button>
+                                <button type="button" id="sort-name-az-btn" class="dropdown-item dropdown-sort-shinylist"><i class="fas fa-sort-alpha-down"></i><span style="padding-left: 10px;">Alphabetically (A -> Z)</span></button>
+                                <button type="button" id="sort-name-za-btn" class="dropdown-item dropdown-sort-shinylist"><i class="fas fa-sort-alpha-down-alt"></i><span style="padding-left: 10px;">Alphabetically (Z -> A)</span></button>
+                                <button type="button" id="sort-family-az-btn" class="dropdown-item dropdown-sort-shinylist"><i class="fas fa-sort-alpha-down"></i><span style="padding-left: 10px;">Family (A -> Z)</span></button>
+                                <button type="button" id="sort-family-za-btn" class="dropdown-item dropdown-sort-shinylist"><i class="fas fa-sort-alpha-down-alt"></i><span style="padding-left: 10px;">Family (Z -> A)</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container cont text-center">
+                <h2 style="color: white; font-weight: bold;">Next Shinies</h2>
+                <p style="color: #fff; font-size: 20px; opacity: .7; font-style: italic;">
+                    <strong>Total: </strong><span id="available-count"></span>
+                </p>
+            </div>
+
+
+            <div class="row shinylist">
+                <% pokemon_data.forEach(function(pokemon) { %>
+                    <div class="col-md-3 col-12 cont shinylist-card-design">
+                        <div class="shinylist-card">
+                            <span id="pokemon-id" style="display: none;"><%= pokemon.id %></span>
+                            <img id="pokemon-card-img" src="/img/pokemon_icons/<%= pokemon.image.image_shiny %>" class="img-responsive img-shiny" style="height: 60%;" />
+                            <% if(pokemon.filters.shadow) { %>
+                                <img id="pokemon-type-icon" src="/img/ic_shadow.png" class="img-responsive icon-type" />
+                                <% } else if(pokemon.filters.purified)  { %>
+                                    <img id="pokemon-type-icon" src="/img/ic_purified.png" class="img-responsive icon-type" />
+                                    <% } %>
+                                        <div class="card-body">
+                                            <div class="card-title-div">
+                                                <span class="card-title" title="<%= pokemon.name %>"><%= pokemon.name %></span>
+                                            </div>
+                                            <span class="card-text" style="padding-top: 10px;"><strong>Event:</strong> <%= pokemon.event %></span>
+                                            <p class="card-text" s><strong>Start Date:</strong>
+                                                <%= pokemon.startDate %>
+                                            </p>
+                                        </div>
+                        </div>
+                    </div>
+                    <% }); %>
+            </div>
+        </div>
+
+
+        <% include ../views/footer.ejs %>
+            <% include ../views/pokemon-bio-modal.ejs %>
+                <% include ../views/search-help-modal.ejs %>
+
+                    <script>
+                        var data = [];
+
+                        '<% pokemon_data.forEach(function(pokemon) { %>'
+                        data.push('<%- JSON.stringify(pokemon).replace(/[\/\(\)\']/g, "\\$&") %>');
+                        '<% }); %>'
+
+                        loadData(data);
+                    </script>
+
+</body>
+
+</html>

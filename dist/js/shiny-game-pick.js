@@ -1,29 +1,29 @@
-
 var checked_pokemon = [];
 
+var MAXIMUM_SELECTED_POKEMON = 20;
 
-$(function(){
+$(function() {
 
 
-    $(".choose-mode-img").on('click', function(){
+    $(".choose-mode-img").on('click', function() {
         $("#home-page-div").css("display", "none");
-        if($(this).data('target') === "pokemon-mode"){
+        if ($(this).data('target') === "pokemon-mode") {
             $("#pokemon-div").css("display", "block");
         } else {
             $("#events-div").css("display", "block");
         }
     });
 
-    $(".choose-mode-text").on('click', function(){
+    $(".choose-mode-text").on('click', function() {
         $("#home-page-div").css("display", "none");
-        if($(this).data('target') === "pokemon-mode"){
+        if ($(this).data('target') === "pokemon-mode") {
             $("#pokemon-div").css("display", "block");
         } else {
             $("#events-div").css("display", "block");
         }
     });
 
-    $(".back-btn").on('click', function(){
+    $(".back-btn").on('click', function() {
         $("#home-page-div").css("display", "block");
         $("#pokemon-div").css("display", "none");
         $("#events-div").css("display", "none");
@@ -34,9 +34,9 @@ $(function(){
 
 
 
-function clickEvent(event_id){
+function clickEvent(event_id) {
     console.log(event_id)
-    $.post("/shiny-simulator", {isEvent: 1, eventID: event_id});
+    $.post("/shiny-simulator", { isEvent: 1, eventID: event_id });
 }
 
 function removeCheckedPokemon(pokemon) {
@@ -46,9 +46,9 @@ function removeCheckedPokemon(pokemon) {
     }
 }
 
-$(function(){
-    $(".card-event-featured-pokemon-btn").on('click', function(){
-        if(this.querySelector("i").className == "fas fa-chevron-down"){
+$(function() {
+    $(".card-event-featured-pokemon-btn").on('click', function() {
+        if (this.querySelector("i").className == "fas fa-chevron-down") {
             this.querySelector("i").className = "fas fa-chevron-up";
         } else {
             this.querySelector("i").className = "fas fa-chevron-down";
@@ -57,21 +57,22 @@ $(function(){
 });
 
 
-$(function(){
-    $(".pokemon-card-btn").on('click', function(){
+$(function() {
+    $(".pokemon-card-btn").on('click', function() {
         var pokemon_id = this.querySelector("input").value;
-        if(checked_pokemon.includes(pokemon_id)){
+        if (checked_pokemon.includes(pokemon_id)) {
             removeCheckedPokemon(pokemon_id);
             this.querySelector("#gallery-card").className = "gallery-card-unchecked"
             this.querySelector(".img-normal").style.display = 'block';
             this.querySelector(".img-shiny").style.display = 'none';
             $("#pokemon-selected-count").text(checked_pokemon.length);
             $("#pokemon-list-submit").val(checked_pokemon);
-            if(checked_pokemon.length === 0){
+            if (checked_pokemon.length === 0) {
                 $("#play-btn").prop('disabled', true);
             }
 
         } else {
+            if (checked_pokemon.length == MAXIMUM_SELECTED_POKEMON) return;
             checked_pokemon.push(pokemon_id);
             this.querySelector("#gallery-card").className = "gallery-card-checked"
             this.querySelector(".img-normal").style.display = 'none';

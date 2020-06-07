@@ -1,220 +1,82 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="description" content="Nome da aplicação">
-        <meta name="author" content="Eduardo Silva">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <title>ShinyList</title>
-        <link rel="icon" href="img/logo-icon.ico">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Nome da aplicação">
+    <meta name="author" content="Eduardo Silva">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!-- Custom styles -->
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/v4-shims.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="css/loader.css">
+    <title>ShinyList</title>
+    <link rel="icon" href="img/shinylist_icon.ico">
 
-        
-        <!-- Scripts -->
-        <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.bundle.min.js"></script>
-        <script type="text/javascript" src="js/shiny-game-pick.js"></script>
-        
-    </head>
-    <body style="background-color: #343a40; ">
-      <div id="loader"></div>
-      <div class="container" id="home-page-div">
-        
-        <div class="container cont text-center">
-          <h2 style="color: white; font-weight: bold;">Shiny Simulator</h2>
-          <p style="color: #fff; font-size: 23px; opacity: .7">Choose your mode: </p>
-        </div>
-
-        <div class="row" style="padding-top: 50px;">
-          <div class="col-md text-center" >
-            <img src="img/pokemon-mode.jpg" class="choose-mode-img" data-target="pokemon-mode">
-            <p class="choose-mode-text" data-target="pokemon-mode">Choose Pokemon</p>
-          </div>
-          <div class="col-md text-center" >
-            <img src="img/pokemon-events-mode.jpg" class="choose-mode-img" data-target="event-mode">
-            <p class="choose-mode-text" data-target="event-mode">Choose an Event</p>
-          </div>
-        </div>
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/v4-shims.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/shiny-simulator-styles.css">
+    <link rel="stylesheet" href="css/loader.css">
+    <link rel="stylesheet" href="css/styles.css">
 
 
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="js/shiny-game-pick.js"></script>
 
-      </div>
+</head>
 
+<body onload="loadNavbar();" style="background-color: #343a40;overflow-x: hidden;">
 
-      <div class="container" id="events-div" style="display: none;">    
+    <% include ../views/navbar.ejs %>
 
-        <div class="container cont text-center">
-          <h2 style="color: white; font-weight: bold;">Events</h2>
-          <p style="color: #fff; font-size: 23px; opacity: .7">Active Events</p>
-        </div>
+        <div id="loader"></div>
+        <div class="container" id="home-page-div" style="min-height: 800px;">
 
-        <button class="btn back-btn" ><i class="fa fa-arrow-left"></i><span style="padding-left: 10px;">Back</span></button>
+            <div class="container cont text-center">
+                <h2 style="color: white; font-weight: bold;">Shiny Simulator</h2>
+                <p style="color: #fff; font-size: 23px; opacity: .7">Choose your mode: </p>
+            </div>
 
-        <div class="row">
-          <div class="col-md-12 col-12">
-              <br>
-              <div class="row">
-                <% active_events.forEach(function(event) { %>
-                  <form action="/shiny-simulator" method="post">
-                    <div class="col-md col-12 cont">
-                      <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="<%= event.image %>" alt="Card image cap" style="height: 200px; width: 100%;">
-                        <div class="card-body">
-                          <input name="eventID" value="<%= event.id %>" style="display: none;">
-                          <h5 class="card-title"><%= event.name %></h5>
-                          <span class="card-event-schedule"><%= event.start_date %></span>
-                          <p class="card-event-schedule"><%= event.end_date %></p>
-                          <p>
-                            <a class="card-event-featured-pokemon-btn" data-toggle="collapse" href="#featuredPokemon<%= event.id %>" role="button" aria-expanded="false" aria-controls="featuredPokemon<%= event.id %>">
-                              <i class="fas fa-chevron-down"></i> <span style="padding-left: 10px;">Featured Pokemon</span>
-                            </a>
-                          </p>
-                          <div class="collapse" id="featuredPokemon<%= event.id %>">
-                            <div class="card card-body">
-                              <ul>
-                                
-                              </ul>
-                            </div>
-                          </div>
-                          <br>
-                          <button type="submit" class="btn btn-success">Play !</a>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-                <% }); %>
-              </div>
-          </div>
-        </div>
-
-        <br><br>
-
-        <hr class="hr-home">
-
-        <div class="container cont text-center">
-          <p style="color: #fff; font-size: 23px; opacity: .7">Upcoming Events</p>
-        </div>
-
-        <div class="row">
-          <div class="col-md-12 col-12">
-              <br>
-              <div class="row">
-                <% future_events.forEach(function(event) { %>
-                  <div class="col-md col-12 cont">
-                    <div class="card" style="width: 18rem;">
-                      <img class="card-img-top" src="<%= event.image %>" alt="Card image cap" style="height: 200px; width: 100%;">
-                      <div class="card-body">
-                        <h5 class="card-title"><%= event.name %></h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <button onclick="clickEvent('<%= event.id %>')" class="btn btn-primary">Go somewhere</a>
-                      </div>
-                    </div>
+            <div class="row" style="padding-top: 50px;">
+                <div class="col-md text-center">
+                    <img src="img/pokemon-mode.jpg" class="choose-mode-img" data-target="pokemon-mode">
+                    <p class="choose-mode-text" data-target="pokemon-mode">Choose Pokemon</p>
                 </div>
-                <% }); %>
-              </div>
-          </div>
-        </div>
-
-        <br><br>
-
-        <hr class="hr-home">
-
-        <div class="container cont text-center">
-          <p style="color: #fff; font-size: 23px; opacity: .7">Past Events</p>
-        </div>
-
-        <div class="row">
-          <div class="col-md-12 col-12">
-              <br>
-              <div class="row">
-                <% past_events.forEach(function(event) { %>
-                  <div class="col-md col-12 cont">
-                    <div class="card" style="width: 18rem;">
-                      <img class="card-img-top" src="<%= event.image %>" alt="Card image cap" style="height: 200px; width: 100%;">
-                      <div class="card-body">
-                        <h5 class="card-title"><%= event.name %></h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <button onclick="clickEvent('<%= event.id %>')" class="btn btn-primary">Go somewhere</a>
-                      </div>
-                    </div>
+                <div class="col-md text-center">
+                    <img src="img/pokemon-events-mode.jpg" class="choose-mode-img" data-target="event-mode">
+                    <p class="choose-mode-text" data-target="event-mode">Choose an Event</p>
                 </div>
-                <% }); %>
-              </div>
-          </div>
-        </div>
+            </div>
 
-        <br><br>
 
-        <hr class="hr-home">
-      </div>
-
-      <div class="container" id="pokemon-div" style="display: none;">    
-
-        <div class="container cont text-center">
-          <h2 style="color: white; font-weight: bold;">Pick your Pokemon</h2>
-        </div>
-
-        <div class="row">
-          <div class="col-md">
-            <button class="btn back-btn" ><i class="fa fa-arrow-left"></i><span style="padding-left: 10px;">Back</span></button>
-          </div>
-          <div class="col-md text-center selected-pokemon-count-text">
-            <span>Number of Pokemon Selected: </span><span id="pokemon-selected-count">0</span><span> / 20</span>
-          </div>
-          <div class="col-md text-right">
-            <form action="/shiny-simulator" method="post">
-              <input id="pokemon-list-submit" name="pokemonList" value="[]" style="display: none;">
-              <button class="btn btn-success" id="play-btn" disabled><span style="padding-right: 10px;">Play</span><i class="fa fa-play"></i></button>
-            </form>
-          </div>
 
         </div>
 
-        <div class="row inner-scroll" style="padding-top: 20px;">
-          <% pokemon_list.forEach(function(pokemon) { %>
-              <div class="col-md-2">
-                  <a class="pokemon-card-btn">
-                      <div id="gallery-card" class="gallery-card-unchecked">
-                          <input style="display: none;" value="<%= pokemon.id %>">
-                          <div class="gallery-card-body">
-                              <label class="block-check">
-                                  <img src="/img/pokemon_icons/<%= pokemon.image.image_normal %>" class="img-responsive img-normal" />
-                                  <img src="/img/pokemon_icons/<%= pokemon.image.image_shiny %>" class="img-responsive img-shiny" style="display: none;" />
-                              </label>    
-                              <div class="mycard-footer text-center">
-                                  <span class="card-link" title="<%= pokemon.name %>"><%= pokemon.name %></span>
-                              </div>
-                          </div>
-                      </div>
-                  </a>
-              </div>
-          <% }); %>
-      </div>
+
+        <% include ../views/shiny-simulator-pick-event.ejs %>
+            <% include ../views/shiny-simulator-pick-pokemon.ejs %>
 
 
-      <script>  
-        document.onreadystatechange = function() { 
-            if (document.readyState !== "complete") { 
-                document.querySelector( 
-                  "body").style.visibility = "hidden"; 
-                document.querySelector( 
-                  "#loader").style.visibility = "visible"; 
-            } else { 
-                document.querySelector( 
-                  "#loader").style.display = "none"; 
-                document.querySelector( 
-                  "body").style.visibility = "visible"; 
-            } 
-        }; 
-    </script> 
+                <% include ../views/footer.ejs %>
 
-    </body>
+                    <script>
+                        document.onreadystatechange = function() {
+                            if (document.readyState !== "complete") {
+                                document.querySelector(
+                                    "body").style.visibility = "hidden";
+                                document.querySelector(
+                                    "#loader").style.visibility = "visible";
+                            } else {
+                                document.querySelector(
+                                    "#loader").style.display = "none";
+                                document.querySelector(
+                                    "body").style.visibility = "visible";
+                            }
+                        };
+                    </script>
+
+</body>
+
 </html>

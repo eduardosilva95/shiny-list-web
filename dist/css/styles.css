@@ -1,0 +1,374 @@
+@import url('https://fonts.googleapis.com/css?family=Englebert');
+@import url('//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+.modal-body,
+.modal-footer,
+.modal-header {
+    border: none;
+    background-color: #343a40;
+}
+
+.modal-header h5,
+.modal-body label {
+    color: white;
+}
+
+.hr-home {
+    border-top: 3px solid #ffd700;
+    width: 300px;
+}
+
+.cont {
+    padding-top: 25px;
+}
+
+.dropdown-item.header {
+    font-family: 'Englebert';
+}
+
+.nav-item img {
+    padding-right: 5px;
+    width: 40px;
+    height: 30px;
+}
+
+.nav-link.header {
+    color: #fff !important;
+    opacity: .8;
+    font-family: 'Englebert';
+}
+
+.nav-link.header:hover {
+    color: #fff !important;
+    opacity: .6;
+    cursor: pointer;
+}
+
+.nav-link.header.active {
+    color: #ffc107 !important;
+    border-bottom: 3px solid #ffc107;
+    opacity: 1;
+}
+
+.nav-link.tab {
+    background-color: white !important;
+    color: #ffc107 !important;
+}
+
+.nav-link.tab.active {
+    color: #ffc107 !important;
+    border-bottom: 3px solid #ffc107;
+}
+
+#profile-btn {
+    display: block;
+    height: 40px;
+    padding: 0;
+    margin: 0;
+    width: 40px;
+}
+
+#profile-btn::before {
+    display: none;
+}
+
+#profile-btn:hover {
+    opacity: 0.7;
+}
+
+#view-profile-btn:hover {
+    cursor: pointer;
+}
+
+#user-profile-pic {
+    display: block;
+    height: 40px;
+    padding: 0;
+    margin: 0;
+    width: 40px;
+}
+
+.btn-google {
+    background-color: #4486F6;
+    color: white;
+    width: 100%;
+}
+
+.btn-google:hover {
+    background-color: white;
+    color: #4486F6;
+    border-color: #4486F6;
+}
+
+#google-signin-icon {
+    height: 1.33em;
+    width: 1.33em;
+}
+
+.second-sticky {
+    background-color: #343a40;
+    top: 64px !important;
+    padding-bottom: 20px;
+}
+
+
+/* POKEMON BIO MODAL STYLES */
+
+.pokemon-bio-modal-img-div {
+    position: relative;
+}
+
+#pokemon-bio-type-icon {
+    position: absolute;
+    top: 200px;
+    right: 130px;
+}
+
+#pokemon-bio-is-shiny-icon {
+    position: absolute;
+    top: 30px;
+    right: 130px;
+}
+
+.pokemon-bio-modal-gender-div img {
+    width: 50px;
+    height: 50px;
+}
+
+.pokemon-bio-modal-gender-div img:hover {
+    cursor: pointer;
+}
+
+#pokemon-bio-title {
+    color: #fff;
+    opacity: 0.7;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.pokemon-bio-info-div {
+    padding-top: 10px;
+    color: #fff;
+    opacity: 0.7;
+    font-size: 14px;
+}
+
+.pokemon-bio-types img {
+    width: 25px;
+    height: 25px;
+}
+
+.pokemon-family-tree-path-img {
+    float: left;
+    margin: 2px;
+}
+
+.pokemon-family-tree-path-img-singular {
+    float: left;
+    margin-left: calc((100% - 128px) / 2);
+}
+
+.pokemon-family-tree-path-img-double {
+    float: left;
+    margin-left: calc((100% - 290px) / 2);
+}
+
+.pokemon-family-tree-path-icon {
+    float: left;
+    margin-top: 60px;
+}
+
+.pokemon-family-tree-path-img p,
+.pokemon-family-tree-path-img-singular p,
+.pokemon-family-tree-path-img-double p {
+    text-align: center;
+    font-weight: bold;
+}
+
+.pokemon-family-tree-path img {
+    width: 128px;
+    height: 128px;
+}
+
+.pokemon-family-tree-path img {
+    width: 128px;
+    height: 128px;
+}
+
+.profile-pic-img-div {
+    background-color: #343a40;
+}
+
+.profile-pic-img-div img {
+    height: 250px;
+    width: 250px;
+}
+
+.profile-info-div,
+.search-help-filters-div {
+    padding-top: 10px;
+    color: #fff;
+    opacity: 0.7;
+    font-size: 14px;
+}
+
+.carousel-text-div {
+    background: transparent\9;
+    background: rgba(52, 58, 64, 0.5);
+}
+
+
+/* FOOTER */
+
+.footer {
+    bottom: 0;
+    color: #fff;
+    font-size: .9rem;
+    background-color: #263238 !important;
+    padding-top: 1.5rem!important;
+}
+
+.footer.cont {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.footer-links {
+    font-size: 14px;
+    color: #fff;
+    opacity: .7;
+}
+
+.footer-version {
+    font-size: 14px;
+    color: #fff;
+    opacity: .7;
+}
+
+.footer-links:hover {
+    color: #fff;
+    opacity: 1;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.footer-text {
+    font-size: 14px;
+    color: #fff;
+    opacity: .7;
+    padding-top: 10px;
+}
+
+.footer img {
+    width: 64px;
+}
+
+#credits-modal .modal-body {
+    color: white;
+}
+
+#social {
+    padding-top: 10px;
+}
+
+.smGlobalBtn {
+    /* global button class */
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border: 2px solid #ddd;
+    /* add border to the buttons */
+    box-shadow: 0 3px 3px #999;
+    padding: 0px;
+    text-decoration: none;
+    text-align: center;
+    color: #fff;
+    font-size: 15px;
+    font-weight: normal;
+    line-height: 2em;
+    border-radius: 27px;
+    -moz-border-radius: 27px;
+    -webkit-border-radius: 27px;
+    margin-right: .5rem;
+}
+
+.smGlobalBtn:hover {
+    text-decoration: none;
+}
+
+
+/* facebook button class*/
+
+.facebookBtn {
+    background: #4060A5;
+}
+
+.facebookBtn:before {
+    /* use :before to add the relevant icons */
+    font-family: "FontAwesome";
+    content: "\f09a";
+    /* add facebook icon */
+}
+
+.facebookBtn:hover {
+    color: #4060A5;
+    background: #fff;
+    border-color: #4060A5;
+    /* change the border color on mouse hover */
+}
+
+
+/* twitter button class*/
+
+.twitterBtn {
+    background: #00ABE3;
+}
+
+.twitterBtn:before {
+    font-family: "FontAwesome";
+    content: "\f099";
+    /* add twitter icon */
+}
+
+.twitterBtn:hover {
+    color: #00ABE3;
+    background: #fff;
+    border-color: #00ABE3;
+}
+
+
+/* google plus button class*/
+
+.googleplusBtn {
+    background: #e64522;
+}
+
+.googleplusBtn:before {
+    font-family: "FontAwesome";
+    content: "\f0d5";
+    /* add googleplus icon */
+}
+
+.googleplusBtn:hover {
+    color: #e64522;
+    background: #fff;
+    border-color: #e64522;
+}
+
+.footer-copyright {
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: rgba(255, 255, 255, 0.6);
+    text-align: center !important;
+    padding-bottom: 1rem!important;
+    padding-top: 1rem!important;
+}
+
+#latest-updates-div {
+    padding-top: 10px;
+}
+
+.date-div {
+    border: solid 1px white;
+}

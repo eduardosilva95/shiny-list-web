@@ -1,0 +1,60 @@
+<div class="modal fade" id="pokemon-bio-modal" tabindex="-1" role="dialog" aria-labelledby="pokemon-bio-modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-body">
+            <p id="pokemon-bio-id" style="display: none;"></p>
+            <div class="text-center">
+                <p id="pokemon-bio-title"></p>
+            </div>
+
+            <div class="pokemon-bio-modal-img-div text-center">
+                <img id="pokemon-bio-img-1" class="text-center">
+                <img id="pokemon-bio-img-2" style="display: none;">
+                <img id="pokemon-bio-img-3" style="display: none;">
+                <img id="pokemon-bio-img-4" style="display: none;">
+                <img id="pokemon-bio-is-shiny-icon" src="/img/ic_shiny.png" class="img-responsive"/>
+                <img id="pokemon-bio-type-icon" class="img-responsive"/>
+            </div>
+
+            <div class="pokemon-bio-modal-gender-div text-center">
+                <img id="pokemon-bio-gender-img-1">
+                <img id="pokemon-bio-gender-img-2">
+                <img id="pokemon-bio-gender-img-3">
+                <img id="pokemon-bio-gender-img-4">
+            </div>
+            <div class="pokemon-bio-info-div">
+                <div class="row">
+                    <div class="col-md">
+                        <p><strong># Pokedex: </strong><span id="pokemon-bio-pokedex-number"></span></p>
+                        <div class="row" style="margin-bottom: 15px;">
+                            <div class="col-md-3">
+                                <strong>Types: </strong>
+                            </div>
+                            <div class="col-md">
+                                <div class="pokemon-bio-types">
+                                    <img id="pokemon-bio-type-1-img">
+                                    <img id="pokemon-bio-type-2-img">
+                                </div>
+                            </div>
+                        </div>
+                        <p><strong>Height: </strong><span id="pokemon-bio-height"></span></p>
+                    </div>
+                    <div class="col-md">
+                        <p><strong>Family: </strong><span id="pokemon-bio-family"></span></p>
+                        <p><strong>Category: </strong><span id="pokemon-bio-category"></span></p>
+                        <p style="padding-top: 3px;"><strong>Weight: </strong><span id="pokemon-bio-weight"></span></p>
+                    </div>
+                </div>
+                <p><strong>Description: </strong><span id="pokemon-bio-description"></span></p>
+
+                <div id="family-trees-div"></div>
+
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+    </div>
+</div>
