@@ -606,11 +606,6 @@ app.get('*', function(req, res) {
 app.listen(process.env.PORT || 8080);
 
 
-open('http://localhost:8080');
-console.log("Running at Port 8080");
-
-
-
 
 function sleep(time) {
     return new Promise((resolve) => setTimeout(resolve, time));
