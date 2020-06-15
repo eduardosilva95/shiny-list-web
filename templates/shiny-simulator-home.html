@@ -31,7 +31,6 @@
 
     <% include ../views/navbar.ejs %>
 
-        <div id="loader"></div>
         <div class="container" id="home-page-div" style="min-height: 800px;">
 
             <div class="container cont text-center">
@@ -42,11 +41,29 @@
             <div class="row" style="padding-top: 50px;">
                 <div class="col-md text-center">
                     <img src="img/pokemon-mode.jpg" class="choose-mode-img" data-target="pokemon-mode">
-                    <p class="choose-mode-text" data-target="pokemon-mode">Choose Pokemon</p>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div id="pokemon-mode-loader" class="spinner-grow text-warning" role="status" style="display: none;">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                        <div class="col-md-8 text-left">
+                            <p class="choose-mode-text" data-target="pokemon-mode">Choose Pokemon</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md text-center">
                     <img src="img/pokemon-events-mode.jpg" class="choose-mode-img" data-target="event-mode">
-                    <p class="choose-mode-text" data-target="event-mode">Choose an Event</p>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div id="event-mode-loader" class="spinner-grow text-warning" role="status" style="display: none;">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                        <div class="col-md-8 text-left">
+                            <p class="choose-mode-text" data-target="event-mode">Choose an Event</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -58,25 +75,9 @@
         <% include ../views/shiny-simulator-pick-event.ejs %>
             <% include ../views/shiny-simulator-pick-pokemon.ejs %>
 
+                <br><br><br>
 
                 <% include ../views/footer.ejs %>
-
-                    <script>
-                        document.onreadystatechange = function() {
-                            if (document.readyState !== "complete") {
-                                document.querySelector(
-                                    "body").style.visibility = "hidden";
-                                document.querySelector(
-                                    "#loader").style.visibility = "visible";
-                            } else {
-                                document.querySelector(
-                                    "#loader").style.display = "none";
-                                document.querySelector(
-                                    "body").style.visibility = "visible";
-                            }
-                        };
-                    </script>
-
 </body>
 
 </html>

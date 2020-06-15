@@ -2,31 +2,36 @@ var checked_pokemon = [];
 
 var MAXIMUM_SELECTED_POKEMON = 20;
 
+
 $(function() {
 
 
     $(".choose-mode-img").on('click', function() {
-        $("#home-page-div").css("display", "none");
         if ($(this).data('target') === "pokemon-mode") {
-            $("#pokemon-div").css("display", "block");
+            $("#pokemon-mode-loader").css("display", "block");
+            loadPokemons();
         } else {
-            $("#events-div").css("display", "block");
+            $("#event-mode-loader").css("display", "block");
+            loadEvents();
         }
     });
 
     $(".choose-mode-text").on('click', function() {
-        $("#home-page-div").css("display", "none");
         if ($(this).data('target') === "pokemon-mode") {
-            $("#pokemon-div").css("display", "block");
+            $("#pokemon-mode-loader").css("display", "block");
+            loadPokemons();
         } else {
-            $("#events-div").css("display", "block");
+            $("#event-mode-loader").css("display", "block");
+            loadEvents();
         }
     });
 
     $(".back-btn").on('click', function() {
-        $("#home-page-div").css("display", "block");
         $("#pokemon-div").css("display", "none");
         $("#events-div").css("display", "none");
+        $("#pokemon-mode-loader").css("display", "none");
+        $("#event-mode-loader").css("display", "none");
+        $("#home-page-div").css("display", "block");
     });
 
 
@@ -58,7 +63,7 @@ $(function() {
 
 
 $(function() {
-    $(".pokemon-card-btn").on('click', function() {
+    $("#pokemon-list-div").on('click', '.pokemon-card-btn', function() {
         var pokemon_id = this.querySelector("input").value;
         if (checked_pokemon.includes(pokemon_id)) {
             removeCheckedPokemon(pokemon_id);
@@ -83,3 +88,92 @@ $(function() {
         }
     });
 });
+
+
+function loadEvents() {
+    $("#future-events-div").empty();
+    $("#past-events-div").empty();
+    $("#active-events-div").empty();
+
+    $.get("/event-list", {}, function(result) {
+        if (result.error == null) {
+            var event_list = result.event_list;
+            for (var i = 0; i < event_list.length; i++) {
+                var event = event_list[i];
+                var content = buildDynamicEventCard(event);
+
+                now = new Date();
+
+                if (new Date(event["startDate"]._seconds * 1000) > now) {
+                    $("#future-events-div").append(content);
+                } else if (new Date(event["endDate"]._seconds * 1000) < now) {
+                    $("#past-events-div").append(content);
+                } else {
+                    $("#active-events-div").append(content);
+                }
+            }
+            $("#home-page-div").css("display", "none");
+            $("#events-div").css("display", "block");
+        }
+    });
+}
+
+function loadPokemons() {
+    $("#pokemon-list-div").empty();
+
+    $.get("/pokemon-list", {}, function(result) {
+        if (result.error == null) {
+            var pokemon_list = result.pokemon_list;
+            for (var i = 0; i < pokemon_list.length; i++) {
+                var pokemon = pokemon_list[i];
+                var content = buildDynamicPokemonCard(pokemon);
+                $("#pokemon-list-div").append(content);
+            }
+            $("#home-page-div").css("display", "none");
+            $("#pokemon-div").css("display", "block");
+        }
+    });
+}
+
+
+
+function buildDynamicEventCard(event) {
+    var content = "<form action=\"/shiny-simulator\" method=\"post\"><div class=\"col-md col-12 cont\"><div class=\"card event-card\" style=\"width: 18rem;\">";
+    content += "<img class=\"card-img-top card-event-img\" src=\"" + event.image + "\">";
+    content += "<div class=\"card-body\"><input name=\"eventID\" value=\"" + event.id + "\" style=\"display: none;\">";
+    content += "<h5 class=\"card-title\" title=\"" + event.name + "\">" + event.name + "</h5>";
+    content += "<span class=\"card-event-schedule\">" + event.startDate_label + "</span><p class=\"card-event-schedule\">" + event.endDate_label + "</p>";
+    content += "<p><a class=\"card-event-featured-pokemon-btn\" data-toggle=\"collapse\" href=\"#" + event.id + "-featuredPokemon\" role=\"button\" aria-expanded=\"false\" aria-controls=\"#" + event.id + "-featuredPokemon\">";
+    content += "<i class=\"fas fa-chevron-down\"></i> <span style=\"padding-left: 10px;\">Featured Pokemon</span></a></p>"
+    content += "<div class=\"collapse\" id=\"" + event.id + "-featuredPokemon\"><div class=\"card card-body\"><ul>";
+
+    for (var i = 0; i < event.pokemon.length; i++) {
+        content += "<li>" + event.pokemon[i].name + "</li>";
+    }
+
+    content += "</ul></div></div><br>";
+
+    if (event.isPlayable) {
+        content += "<button type=\"submit\" class=\"btn btn-success\">Play !</button>";
+    } else {
+        content += "<button type=\"submit\" class=\"btn btn-success\" disabled>Play !</button>";
+    }
+
+    content += "</div></div></div></form>";
+
+    return content;
+}
+
+
+function buildDynamicPokemonCard(pokemon) {
+    var content = "<div class=\"col-md-2\"><a class=\"pokemon-card-btn\"><div id=\"gallery-card\" class=\"gallery-card-unchecked\">";
+    content += "<input style=\"display: none;\" value=\"" + pokemon.id + "\">";
+    content += "<div class=\"gallery-card-body\"><label class=\"block-check\">";
+    content += "<img src=\"/img/pokemon_icons/" + pokemon.image.image_normal + "\" class=\"img-responsive img-normal\"/>";
+    content += "<img src=\"/img/pokemon_icons/" + pokemon.image.image_shiny + "\" class=\"img-responsive img-shiny\" style=\"display: none;\"/></label>";
+    content += "<div class=\"mycard-footer text-center\"><span class=\"card-link\" title=\"" + pokemon.name + "\">" + pokemon.name + "</span></div>";
+    content += "</div></div></a></div>";
+
+    return content;
+
+}

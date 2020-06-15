@@ -52,37 +52,31 @@ var statsController = require('./controllers/statsController');
 // home page 
 app.get('/', function(req, res) {
 
-    fs.readFile(path.join(__dirname, 'dist/json/latest/mypogotool.json'), (err, data) => {
-        if (err) throw err;
-        let loaded_data = JSON.parse(data);
+    const eventsDB = db.collection('events');
 
-        var events = [];
+    var events_list = [];
 
-        for (var key in loaded_data.event) {
-            if (loaded_data.event.hasOwnProperty(key)) {
-                if (loaded_data.event[key]["pokemon"]) {
-                    event = loaded_data.event[key];
+    let eventsDoc = eventsDB.get().then(snapshot => {
+        snapshot.forEach(doc => {
+            var event = doc.data();
 
-                    now = new Date();
+            event["startDateLabel"] = parseSchedule(event["startDate"].seconds * 1000);
+            event["endDateLabel"] = parseSchedule(event["endDate"].seconds * 1000);
 
-                    if (new Date(event["start_date"]) > now) {
-                        events.push(event);
-                    } else if (new Date(event["end_date"]) < now) {
-                        continue;
-                    } else {
-                        events.push(event);
-                    }
+            now = new Date();
 
-                    event["start_date"] = parseSchedule(event["start_date"]);
-                    event["end_date"] = parseSchedule(event["end_date"]);
-
-                }
+            if (new Date(event["startDate"].seconds * 1000) > now) {
+                events_list.push(event);
+            } else if (new Date(event["endDate"].seconds * 1000) >= now) {
+                events_list.push(event);
             }
-        }
+        });
 
-        res.render(path.join(__dirname + '/templates/index.html'), { events: events });
+        res.render(path.join(__dirname + '/templates/index.html'), { events: events_list });
+
+    }).catch(err => {
+        console.log('Error getting documents', err);
     });
-
 });
 
 
@@ -252,55 +246,58 @@ app.get('/shiny-list-2', function(req, res) {
 
 app.get('/shiny-simulator', function(req, res) {
 
-    fs.readFile(path.join(__dirname, 'dist/json/latest/mypogotool.json'), (err, data) => {
-        if (err) throw err;
-        let loaded_data = JSON.parse(data);
-
-        var active_events = [];
-        var past_events = [];
-        var future_events = [];
-
-        var pokemon_list = [];
-
-        for (var key in loaded_data.pokemon) {
-            if (loaded_data.pokemon.hasOwnProperty(key)) {
-                pokemon_list.push(loaded_data.pokemon[key]);
-            }
-        }
-
-        for (var key in loaded_data.event) {
-            if (loaded_data.event.hasOwnProperty(key)) {
-                if (loaded_data.event[key]["pokemon"]) {
-                    event = loaded_data.event[key];
-
-                    now = new Date();
-
-                    if (new Date(event["start_date"]) > now) {
-                        future_events.push(event);
-                    } else if (new Date(event["end_date"]) < now) {
-                        past_events.push(event);
-                    } else {
-                        active_events.push(event);
-                    }
-
-                    var event_pokemon_list = [];
-                    for (var key2 in event.pokemon) {
-                        event_pokemon_list.push(event.pokemon[key2]);
-                    }
-
-                    event["pokemon"] = event_pokemon_list;
+    res.render(path.join(__dirname + '/templates/shiny-simulator-home.html'), {});
+});
 
 
-                    event["start_date"] = parseSchedule(event["start_date"]);
-                    event["end_date"] = parseSchedule(event["end_date"]);
+app.get('/pokemon-list', function(req, res) {
 
-                }
-            }
-        }
+    const pokemon = db.collection('pokemon');
 
-        res.render(path.join(__dirname + '/templates/shiny-simulator-home.html'), { pokemon_list: pokemon_list, active_events: active_events, past_events: past_events, future_events: future_events });
+    var pokemon_list = [];
+
+    let pokemonDoc = pokemon.where("filters.shadow", "==", false).where("filters.purified", "==", false).get().then(snapshot => {
+        snapshot.forEach(doc => {
+            data = doc.data();
+            pokemon_list.push(data);
+        });
+
+        res.contentType('json');
+        res.send({ pokemon_list: pokemon_list });
+
+    }).catch(err => {
+        console.log('Error getting documents', err);
     });
+});
 
+app.get('/event-list', function(req, res) {
+
+    const eventsDB = db.collection('events');
+
+    var events_list = [];
+
+    let eventsDoc = eventsDB.get().then(snapshot => {
+        snapshot.forEach(doc => {
+            var event = doc.data();
+
+            var event_pokemon_list = [];
+            for (var key in event.pokemon) {
+                event_pokemon_list.push(event.pokemon[key]);
+            }
+
+            event["pokemon"] = event_pokemon_list;
+            event["startDate_label"] = parseSchedule(event.startDate.seconds * 1000);
+            event["endDate_label"] = parseSchedule(event.endDate.seconds * 1000);
+
+            events_list.push(event);
+        });
+
+        res.contentType('json');
+        res.send({ event_list: events_list });
+
+    }).catch(err => {
+        console.log('Error getting documents', err);
+    });
 });
 
 
@@ -312,38 +309,58 @@ app.post('/shiny-simulator', function(req, res) {
     var eventID = req.body.eventID;
 
     if (eventID != undefined) {
-        fs.readFile(path.join(__dirname, 'dist/json/latest/mypogotool.json'), (err, data) => {
-            if (err) throw err;
-            let loaded_data = JSON.parse(data);
-            if (eventID in loaded_data.event) {
-                event = loaded_data.event[eventID];
-                for (var key in event["pokemon"]) {
-                    if (event["pokemon"].hasOwnProperty(key)) {
-                        pokemon_list.push(event["pokemon"][key]["id"]);
-                        pokemon_data.push(loaded_data.pokemon[event["pokemon"][key]["id"]])
-                    }
-                }
-            }
+        const eventsDB = db.collection('events');
 
-            res.render(path.join(__dirname + '/templates/shiny-simulator.html'), { event: event, pokemon_data: pokemon_data, pokemon_list: pokemon_list });
-        });
-    } else {
-        var pokemon_list = req.body.pokemonList.split(",");
-        fs.readFile(path.join(__dirname, 'dist/json/latest/mypogotool.json'), (err, data) => {
-            if (err) throw err;
-            let loaded_data = JSON.parse(data);
-            for (var key in loaded_data["pokemon"]) {
-                if (loaded_data["pokemon"].hasOwnProperty(key) && pokemon_list.includes(loaded_data["pokemon"][key].id)) {
-                    pokemon_list.push(loaded_data["pokemon"][key].id);
-                    pokemon_data.push(loaded_data["pokemon"][key])
+        let eventsDoc = eventsDB.doc(eventID).get().then(doc => {
+                if (!doc.exists) {
+                    res.send({ error: 'error', message: 'event not found' });
+                } else {
+                    event = doc.data();
+                    event["pokemon"] = {};
+
+                    let eventsPokemonDoc = eventsDB.doc(eventID).collection("pokemon").get().then(snapshot => {
+                        snapshot.forEach(doc => {
+                            event["pokemon"][doc.data().id] = doc.data();
+                            pokemon_list.push(doc.data().id);
+                        });
+
+                        let eventsPokemonDocData = db.collection('pokemon').get().then(snapshot2 => {
+                            snapshot2.forEach(doc => {
+                                if (pokemon_list.includes(doc.data().id)) {
+                                    var data = doc.data();
+                                    delete data.description;
+                                    pokemon_data.push(data);
+                                }
+                            });
+
+                            res.render(path.join(__dirname + '/templates/shiny-simulator.html'), { event: event, pokemon_data: pokemon_data, pokemon_list: pokemon_list });
+                        });
+                    });
                 }
-            }
+            })
+            .catch(err => {
+                console.log('Error getting document', err);
+                res.send({ error: 'error', message: 'user not found' });
+            });
+    } else {
+        const pokemonQuery = db.collection('pokemon');
+        pokemon_list_tmp = req.body.pokemonList.split(",");
+        let eventsPokemonDocData = pokemonQuery.get().then(snapshot2 => {
+            snapshot2.forEach(doc => {
+                if (pokemon_list_tmp.includes(doc.data().id)) {
+                    var data = doc.data();
+                    delete data.description;
+                    pokemon_data.push(data);
+                    pokemon_list.push(data.id);
+                }
+            });
 
             res.render(path.join(__dirname + '/templates/shiny-simulator.html'), { event: [], pokemon_data: pokemon_data, pokemon_list: pokemon_list });
         });
     }
 
 });
+
 
 app.get('/profile-info', function(req, res) {
     var user_id = req.cookies['user']; // user ID
@@ -603,6 +620,7 @@ app.get('*', function(req, res) {
 
 
 app.listen(process.env.PORT || 8080);
+
 
 
 

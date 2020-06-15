@@ -153,7 +153,9 @@ $(function() {
 
         $("#encounter img").css("display", "none");
 
-        var odds = pokemon_info.odds;
+        var odds = getPokemonShinyOdd(spawn, pokemon_info);
+
+        console.log(odds);
 
         $("#pokemon_" + spawn + "_encounters").html(parseInt($("#pokemon_" + spawn + "_encounters").html()) + 1);
         $("#total_encounters").html(parseInt($("#total_encounters").html()) + 1);
@@ -194,4 +196,12 @@ function generateSpawn() {
 
 function generateRandomBetweenTwoNum(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+function getPokemonShinyOdd(pokemon_id, pokemon_info) {
+    if (event_data.length > 0 && event_data.pokemon[pokemon_id].odd) {
+        return parseInt(event_data.pokemon[pokemon_id].odd);
+    } else {
+        return parseInt(pokemon_info.odds);
+    }
 }

@@ -20,24 +20,6 @@
 
     </div>
 
-    <div class="row inner-scroll" style="padding-top: 20px;">
-        <% pokemon_list.forEach(function(pokemon) { %>
-            <div class="col-md-2">
-                <a class="pokemon-card-btn">
-                    <div id="gallery-card" class="gallery-card-unchecked">
-                        <input style="display: none;" value="<%= pokemon.id %>">
-                        <div class="gallery-card-body">
-                            <label class="block-check">
-                              <img src="/img/pokemon_icons/<%= pokemon.image.image_normal %>" class="img-responsive img-normal" />
-                              <img src="/img/pokemon_icons/<%= pokemon.image.image_shiny %>" class="img-responsive img-shiny" style="display: none;" />
-                          </label>
-                            <div class="mycard-footer text-center">
-                                <span class="card-link" title="<%= pokemon.name %>"><%= pokemon.name %></span>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <% }); %>
+    <div class="row inner-scroll" id="pokemon-list-div" style="padding-top: 20px;">
     </div>
 </div>

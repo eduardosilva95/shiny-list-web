@@ -108,6 +108,7 @@
     background-color: #343a40;
     top: 64px !important;
     padding-bottom: 20px;
+    z-index: 100;
 }
 
 

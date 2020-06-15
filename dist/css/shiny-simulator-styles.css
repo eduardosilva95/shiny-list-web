@@ -54,6 +54,7 @@
     color: white;
     font-weight: bold;
     font-size: 20px;
+    padding-left: 10px;
 }
 
 .choose-mode-text:hover {
@@ -364,4 +365,9 @@ label {
     overflow: hidden;
     white-space: nowrap;
     max-width: 95%;
+}
+
+.card-event-img {
+    height: 200px;
+    width: 100%;
 }
