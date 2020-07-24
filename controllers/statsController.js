@@ -123,7 +123,7 @@ exports.getData = function() {
     setData('Safari Zone', 'img/stats_icons/safari-zone.png', total_safari_zone, unique_safari_zone, number_safari_zone);
     setData('Go Fest', 'img/stats_icons/go-fest.png', total_go_fest, unique_go_fest, number_go_fest);
     setData('Meltan Box', 'img/stats_icons/meltan-box.png', total_meltan_box, unique_meltan_box, number_meltan_box);
-    setData('Team Rocket', 'img/stats_icons/team-rocket.png', total_shadow, unique_shadow, number_shadow + number_purified);
+    setData('Team GO Rocket', 'img/stats_icons/team-rocket.png', total_shadow, unique_shadow, number_shadow + number_purified);
     setData('Costume', 'img/stats_icons/costume.png', total_special, unique_special, number_special);
     setData('Go Battle Day', 'img/stats_icons/battle.png', total_go_battle_day, unique_go_battle_day, number_go_battle_day);
     setData('Incense Day', 'img/stats_icons/incense.png', total_incense_day, unique_incense_day, number_incense_day);

@@ -11,6 +11,11 @@
     width: 300px;
 }
 
+.hr-event-category {
+    border-top: 3px solid #ffd700;
+    margin-left: 0;
+}
+
 .overlay {
     position: absolute;
     top: 0;
@@ -36,6 +41,34 @@
     left: 50%;
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+
+/* Track */
+
+ ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 5px;
+}
+
+
+/* Handle */
+
+ ::-webkit-scrollbar-thumb {
+    background: #d3d3d3;
+    border-radius: 10px;
+}
+
+
+/* Handle on hover */
+
+ ::-webkit-scrollbar-thumb:hover {
+    background: #e3e3e3;
 }
 
 

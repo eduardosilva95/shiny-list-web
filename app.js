@@ -48,6 +48,7 @@ app.use(cookieParser());
 
 // CONTROLLERS
 var statsController = require('./controllers/statsController');
+const { data } = require("jquery");
 
 // home page 
 app.get('/', function(req, res) {
@@ -164,8 +165,8 @@ app.get('/future-shiny-list', function(req, res) {
     let pokemonDoc = baseQuery.get().then(snapshot => {
             snapshot.forEach(doc => {
                 data = doc.data();
-                data["startDate"] = parseSchedule(data.startDate.seconds * 1000);
-
+                data.startDateLabel = parseSchedule(data.startDate.seconds * 1000);
+                data.startDate = data.startDate.toDate().toString();
                 pokemon_data.push(data);
             });
 
@@ -288,6 +289,9 @@ app.get('/event-list', function(req, res) {
             event["pokemon"] = event_pokemon_list;
             event["startDate_label"] = parseSchedule(event.startDate.seconds * 1000);
             event["endDate_label"] = parseSchedule(event.endDate.seconds * 1000);
+
+
+            event.startDate = event.startDate.toDate().toString();
 
             events_list.push(event);
         });
@@ -522,6 +526,109 @@ app.get('/friends', function(req, res) {
     res.status(404).render(path.join(__dirname + '/templates/under-construct.html'), );
 });
 
+
+app.get('/friends/:id', function(req, res) {
+    var user_id = req.params.id;
+
+    const friendsDB = db.collection('users').doc(user_id).collection('friends');
+
+    var friends_list = {};
+
+    let friendsDoc = friendsDB.get().then(snapshot => {
+        var friends_id_list = [];
+        snapshot.forEach(doc => {
+            var friend = doc.data();
+            friends_id_list.push(friend.id);
+            friends_list[friend.id] = friend;
+        });
+
+        let friendsDataDoc = db.collection('users').where('id', 'in', friends_id_list).get().then(snapshot2 => {
+            snapshot2.forEach(doc2 => {
+                var friendData = doc2.data();
+                friends_list[friendData.id].name = friendData.name;
+                friends_list[friendData.id].nickname = friendData.nickname;
+                friends_list[friendData.id].image = friendData.image;
+                friends_list[friendData.id].lastAccess = friendData.lastAccessDate;
+            });
+
+            res.contentType('json');
+            res.send({ friends_list: friends_list });
+
+        }).catch(err => {
+            console.log('Error getting documents', err);
+        });
+
+    }).catch(err => {
+        console.log('Error getting documents', err);
+    });
+});
+
+app.post('/friends/shiny-compare', function(req, res) {
+    var userA = req.body.userA;
+    var userB = req.body.userB;
+    var userC = req.body.userC;
+
+    console.log(userA);
+
+    const user = db.collection('users');
+    const pokemon = db.collection('pokemon');
+    const baseQuery = pokemon.where("hasShinyAvailable", "==", true)
+        .where("startDate", "<=", admin.firestore.Timestamp.now());
+
+    var pokemon_data = {};
+
+    let pokemonDoc = baseQuery.get().then(snapshot => {
+        snapshot.forEach(doc => {
+            var data = {};
+
+            data.id = doc.data().id;
+            data.name = doc.data().name;
+            data.image = doc.data().image;
+            data.startDate = doc.data().startDate.toDate().toString();
+
+            data.userAQuantity = 0;
+            data.userBQuantity = 0;
+            data.userCQuantity = 0;
+
+            pokemon_data[data.id] = data;
+        });
+
+        let userDocA = user.doc(userA).collection("pokemon").get().then(snapshot => {
+            snapshot.forEach(doc => {
+                pokemon_data[doc.data().id].userAQuantity = doc.data().quantity;
+            });
+
+            let userDocB = user.doc(userB).collection("pokemon").get().then(snapshot => {
+                snapshot.forEach(doc => {
+                    pokemon_data[doc.data().id].userBQuantity = doc.data().quantity;
+                });
+
+                let userDocC = user.doc(userC).collection("pokemon").get().then(snapshot => {
+                    snapshot.forEach(doc => {
+                        pokemon_data[doc.data().id].userCQuantity = doc.data().quantity;
+                    });
+
+                    res.contentType('json');
+                    res.send({ pokemon_data: pokemon_data });
+
+                }).catch(err => {
+                    console.log('Error getting documents', err);
+                });
+
+            }).catch(err => {
+                console.log('Error getting documents', err);
+            });
+
+        }).catch(err => {
+            console.log('Error getting documents', err);
+        });
+
+    }).catch(err => {
+        console.log('Error getting documents', err);
+    });
+});
+
+
 app.get('/request-stats', function(req, res) {
     var user_id = req.cookies['user']; // user ID
 
@@ -620,6 +727,10 @@ app.get('*', function(req, res) {
 
 
 app.listen(process.env.PORT || 8080);
+
+
+//open('http://localhost:8080');
+console.log("Running at Port 8080");
 
 
 

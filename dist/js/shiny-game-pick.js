@@ -1,10 +1,11 @@
 var checked_pokemon = [];
 
+var events_data = {};
+
 var MAXIMUM_SELECTED_POKEMON = 20;
 
 
 $(function() {
-
 
     $(".choose-mode-img").on('click', function() {
         if ($(this).data('target') === "pokemon-mode") {
@@ -96,22 +97,34 @@ function loadEvents() {
     $("#active-events-div").empty();
 
     $.get("/event-list", {}, function(result) {
+        events_data = {};
         if (result.error == null) {
             var event_list = result.event_list;
             for (var i = 0; i < event_list.length; i++) {
                 var event = event_list[i];
+                events_data[event.id] = event;
                 var content = buildDynamicEventCard(event);
 
                 now = new Date();
 
-                if (new Date(event["startDate"]._seconds * 1000) > now) {
+                if (new Date(event["startDate"]) > now) {
                     $("#future-events-div").append(content);
                 } else if (new Date(event["endDate"]._seconds * 1000) < now) {
-                    $("#past-events-div").append(content);
+                    if (event.category && event.category === 'COMMUNITY_DAY') {
+                        $("#cd-events-div").append(content);
+                    } else if (event.category && (event.category === 'GO_FEST' || event.category === 'SAFARI_ZONE')) {
+                        $("#go-fest-safari-events-div").append(content);
+                    } else {
+                        var sectionId = "#" + (new Date(event.startDate).getFullYear()) + "-events-div";
+                        $(sectionId).append(content);
+                    }
                 } else {
                     $("#active-events-div").append(content);
                 }
             }
+
+            sortEventsSections();
+
             $("#home-page-div").css("display", "none");
             $("#events-div").css("display", "block");
         }
@@ -138,9 +151,9 @@ function loadPokemons() {
 
 
 function buildDynamicEventCard(event) {
-    var content = "<form action=\"/shiny-simulator\" method=\"post\"><div class=\"col-md col-12 cont\"><div class=\"card event-card\" style=\"width: 18rem;\">";
+    var content = "<div class=\"event-card-design\"><form action=\"/shiny-simulator\" method=\"post\"><div class=\"col-md col-12 cont\"><div class=\"card event-card\" style=\"width: 18rem;\">";
     content += "<img class=\"card-img-top card-event-img\" src=\"" + event.image + "\">";
-    content += "<div class=\"card-body\"><input name=\"eventID\" value=\"" + event.id + "\" style=\"display: none;\">";
+    content += "<div class=\"card-body\"><input name=\"eventID\" id=\"event-id\" value=\"" + event.id + "\" style=\"display: none;\">";
     content += "<h5 class=\"card-title\" title=\"" + event.name + "\">" + event.name + "</h5>";
     content += "<span class=\"card-event-schedule\">" + event.startDate_label + "</span><p class=\"card-event-schedule\">" + event.endDate_label + "</p>";
     content += "<p><a class=\"card-event-featured-pokemon-btn\" data-toggle=\"collapse\" href=\"#" + event.id + "-featuredPokemon\" role=\"button\" aria-expanded=\"false\" aria-controls=\"#" + event.id + "-featuredPokemon\">";
@@ -159,7 +172,7 @@ function buildDynamicEventCard(event) {
         content += "<button type=\"submit\" class=\"btn btn-success\" disabled>Play !</button>";
     }
 
-    content += "</div></div></div></form>";
+    content += "</div></div></div></form></div>";
 
     return content;
 }
@@ -176,4 +189,31 @@ function buildDynamicPokemonCard(pokemon) {
 
     return content;
 
+}
+
+
+function sortEventsSections() {
+    $('#active-events-div .event-card-design').sort(function(a, b) {
+        return new Date(events_data[$(a).find("#event-id").val()].startDate) < new Date(events_data[$(b).find("#event-id").val()].startDate) ? 1 : -1;
+    }).appendTo("#active-events-div");
+
+    $('#future-events-div .event-card-design').sort(function(a, b) {
+        return new Date(events_data[$(a).find("#event-id").val()].startDate) > new Date(events_data[$(b).find("#event-id").val()].startDate) ? 1 : -1;
+    }).appendTo("#future-events-div");
+
+    $('#2020-events-div .event-card-design').sort(function(a, b) {
+        return new Date(events_data[$(a).find("#event-id").val()].startDate) < new Date(events_data[$(b).find("#event-id").val()].startDate) ? 1 : -1;
+    }).appendTo("#2020-events-div");
+
+    $('#2019-events-div .event-card-design').sort(function(a, b) {
+        return new Date(events_data[$(a).find("#event-id").val()].startDate) < new Date(events_data[$(b).find("#event-id").val()].startDate) ? 1 : -1;
+    }).appendTo("#2019-events-div");
+
+    $('#cd-events-div .event-card-design').sort(function(a, b) {
+        return new Date(events_data[$(a).find("#event-id").val()].startDate) < new Date(events_data[$(b).find("#event-id").val()].startDate) ? 1 : -1;
+    }).appendTo("#cd-events-div");
+
+    $('#go-fest-safari-events-div .event-card-design').sort(function(a, b) {
+        return new Date(events_data[$(a).find("#event-id").val()].startDate) < new Date(events_data[$(b).find("#event-id").val()].startDate) ? 1 : -1;
+    }).appendTo("#go-fest-safari-events-div");
 }
