@@ -117,7 +117,7 @@ app.get('/shiny-list', function(req, res) {
 
             let pokemonDoc = baseQuery.get().then(snapshot => {
                     snapshot.forEach(doc => {
-                        data = doc.data();
+                        var data = doc.data();
                         if (user_pokemon_data[doc.id] != undefined) {
                             data["quantity"] = user_pokemon_data[doc.id].quantity;
                         } else {
@@ -164,7 +164,7 @@ app.get('/future-shiny-list', function(req, res) {
 
     let pokemonDoc = baseQuery.get().then(snapshot => {
             snapshot.forEach(doc => {
-                data = doc.data();
+                var data = doc.data();
                 data.startDateLabel = parseSchedule(data.startDate.seconds * 1000);
                 data.startDate = data.startDate.toDate().toString();
                 pokemon_data.push(data);
@@ -194,7 +194,7 @@ app.get('/future-shiny-list-2', function(req, res) {
 
     let pokemonDoc = baseQuery.get().then(snapshot => {
             snapshot.forEach(doc => {
-                data = doc.data();
+                var data = doc.data();
                 data["startDate"] = "TBA";
 
                 pokemon_data.push(data);
@@ -259,7 +259,7 @@ app.get('/pokemon-list', function(req, res) {
 
     let pokemonDoc = pokemon.where("filters.shadow", "==", false).where("filters.purified", "==", false).get().then(snapshot => {
         snapshot.forEach(doc => {
-            data = doc.data();
+            var data = doc.data();
             pokemon_list.push(data);
         });
 
@@ -671,7 +671,7 @@ app.get('/stats', function(req, res) {
 
             let pokemonDoc = baseQuery.get().then(snapshot => {
                     snapshot.forEach(doc => {
-                        data = doc.data();
+                        var data = doc.data();
                         if (user_pokemon_data[doc.id] != undefined) {
                             data["quantity"] = user_pokemon_data[doc.id].quantity;
                         } else {
