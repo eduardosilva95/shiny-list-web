@@ -768,6 +768,10 @@ function updateShinyToBe(pokemon_id, quantity, card) {
         return;
     }
 
+    if (pokemon_data[pokemon_id].isTemporary && quantity > 1) {
+        quantity = 1;
+    }
+
     var original_quantity = pokemon_data[pokemon_id].quantity;
 
     $.post("/update-shiny", { pokemon: pokemon_id, quantity: quantity }, function(result) {
@@ -779,6 +783,13 @@ function updateShinyToBe(pokemon_id, quantity, card) {
             card.querySelector("#pokemon-card-img").classList.add("img-normal");
             card.querySelector("#pokemon-card-img").src = BASE_IMG_FOLDER_URL + pokemon_data[pokemon_id].image.image_normal;
             card.querySelector("#pokemon-remove-btn").disabled = true;
+            card.querySelector("#pokemon-add-btn").disabled = false;
+        } else if (pokemon_data[pokemon_id].isTemporary) {
+            card.querySelector("#pokemon-card-img").classList.remove("img-normal");
+            card.querySelector("#pokemon-card-img").classList.add("img-shiny");
+            card.querySelector("#pokemon-card-img").src = BASE_IMG_FOLDER_URL + pokemon_data[pokemon_id].image.image_shiny;
+            card.querySelector("#pokemon-add-btn").disabled = true;
+            card.querySelector("#pokemon-remove-btn").disabled = false;
         } else {
             card.querySelector("#pokemon-card-img").classList.remove("img-normal");
             card.querySelector("#pokemon-card-img").classList.add("img-shiny");

@@ -1,15 +1,15 @@
 .has-search .form-control {
     padding-left: 2.375rem;
     width: 100%;
-  }
-  
-  @media only screen and (max-width: 600px) {
+}
+
+@media only screen and (max-width: 600px) {
     .has-search .form-control {
-      width: 100%;
+        width: 100%;
     }
-  }
-  
-  .has-search .form-control-feedback {
+}
+
+.has-search .form-control-feedback {
     position: absolute;
     z-index: 2;
     display: block;
@@ -19,19 +19,18 @@
     text-align: center;
     pointer-events: none;
     color: #aaa;
-  }
-
-.dropdown-sort-shinylist.active{
-    background-color: #ffc107;
 }
 
+.dropdown-sort-shinylist.active {
+    background-color: #ffc107;
+}
 
 .shinylist {
     display: flex;
     justify-content: space-around;
     flex-flow: row wrap;
     align-items: stretch;
-  }
+}
 
 .shinylist-card {
     position: relative;
@@ -47,9 +46,10 @@
     background-clip: border-box;
     border-radius: .25rem;
     height: 350px;
-	margin-bottom:14px;
+    margin-bottom: 14px;
     flex-grow: 1;
 }
+
 .image-label {
     position: absolute;
     top: 170px;
@@ -59,18 +59,18 @@
     font-weight: bold;
 }
 
-.icon-type{
+.icon-type {
     position: absolute;
     top: 150px;
     right: 16px;
 }
 
-.img-normal{
-    background-color: rgb(204,132,132);
+.img-normal {
+    background-color: rgb(204, 132, 132);
 }
 
-.img-shiny{
-    background-color: rgb(132,204,132);
+.img-shiny {
+    background-color: rgb(132, 204, 132);
 }
 
 .card-title-div {
@@ -81,9 +81,8 @@
     font-weight: 500;
 }
 
-
-.button-add{
-    background-color: rgb(132,204,132);
+.button-add {
+    background-color: rgb(132, 204, 132);
     border: none;
     color: white;
     text-align: center;
@@ -95,42 +94,48 @@
     border-radius: 50%;
 }
 
-.button-add:hover{
-    background-color: rgb(78,182,78);
+.button-add:hover {
+    background-color: rgb(78, 182, 78);
 }
 
-.button-remove{
-    background-color: rgb(204,132,132);
-    border: none;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 22px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 50%;
-}
-
-.button-remove:hover{
-    background-color: rgb(182,78,78);
-}
-
-.button-remove:disabled{
-    background-color: rgb(204,132,132);
+.button-add:disabled {
+    background-color: rgb(132, 204, 132);
     cursor: initial;
 }
 
-#change-quantity-modal h5, #change-quantity-modal label{
+.button-remove {
+    background-color: rgb(204, 132, 132);
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 22px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.button-remove:hover {
+    background-color: rgb(182, 78, 78);
+}
+
+.button-remove:disabled {
+    background-color: rgb(204, 132, 132);
+    cursor: initial;
+}
+
+#change-quantity-modal h5,
+#change-quantity-modal label {
     color: white;
 }
 
-.search-filters-btn{
+.search-filters-btn {
     color: #ffc107 !important;
     font-weight: bold;
 }
 
-.search-filters-btn:hover{
+.search-filters-btn:hover {
     text-decoration: underline !important;
     cursor: pointer;
 }

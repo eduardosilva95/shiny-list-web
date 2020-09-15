@@ -107,7 +107,63 @@ app.get('/shiny-list', function(req, res) {
 
     const user = db.collection('users').doc(user_id);
     const pokemon = db.collection('pokemon');
-    const baseQuery = pokemon.where("hasShinyAvailable", "==", true)
+    const baseQuery = pokemon.where("hasShinyAvailable", "==", true).where("isTemporary", "==", false)
+        .where("startDate", "<=", admin.firestore.Timestamp.now());
+
+    let userDoc = user.collection("pokemon").get().then(snapshot => {
+            snapshot.forEach(doc => {
+                user_pokemon_data[doc.id] = doc.data();
+            });
+
+            let pokemonDoc = baseQuery.get().then(snapshot => {
+                    snapshot.forEach(doc => {
+                        var data = doc.data();
+                        if (user_pokemon_data[doc.id] != undefined) {
+                            data["quantity"] = user_pokemon_data[doc.id].quantity;
+                        } else {
+                            data["quantity"] = 0;
+                        }
+
+                        if (user_pokemon_data[doc.id] != undefined && user_pokemon_data[doc.id].lastModified != undefined) {
+                            data["lastModified"] = user_pokemon_data[doc.id].lastModified.toDate().toString();
+                        } else {
+                            data["lastModified"] = new Date(0).toString();
+                        }
+
+                        data.startDate = data.startDate.toDate().toString();
+
+                        pokemon_data.push(data);
+                    });
+
+
+                    res.render(path.join(__dirname + '/templates/shiny-list.html'), { pokemon_data: pokemon_data });
+
+
+                })
+                .catch(err => {
+                    console.log('Error getting documents', err);
+                });
+        })
+        .catch(err => {
+            console.log('Error getting documents', err);
+        });
+});
+
+// shiny list temp page 
+app.get('/shiny-list-temp', function(req, res) {
+
+    var user_id = req.cookies['user']; // user ID
+    var user_pokemon_data = {};
+    var pokemon_data = [];
+
+    if (user_id == null) {
+        res.status(404).render(path.join(__dirname + '/templates/404page.html'), );
+        return;
+    }
+
+    const user = db.collection('users').doc(user_id);
+    const pokemon = db.collection('pokemon');
+    const baseQuery = pokemon.where("hasShinyAvailable", "==", true).where("isTemporary", "==", true)
         .where("startDate", "<=", admin.firestore.Timestamp.now());
 
     let userDoc = user.collection("pokemon").get().then(snapshot => {
@@ -523,7 +579,7 @@ app.get('/request-friends', function(req, res) {
 
 
 app.get('/friends', function(req, res) {
-    res.status(404).render(path.join(__dirname + '/templates/under-construct.html'), );
+	res.status(404).render(path.join(__dirname + '/templates/under-construct.html'), );
 });
 
 
@@ -567,9 +623,7 @@ app.post('/friends/shiny-compare', function(req, res) {
     var userA = req.body.userA;
     var userB = req.body.userB;
     var userC = req.body.userC;
-
-    console.log(userA);
-
+    
     const user = db.collection('users');
     const pokemon = db.collection('pokemon');
     const baseQuery = pokemon.where("hasShinyAvailable", "==", true)
@@ -585,6 +639,7 @@ app.post('/friends/shiny-compare', function(req, res) {
             data.name = doc.data().name;
             data.image = doc.data().image;
             data.startDate = doc.data().startDate.toDate().toString();
+            data.pokemon_id = doc.data().id_numeric;
 
             data.userAQuantity = 0;
             data.userBQuantity = 0;
