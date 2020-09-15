@@ -1,5 +1,5 @@
-
-<script type="text/javascript" src="/js/login.js"></script>
+<script type="text/javascript" src="/js/login.js">
+</script>
 <script type="text/javascript" src="js/toastr.js"></script>
 
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark justify-content-between" style="background-color: #1d2024;">
@@ -8,48 +8,51 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link header" id="link-shiny-list"><img src="img/shiny.png"></i>Shiny List</a>
-          </li>
-        
-        <li class="nav-item">
-          <a class="nav-link header" href="./future-shiny-list"><img src="img/calendar.png">Next Shinies</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link header" id="link-friends"><img src="img/friends.png">Friends</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link header" id="link-stats"><img src="img/stats.png">Stats</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link header" href="./shiny-simulator"><img src="img/pokemon_go.png">Shiny Simulator</a>
-      </li>
-      </ul>
-      <ul class="navbar-nav ml-auto">
-        <li>
-          <div id="login-user">
-            <div id="login" style="display: none;">
-              <button class="btn btn-outline-warning btn-sm my-2 my-sm-0" type="button" data-toggle="modal" data-target="#login-modal">Login</button>
-            </div>
-            <div id="profile" class="dropleft" style="display: none;">
-              <a class="nav-link dropdown-toggle" href="#profile-menu" id="profile-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <img id="user-profile-pic" class="rounded-circle border border-light">
-              </a>
-              <div class="dropdown-menu" id="profile-menu" aria-labelledby="profile-btn">
-                <a class="dropdown-item header" id="view-profile-btn"><i class="fas fa-user"></i><span style="padding-left: 10px;">Profile</span></a>
-                <a class="dropdown-item header"><i class="fas fa-cog"></i><span style="padding-left: 10px;">Settings</span></a>
-                <div class="dropdown-divider"></div>
-                <button class="dropdown-item header" onclick="signOut();"><i class="fas fa-sign-out-alt"></i><span style="padding-left: 10px;">Sign out</span></button>
-              </div>   
-            </div>        
-          </div>
-        </li>
-      </ul>
-    </div>
-  </nav>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link header" id="link-shiny-list"><img src="img/shiny.png"></i>Shiny List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link header" id="link-shiny-list-temp"><img src="img/shiny_temp.png"></i>Shiny List (Temporary)</a>
+            </li>
 
-  
-  <% include ../views/login-modal.ejs %>
-  <% include ../views/profile-modal.ejs %>
-  <% include ../views/register-modal.ejs %>
+            <li class="nav-item">
+                <a class="nav-link header" href="./future-shiny-list"><img src="img/calendar.png">Next Shinies</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link header" id="link-friends"><img src="img/friends.png">Friends</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link header" id="link-stats"><img src="img/stats.png">Stats</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link header" href="./shiny-simulator"><img src="img/pokemon_go.png">Shiny Simulator</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li>
+                <div id="login-user">
+                    <div id="login" style="display: none;">
+                        <button class="btn btn-outline-warning btn-sm my-2 my-sm-0" type="button" data-toggle="modal" data-target="#login-modal">Login</button>
+                    </div>
+                    <div id="profile" class="dropleft" style="display: none;">
+                        <a class="nav-link dropdown-toggle" href="#profile-menu" id="profile-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img id="user-profile-pic" class="rounded-circle border border-light">
+                        </a>
+                        <div class="dropdown-menu" id="profile-menu" aria-labelledby="profile-btn">
+                            <a class="dropdown-item header" id="view-profile-btn"><i class="fas fa-user"></i><span style="padding-left: 10px;">Profile</span></a>
+                            <a class="dropdown-item header"><i class="fas fa-cog"></i><span style="padding-left: 10px;">Settings</span></a>
+                            <div class="dropdown-divider"></div>
+                            <button class="dropdown-item header" onclick="signOut();"><i class="fas fa-sign-out-alt"></i><span style="padding-left: 10px;">Sign out</span></button>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<% include ../views/login-modal.ejs %>
+    <% include ../views/profile-modal.ejs %>
+        <% include ../views/register-modal.ejs %>
