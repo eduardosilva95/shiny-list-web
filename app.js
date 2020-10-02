@@ -538,8 +538,10 @@ app.post('/update-shiny', function(req, res) {
     var user_id = req.cookies['user']; // user ID
     var pokemon_id = req.body.pokemon;
     var quantity = parseInt(req.body.quantity);
+    var isTemporary = req.body.isTemporary ? req.body.isTemporary : false;
+    var collection = isTemporary ? "tempPokemon" : "pokemon";
 
-    const pokemonDoc = db.collection('users').doc(user_id).collection("pokemon").doc(pokemon_id);
+    const pokemonDoc = db.collection('users').doc(user_id).collection(collection).doc(pokemon_id);
 
     let setData = pokemonDoc.get().then(doc => {
         if (!doc.exists && quantity > 0) {
@@ -556,7 +558,6 @@ app.post('/update-shiny', function(req, res) {
         } else if (doc.exists && quantity == 0) {
             pokemonDoc.delete();
         }
-
     });
 
     console.log("Updating the quantity of shinies of " + pokemon_id + " to " + quantity);

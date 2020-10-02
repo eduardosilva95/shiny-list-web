@@ -774,7 +774,7 @@ function updateShinyToBe(pokemon_id, quantity, card) {
 
     var original_quantity = pokemon_data[pokemon_id].quantity;
 
-    $.post("/update-shiny", { pokemon: pokemon_id, quantity: quantity }, function(result) {
+    $.post("/update-shiny", { pokemon: pokemon_id, quantity: quantity, isTemporary: pokemon_data[pokemon_id].isTemporary }, function(result) {
         pokemon_data[result.pokemon_id].quantity = parseInt(result.quantity);
         card.querySelector("#pokemon-quantity-label").innerHTML = quantity + "x";
 
