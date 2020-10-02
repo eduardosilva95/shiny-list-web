@@ -166,7 +166,7 @@ app.get('/shiny-list-temp', function(req, res) {
     const baseQuery = pokemon.where("hasShinyAvailable", "==", true).where("isTemporary", "==", true)
         .where("startDate", "<=", admin.firestore.Timestamp.now());
 
-    let userDoc = user.collection("pokemon").get().then(snapshot => {
+    let userDoc = user.collection("tempPokemon").get().then(snapshot => {
             snapshot.forEach(doc => {
                 user_pokemon_data[doc.id] = doc.data();
             });
