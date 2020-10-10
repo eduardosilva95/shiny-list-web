@@ -199,7 +199,7 @@ function generateRandomBetweenTwoNum(min, max) {
 }
 
 function getPokemonShinyOdd(pokemon_id, pokemon_info) {
-    if (event_data.length > 0 && event_data.pokemon[pokemon_id].odd) {
+    if (event_data.length > 0 && event_data.pokemon[pokemon_id].odd !== undefined) {
         return parseInt(event_data.pokemon[pokemon_id].odd);
     } else {
         return parseInt(pokemon_info.odds);
