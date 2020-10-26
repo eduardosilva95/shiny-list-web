@@ -483,6 +483,32 @@ $(function() {
             unique_percentage_label.text((unique / available * 100).toFixed(1) + " %");
         });
     });
+
+
+    /* FILTER */
+
+    $(function() {
+
+        $('#costume-filter-checkbox').change(function() {
+            $('.shinylist-card-design').removeClass('d-none');
+
+            unique = 0, available = 0, total = 0;
+
+            $(".shinylist-card-design").each(function() {
+                var pokemon_id = this.querySelector("#pokemon-id").innerHTML;
+
+                if (evaluateSubQuery("costume", pokemon_id)) {
+                    $(this).addClass('d-none');
+                } else {
+                    available++;
+                    unique = pokemon_data[pokemon_id].quantity > 0 ? unique + 1 : unique;
+                    total = total + parseInt(pokemon_data[pokemon_id].quantity);
+                }
+            });
+        });
+
+    });
+
 });
 
 

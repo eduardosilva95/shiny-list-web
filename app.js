@@ -541,6 +541,8 @@ app.post('/update-shiny', function(req, res) {
     var isTemporary = req.body.isTemporary ? req.body.isTemporary == "true" : false;
     var collection = isTemporary ? "tempPokemon" : "pokemon";
 
+    console.log(req.body);
+
     const pokemonDoc = db.collection('users').doc(user_id).collection(collection).doc(pokemon_id);
 
     let setData = pokemonDoc.get().then(doc => {
@@ -580,7 +582,7 @@ app.get('/request-friends', function(req, res) {
 
 
 app.get('/friends', function(req, res) {
-	res.status(404).render(path.join(__dirname + '/templates/under-construct.html'), );
+    res.render(path.join(__dirname + '/templates/friends-compare.html'), {});
 });
 
 
@@ -624,7 +626,9 @@ app.post('/friends/shiny-compare', function(req, res) {
     var userA = req.body.userA;
     var userB = req.body.userB;
     var userC = req.body.userC;
-    
+
+    console.log(req.body);
+
     const user = db.collection('users');
     const pokemon = db.collection('pokemon');
     const baseQuery = pokemon.where("hasShinyAvailable", "==", true)
