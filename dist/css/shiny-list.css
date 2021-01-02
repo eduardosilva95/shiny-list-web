@@ -139,3 +139,47 @@
     text-decoration: underline !important;
     cursor: pointer;
 }
+
+.filter-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.filter-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 200;
+    width: 225px;
+}
+
+.filter-dropdown:hover .filter-dropdown-content {
+    display: block;
+}
+
+.filter-dropdown-content .container {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.nav-link {
+    color: #fff;
+    font-weight: bold;
+    opacity: 0.7;
+}
+
+.nav-link:hover {
+    color: #fff !important;
+    opacity: 1;
+    font-weight: bold;
+    border-color: transparent !important;
+}
+
+.nav-link.active:hover {
+    color: black !important;
+    opacity: 1;
+    font-weight: bold;
+    border-color: transparent !important;
+}
