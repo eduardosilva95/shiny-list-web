@@ -88,35 +88,62 @@ $(function() {
     total_count_label.text(total);
     unique_percentage_label.text((unique / available * 100).toFixed(1) + " %");
 
-    $(".shinylist-card").on('click', function(e) {
-        var pokemonID = this.querySelector("#pokemon-id").innerHTML;
+    /* CHANGE QUANTITY */
+
+    $(".shinylist-card #pokemon-remove-btn").on('click', function(e) {
+        var card = this.parentElement.parentElement.parentElement.parentElement;
+        var pokemonID = card.querySelector("#pokemon-id").innerHTML;
+        var pokemonData = pokemon_data[pokemonID];
+        var quantity = parseInt(pokemonData.quantity) - 1;
+        updateShinyToBe(pokemonID, quantity, card);
+    });
+
+    $(".shinylist-card #pokemon-add-btn").on('click', function(e) {
+        var card = this.parentElement.parentElement.parentElement.parentElement;
+        var pokemonID = card.querySelector("#pokemon-id").innerHTML;
+        var pokemonData = pokemon_data[pokemonID];
+        var quantity = parseInt(pokemonData.quantity) + 1;
+        updateShinyToBe(pokemonID, quantity, card);
+    });
+
+    $(".shinylist-card #pokemon-update-shiny-btn").on('click', function(e) {
+        var card = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+        var pokemonID = card.querySelector("#pokemon-id").innerHTML;
+        var pokemonData = pokemon_data[pokemonID];
+        $("#change-quantity-modal .modal-title").text("Change Quantity of Shiny " + pokemonData.name);
+        $("#change-quantity-modal #new-quantity-input").val(pokemonData.quantity);
+        $("#change-quantity-modal #pokemon-id-hidden-input").val(pokemonData.id);
+        cardOnChangeQuantity = card;
+        $("#change-quantity-modal").modal();
+    });
+
+    $(".shinylist-card #pokemon-update-checks-btn").on('click', function(e) {
+        var card = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+        var pokemonID = card.querySelector("#pokemon-id").innerHTML;
+        var pokemonData = pokemon_data[pokemonID];
+        $("#update-checks-modal .modal-title").text("Update number of checks of " + pokemonData.name);
+        $("#update-checks-modal #start-seen-input").val(pokemonData.startSeen);
+        $("#update-checks-modal #current-seen-input").val(pokemonData.currentSeen);
+
+        if (parseInt(pokemonData.startSeen) > 0) {
+            $("#update-checks-modal #start-seen-input").prop("disabled", true);
+        } else {
+            $("#update-checks-modal #start-seen-input").prop("disabled", false);
+        }
+
+        $("#update-checks-modal #pokemon-id-hidden-input").val(pokemonData.id);
+        $("#update-checks-modal").modal();
+    });
+
+
+    $(".shinylist-card").on('click', "#pokemon-card-img", function(e) {
+        var pokemonID = this.parentElement.querySelector("#pokemon-id").innerHTML;
         var pokemonData = pokemon_data[pokemonID];
 
         previousCard = $(this).parent().prev().children();
         nextCard = $(this).parent().next().children();
 
-        /* CHANGE QUANTITY */
 
-        if ($(e.target).closest("#pokemon-remove-btn:enabled").length > 0) {
-            var quantity = parseInt(pokemonData.quantity) - 1;
-            updateShinyToBe(pokemonID, quantity, this);
-            return;
-        }
-
-        if ($(e.target).closest("#pokemon-add-btn:enabled").length > 0) {
-            var quantity = parseInt(pokemonData.quantity) + 1;
-            updateShinyToBe(pokemonID, quantity, this);
-            return;
-        }
-
-        if ($(e.target).closest("#pokemon-change-btn:enabled").length > 0) {
-            $("#change-quantity-modal .modal-title").text("Change Quantity of Shiny " + pokemonData.name);
-            $("#change-quantity-modal #new-quantity-input").val(pokemonData.quantity);
-            $("#change-quantity-modal #pokemon-id-hidden-input").val(pokemonData.id);
-            cardOnChangeQuantity = this;
-            $("#change-quantity-modal").modal();
-            return;
-        }
 
         /* SET IMAGES AND GENDER ICONS */
 
@@ -234,29 +261,48 @@ $(function() {
         $("#pokemon-bio-category").text(pokemonData.category.charAt(0).toUpperCase() + pokemonData.category.slice(1).replace("_", ""));
         $("#pokemon-bio-weight").text(pokemonData.weight < 0 ? "??? kg" : pokemonData.weight.toFixed(2) + " kg");
         $("#pokemon-bio-description").text(pokemonData.description.description_en);
+        $("#pokemon-bio-start-date").text(processDateToBio(pokemonData.startDate));
+
+        /* SET STATS INFORMATION */
+
+
+        var no_checks = parseInt(pokemonData.currentSeen) - parseInt(pokemonData.startSeen);
+        var percentage_1 = parseInt(pokemonData.quantity) > 0 ? " 1/" + (no_checks / parseInt(pokemonData.quantity).toFixed(0)).toString() :
+            "0/" + no_checks;
+        var percentage_2 = parseInt(pokemonData.quantity) / no_checks;
+
+        $("#pokemon-stats-start-seen").text(pokemonData.startSeen);
+        $("#pokemon-stats-current-seen").text(pokemonData.currentSeen);
+        $("#pokemon-stats-checks-total").text(pokemonData.quantity + "/" + no_checks.toString());
+        $("#pokemon-stats-checks-percentage").text(percentage_1);
+        $("#pokemon-stats-checks-percentage-2").text(percentage_2);
+
 
         /* SET FAMILY TREE PATHS */
 
         $("#family-trees-div").empty();
 
-        buildDynamicFamilyTree(pokemonData.familyTree.path1, 1);
-        if (pokemonData.familyTree.path2) {
-            buildDynamicFamilyTree(pokemonData.familyTree.path2, 2);
+        buildDynamicFamilyTree(pokemonData.familyTree.path01, 1);
+        if (pokemonData.familyTree.path02) {
+            buildDynamicFamilyTree(pokemonData.familyTree.path02, 2);
         }
-        if (pokemonData.familyTree.path3) {
-            buildDynamicFamilyTree(pokemonData.familyTree.path3, 3);
+        if (pokemonData.familyTree.path03) {
+            buildDynamicFamilyTree(pokemonData.familyTree.path03, 3);
         }
-        if (pokemonData.familyTree.path4) {
-            buildDynamicFamilyTree(pokemonData.familyTree.path4, 4);
+        if (pokemonData.familyTree.path04) {
+            buildDynamicFamilyTree(pokemonData.familyTree.path04, 4);
         }
-        if (pokemonData.familyTree.path5) {
-            buildDynamicFamilyTree(pokemonData.familyTree.path5, 5);
+        if (pokemonData.familyTree.path05) {
+            buildDynamicFamilyTree(pokemonData.familyTree.path05, 5);
         }
-        if (pokemonData.familyTree.path6) {
-            buildDynamicFamilyTree(pokemonData.familyTree.path6, 6);
+        if (pokemonData.familyTree.path06) {
+            buildDynamicFamilyTree(pokemonData.familyTree.path06, 6);
         }
-        if (pokemonData.familyTree.path7) {
-            buildDynamicFamilyTree(pokemonData.familyTree.path7, 7);
+        if (pokemonData.familyTree.path07) {
+            buildDynamicFamilyTree(pokemonData.familyTree.path07, 7);
+        }
+        if (pokemonData.familyTree.path08) {
+            buildDynamicFamilyTree(pokemonData.familyTree.path08, 8);
         }
 
         if (bioContext === 'shiny') {
@@ -452,6 +498,40 @@ $(function() {
         }
     });
 
+    $("#submit-checks-form").click(function() {
+        var pokemonID = $("#update-checks-modal #pokemon-id-hidden-input").val();
+        var startSeen = parseInt($("#update-checks-modal #start-seen-input").val());
+        var currentSeen = parseInt($("#update-checks-modal #current-seen-input").val());
+
+        if (isNaN(startSeen) || startSeen < 0) {
+            $("#update-checks-modal #start-seen-error").css("display", "block");
+            return;
+        }
+
+        if (isNaN(currentSeen) || currentSeen < 0) {
+            $("#update-checks-modal #current-seen-error span").text("Wrong number format!");
+            $("#update-checks-modal #current-seen-error").css("display", "block");
+            return;
+        }
+
+        if (currentSeen < startSeen) {
+            $("#update-checks-modal #current-seen-error span").text("The number of current seen must be higher than the number of seen before the shiny release");
+            $("#update-checks-modal #current-seen-error").css("display", "block");
+            return;
+        }
+
+
+        $.post("/update-checks", { pokemon: pokemonID, startSeen: startSeen, currentSeen: currentSeen }, function(result) {
+            pokemon_data[result.pokemon_id].startSeen = parseInt(result.startSeen);
+            pokemon_data[result.pokemon_id].currentSeen = parseInt(result.currentSeen);
+
+            $('#update-checks-modal').modal('hide')
+
+            $("#update-checks-modal #start-seen-error").css("display", "none");
+            $("#update-checks-modal #current-seen-error").css("display", "none");
+        });
+    });
+
 
 
     /* SEARCH */
@@ -467,7 +547,7 @@ $(function() {
                 unique_count_label.text(unique);
                 available_count_label.text(available);
                 total_count_label.text(total);
-                unique_percentage_label.text((unique / available * 100).toFixed(1) + " %");
+                unique_percentage_label.text((available > 0 ? (unique / available * 100).toFixed(1) : 0) + " %");
             }
         });
 
@@ -480,7 +560,7 @@ $(function() {
             unique_count_label.text(unique);
             available_count_label.text(available);
             total_count_label.text(total);
-            unique_percentage_label.text((unique / available * 100).toFixed(1) + " %");
+            unique_percentage_label.text((available > 0 ? (unique / available * 100).toFixed(1) : 0) + " %");
         });
     });
 
@@ -490,21 +570,27 @@ $(function() {
     $(function() {
 
         $('#costume-filter-checkbox').change(function() {
-            $('.shinylist-card-design').removeClass('d-none');
+            search();
+            unique_count_label.text(unique);
+            available_count_label.text(available);
+            total_count_label.text(total);
+            unique_percentage_label.text((available > 0 ? (unique / available * 100).toFixed(1) : 0) + " %");
+        });
 
-            unique = 0, available = 0, total = 0;
+        $('#shadow-filter-checkbox').change(function() {
+            search();
+            unique_count_label.text(unique);
+            available_count_label.text(available);
+            total_count_label.text(total);
+            unique_percentage_label.text((available > 0 ? (unique / available * 100).toFixed(1) : 0) + " %");
+        });
 
-            $(".shinylist-card-design").each(function() {
-                var pokemon_id = this.querySelector("#pokemon-id").innerHTML;
-
-                if (evaluateSubQuery("costume", pokemon_id)) {
-                    $(this).addClass('d-none');
-                } else {
-                    available++;
-                    unique = pokemon_data[pokemon_id].quantity > 0 ? unique + 1 : unique;
-                    total = total + parseInt(pokemon_data[pokemon_id].quantity);
-                }
-            });
+        $('#purified-filter-checkbox').change(function() {
+            search();
+            unique_count_label.text(unique);
+            available_count_label.text(available);
+            total_count_label.text(total);
+            unique_percentage_label.text((available > 0 ? (unique / available * 100).toFixed(1) : 0) + " %");
         });
 
     });
@@ -552,6 +638,26 @@ function search() {
 
 
 function evaluateSubQuery(query, pokemon_id) {
+    var queryEvaluation = evaluateByQuery(query, pokemon_id);
+
+    // filter evaluation
+    if (!$("#shadow-filter-checkbox").is(':checked') && filterByFilter("shadow", pokemon_id, false)) {
+        return false;
+    }
+
+    if (!$("#purified-filter-checkbox").is(':checked') && filterByFilter("purified", pokemon_id, false)) {
+        return false;
+    }
+
+    if (!$("#costume-filter-checkbox").is(':checked') && filterByFilter("costume", pokemon_id, false)) {
+        return false;
+    }
+
+    return queryEvaluation;
+
+}
+
+function evaluateByQuery(query, pokemon_id) {
     var notFlag = query.startsWith('!');
     if (notFlag) query = query.slice(1);
 
@@ -596,8 +702,8 @@ function evaluateSubQuery(query, pokemon_id) {
     } else {
         return !notFlag;
     }
-
 }
+
 
 function filterByName(query, pokemon_id, notFlag) {
     if (pokemon_data[pokemon_id].name.toLowerCase().includes(query.toLowerCase())) {
@@ -753,10 +859,27 @@ function filterByYear(query, pokemon_id, notFlag) {
 
 /* EXTRA FUNCTIONS */
 
+function getFamilyShinyQuantity(pokemonData) {
+
+
+    var quantity = parseInt(getFamilyMemberShinyQuantity(pokemonData))
+}
+
+function getFamilyPathShinyQuantity(path) {
+
+}
+
+function getFamilyMemberImg(familyMemberId, isShiny) {
+    return isShiny ? pokemon_data[familyMemberId].image.image_shiny : pokemon_data[familyMemberId].image.image_normal;
+}
 
 function getFamilyTreeLabel(familyMemberId) {
-    var name = pokemon_data[Object.keys(pokemon_data).find(element => element.includes(familyMemberId))].name_species;
+    var name = pokemon_data[familyMemberId].name_species;
     return name.charAt(0).toUpperCase() + name.slice(1);
+}
+
+function getFamilyMemberShinyQuantity(familyMemberId) {
+    return parseInt(pokemon_data[familyMemberId].quantity);
 }
 
 
@@ -802,6 +925,7 @@ function updateShinyToBe(pokemon_id, quantity, card) {
 
     $.post("/update-shiny", { pokemon: pokemon_id, quantity: quantity, isTemporary: pokemon_data[pokemon_id].isTemporary }, function(result) {
         pokemon_data[result.pokemon_id].quantity = parseInt(result.quantity);
+        pokemon_data[result.pokemon_id].lastModified = result.lastModified;
         card.querySelector("#pokemon-quantity-label").innerHTML = quantity + "x";
 
         if (quantity == 0) {
@@ -855,22 +979,22 @@ function buildDynamicFamilyTree(familyTree, index) {
         content += "<div class=\"pokemon-family-tree-path-img\">";
     }
 
-    content += "<img id=\"pokemon-family-tree-" + index + "-img-1\" src=\"" + BASE_IMG_FAMILY_TREE_PATH + familyTree[0] + ".png\">";
-    content += "<img id=\"pokemon-family-tree-" + index + "-img-1-shiny\" src=\"" + BASE_IMG_FAMILY_TREE_PATH + familyTree[0] + "_shiny.png\" style=\"display: none\">";
+    content += "<img id=\"pokemon-family-tree-" + index + "-img-1\" src=\"" + BASE_IMG_FOLDER_URL + getFamilyMemberImg(familyTree[0], false) + "\">";
+    content += "<img id=\"pokemon-family-tree-" + index + "-img-1-shiny\" src=\"" + BASE_IMG_FOLDER_URL + getFamilyMemberImg(familyTree[0], true) + "\" style=\"display: none\">";
     content += "<p id=\"pokemon-family-tree-" + index + "-label-1\">" + getFamilyTreeLabel(familyTree[0]) + "</p></div>";
     if (familyTree.length > 1) {
         content += "<div class=\"pokemon-family-tree-path-icon\"><i id=\"pokemon-family-tree-" + index + "-arrow-1\" class=\"fas fa-arrow-right fa-2x\"></i></div>";
         content += "<div class=\"pokemon-family-tree-path-img\">";
-        content += "<img id=\"pokemon-family-tree-" + index + "-img-2\" src=\"" + BASE_IMG_FAMILY_TREE_PATH + familyTree[1] + ".png\">";
-        content += "<img id=\"pokemon-family-tree-" + index + "-img-2-shiny\" src=\"" + BASE_IMG_FAMILY_TREE_PATH + familyTree[1] + "_shiny.png\" style=\"display: none\">";
+        content += "<img id=\"pokemon-family-tree-" + index + "-img-2\" src=\"" + BASE_IMG_FOLDER_URL + getFamilyMemberImg(familyTree[1], false) + "\">";
+        content += "<img id=\"pokemon-family-tree-" + index + "-img-2-shiny\" src=\"" + BASE_IMG_FOLDER_URL + getFamilyMemberImg(familyTree[1], true) + "\" style=\"display: none\">";
         content += "<p id=\"pokemon-family-tree-" + index + "-label-2\">" + getFamilyTreeLabel(familyTree[1]) + "</p></div>";
     }
 
     if (familyTree.length > 2) {
         content += "<div class=\"pokemon-family-tree-path-icon\"><i id=\"pokemon-family-tree-" + index + "-arrow-1\" class=\"fas fa-arrow-right fa-2x\"></i></div>";
         content += "<div class=\"pokemon-family-tree-path-img\">";
-        content += "<img id=\"pokemon-family-tree-" + index + "-img-3\" src=\"" + BASE_IMG_FAMILY_TREE_PATH + familyTree[2] + ".png\">";
-        content += "<img id=\"pokemon-family-tree-" + index + "-img-3-shiny\" src=\"" + BASE_IMG_FAMILY_TREE_PATH + familyTree[2] + "_shiny.png\" style=\"display: none\">";
+        content += "<img id=\"pokemon-family-tree-" + index + "-img-3\" src=\"" + BASE_IMG_FOLDER_URL + getFamilyMemberImg(familyTree[2], false) + "\">";
+        content += "<img id=\"pokemon-family-tree-" + index + "-img-3-shiny\" src=\"" + BASE_IMG_FOLDER_URL + getFamilyMemberImg(familyTree[2], true) + "\" style=\"display: none\">";
         content += "<p id=\"pokemon-family-tree-" + index + "-label-3\">" + getFamilyTreeLabel(familyTree[2]) + "</p></div>";
     }
 
@@ -892,4 +1016,14 @@ function activateFamilyTree(data, isShiny) {
             }
         }
     }
+}
+
+function processDateToBio(date) {
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    date = new Date(date);
+
+    return (date.getDate() < 10 ? '0' : '') + date.getDate() + " " + months[date.getMonth()] +
+        " " + date.getFullYear() + " " + (date.getHours() < 10 ? '0' : '') + date.getHours() + ":" + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();
+
 }

@@ -99,13 +99,26 @@ function loadEvents() {
     $.get("/event-list", {}, function(result) {
         events_data = {};
         if (result.error == null) {
+            var now = new Date();
             var event_list = result.event_list;
+
+            var years = [];
+            for (var i = 0; i < event_list.length; i++) {
+                var event = event_list[i];
+                var year = parseInt(new Date(event.startDate).getFullYear());
+                if (!years.includes(year) && event.category != undefined && new Date(event["startDate"]) <= now) {
+                    years.push(year);
+                }
+            }
+            years.sort(function(a, b) { return b - a; }).forEach(year => buildPastEventsSubDiv(year, year));
+            buildPastEventsSubDiv("cd", "Community Day");
+            buildPastEventsSubDiv("go-fest-safari", "Go Fest & Safari Zone");
+
+
             for (var i = 0; i < event_list.length; i++) {
                 var event = event_list[i];
                 events_data[event.id] = event;
                 var content = buildDynamicEventCard(event);
-
-                now = new Date();
 
                 if (new Date(event["startDate"]) > now) {
                     $("#future-events-div").append(content);
@@ -201,6 +214,10 @@ function sortEventsSections() {
         return new Date(events_data[$(a).find("#event-id").val()].startDate) > new Date(events_data[$(b).find("#event-id").val()].startDate) ? 1 : -1;
     }).appendTo("#future-events-div");
 
+    $('#2021-events-div .event-card-design').sort(function(a, b) {
+        return new Date(events_data[$(a).find("#event-id").val()].startDate) < new Date(events_data[$(b).find("#event-id").val()].startDate) ? 1 : -1;
+    }).appendTo("#2021-events-div");
+
     $('#2020-events-div .event-card-design').sort(function(a, b) {
         return new Date(events_data[$(a).find("#event-id").val()].startDate) < new Date(events_data[$(b).find("#event-id").val()].startDate) ? 1 : -1;
     }).appendTo("#2020-events-div");
@@ -216,4 +233,14 @@ function sortEventsSections() {
     $('#go-fest-safari-events-div .event-card-design').sort(function(a, b) {
         return new Date(events_data[$(a).find("#event-id").val()].startDate) < new Date(events_data[$(b).find("#event-id").val()].startDate) ? 1 : -1;
     }).appendTo("#go-fest-safari-events-div");
+}
+
+
+function buildPastEventsSubDiv(key, label) {
+    var content = "<div class=\"row\"><div class=\"col-md-12 col-12\"><br>";
+    content += "<p style=\"color: #fff; font-size: 23px; opacity: .7; border-bottom: 3px solid #ffd700; width: fit-content; height: 45px;\">" + label + "</p>";
+    content += "<div class=\"row\"><div class=\"d-flex flex-row flex-nowrap\" style=\"overflow-y: auto;\" id=\"" + key + "-events-div\"></div></div></div></div>";
+
+    $("#events-div").append(content);
+
 }

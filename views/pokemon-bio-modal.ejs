@@ -1,60 +1,90 @@
 <div class="modal fade" id="pokemon-bio-modal" tabindex="-1" role="dialog" aria-labelledby="pokemon-bio-modal" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-        <div class="modal-body">
-            <p id="pokemon-bio-id" style="display: none;"></p>
-            <div class="text-center">
-                <p id="pokemon-bio-title"></p>
-            </div>
+            <div class="modal-body">
+                <p id="pokemon-bio-id" style="display: none;"></p>
+                <div class="text-center">
+                    <p id="pokemon-bio-title"></p>
+                </div>
 
-            <div class="pokemon-bio-modal-img-div text-center">
-                <img id="pokemon-bio-img-1" class="text-center">
-                <img id="pokemon-bio-img-2" style="display: none;">
-                <img id="pokemon-bio-img-3" style="display: none;">
-                <img id="pokemon-bio-img-4" style="display: none;">
-                <img id="pokemon-bio-is-shiny-icon" src="/img/ic_shiny.png" class="img-responsive"/>
-                <img id="pokemon-bio-type-icon" class="img-responsive"/>
-            </div>
+                <div class="pokemon-bio-modal-img-div text-center">
+                    <img id="pokemon-bio-img-1" class="text-center">
+                    <img id="pokemon-bio-img-2" style="display: none;">
+                    <img id="pokemon-bio-img-3" style="display: none;">
+                    <img id="pokemon-bio-img-4" style="display: none;">
+                    <img id="pokemon-bio-is-shiny-icon" src="/img/ic_shiny.png" class="img-responsive" />
+                    <img id="pokemon-bio-type-icon" class="img-responsive" />
+                </div>
 
-            <div class="pokemon-bio-modal-gender-div text-center">
-                <img id="pokemon-bio-gender-img-1">
-                <img id="pokemon-bio-gender-img-2">
-                <img id="pokemon-bio-gender-img-3">
-                <img id="pokemon-bio-gender-img-4">
-            </div>
-            <div class="pokemon-bio-info-div">
-                <div class="row">
-                    <div class="col-md">
-                        <p><strong># Pokedex: </strong><span id="pokemon-bio-pokedex-number"></span></p>
-                        <div class="row" style="margin-bottom: 15px;">
-                            <div class="col-md-3">
-                                <strong>Types: </strong>
+                <div class="pokemon-bio-modal-gender-div text-center">
+                    <img id="pokemon-bio-gender-img-1">
+                    <img id="pokemon-bio-gender-img-2">
+                    <img id="pokemon-bio-gender-img-3">
+                    <img id="pokemon-bio-gender-img-4">
+                </div>
+
+
+                <ul class="nav nav-tabs" id="pokemon-bio-tabs" role="tablist" style="padding-top: 20px;">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="pokemon-bio-tab" data-toggle="tab" href="#pokemon-bio-info-div" role="tab" aria-controls="home" aria-selected="true">Pokemon Bio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pokemon-stats-tab" data-toggle="tab" href="#pokemon-bio-stats-div" role="tab" aria-controls="profile" aria-selected="false">Personal Stats</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="myTabContent">
+
+                    <div class="tab-pane fade show active pokemon-bio-info-div" id="pokemon-bio-info-div" role="tabpanel" aria-labelledby="pokemon-bio-tab">
+                        <div class="row">
+                            <div class="col-md">
+                                <p><strong># Pokedex: </strong><span id="pokemon-bio-pokedex-number"></span></p>
+                                <div class="row" style="margin-bottom: 15px;">
+                                    <div class="col-md-3">
+                                        <strong>Types: </strong>
+                                    </div>
+                                    <div class="col-md">
+                                        <div class="pokemon-bio-types">
+                                            <img id="pokemon-bio-type-1-img">
+                                            <img id="pokemon-bio-type-2-img">
+                                        </div>
+                                    </div>
+                                </div>
+                                <p><strong>Height: </strong><span id="pokemon-bio-height"></span></p>
                             </div>
                             <div class="col-md">
-                                <div class="pokemon-bio-types">
-                                    <img id="pokemon-bio-type-1-img">
-                                    <img id="pokemon-bio-type-2-img">
-                                </div>
+                                <p><strong>Family: </strong><span id="pokemon-bio-family"></span></p>
+                                <p><strong>Category: </strong><span id="pokemon-bio-category"></span></p>
+                                <p style="padding-top: 3px;"><strong>Weight: </strong><span id="pokemon-bio-weight"></span></p>
                             </div>
                         </div>
-                        <p><strong>Height: </strong><span id="pokemon-bio-height"></span></p>
+                        <p><strong>Description: </strong><span id="pokemon-bio-description"></span></p>
+                        <p><strong>Shiny available since: </strong><span id="pokemon-bio-start-date"></span></p>
+
+                        <div id="family-trees-div"></div>
+
                     </div>
-                    <div class="col-md">
-                        <p><strong>Family: </strong><span id="pokemon-bio-family"></span></p>
-                        <p><strong>Category: </strong><span id="pokemon-bio-category"></span></p>
-                        <p style="padding-top: 3px;"><strong>Weight: </strong><span id="pokemon-bio-weight"></span></p>
+
+
+                    <div class="tab-pane fade pokemon-bio-info-div" id="pokemon-bio-stats-div" role="tabpanel" aria-labelledby="pokemon-stats-tab">
+                        <div class="row">
+                            <div class="col-md">
+                                <p><strong>Seen Before Shiny Release: </strong><span id="pokemon-stats-start-seen"></span></p>
+                                <p><strong>Current Seen: </strong><span id="pokemon-stats-current-seen"></span></p>
+                                <p><strong>Total: </strong><span id="pokemon-stats-checks-total"></span></p>
+                                <p><strong>Percentage (number): </strong><span id="pokemon-stats-checks-percentage"></span></p>
+                                <p><strong>Percentage (%): </strong><span id="pokemon-stats-checks-percentage-2"></span></p>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-                <p><strong>Description: </strong><span id="pokemon-bio-description"></span></p>
 
-                <div id="family-trees-div"></div>
 
             </div>
-
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
         </div>
     </div>
 </div>

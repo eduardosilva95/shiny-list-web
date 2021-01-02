@@ -57,12 +57,14 @@
                     </div>
                 </div>
 
+
                 <div class="col-md-3 cont">
-                    <div class="text-right">
+                    <div class="btn-group mr-2">
                         <div class="dropdown">
                             <button class="btn btn-outline-warning dropdown-toggle" type="button" id="sortDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-sort"></i><span style="padding-left: 10px; ">Sort</span>
-                        </button>
+                                        <i class="fas fa-sort"></i><span style="padding-left: 10px; ">Sort</span>
+                            </button>
+
                             <div class="dropdown-menu" aria-labelledby="sortDropdownMenu">
                                 <button type="button" id="sort-num-1n-btn" class="dropdown-item dropdown-sort-shinylist active" disabled><i class="fas fa-sort-numeric-down"></i><span style="padding-left: 10px;"># Pokedex (1 -> ...)</span></button>
                                 <button type="button" id="sort-num-n1-btn" class="dropdown-item dropdown-sort-shinylist"><i class="fas fa-sort-numeric-down-alt"></i><span style="padding-left: 10px;"># Pokedex (... -> 1)</span></button>
@@ -77,7 +79,28 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="btn-group filter-dropdown">
+                        <button type="button" class="btn btn-outline-warning" id="btn-filter-shinylist"><i class="fas fa-filter"></i><span style="padding-left: 10px; ">Filter</span></button>
+                        <div class="filter-dropdown-content">
+                            <div class="container">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="costume-filter-checkbox" checked>
+                                    <label class="form-check-label" for="costume-filter-checkbox">Costume</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="shadow-filter-checkbox" checked>
+                                    <label class="form-check-label" for="shadow-filter-checkbox">Shadow</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="purified-filter-checkbox" checked>
+                                    <label class="form-check-label" for="purified-filter-checkbox">Purified</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
             </div>
 
             <div class="sticky-top second-sticky">
@@ -127,7 +150,18 @@
                                                                             <button id="pokemon-add-btn" class="button-add"><i class="fas fa-plus"></i></button>
                                                             </div>
                                                             <div class="col-md-5 text-right">
-                                                                <button id="pokemon-change-btn" class="btn btn-secondary">Change</button>
+                                                                <!--<button id="pokemon-change-btn" class="btn btn-secondary">Change</button>-->
+                                                                <div class="dropdown">
+                                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="actions-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                      <i class="fas fa-cogs"></i>
+                                                                    </button>
+                                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                                        <a class="dropdown-item" id="pokemon-update-shiny-btn" style="cursor: pointer;">Update shiny amount</a>
+                                                                        <% if(!pokemon.isTemporary) { %>
+                                                                            <a class="dropdown-item" id="pokemon-update-checks-btn" style="cursor: pointer;">Update number of checks</a>
+                                                                            <% } %>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -140,57 +174,36 @@
 
         <% include ../views/pokemon-bio-modal.ejs %>
             <% include ../views/search-help-modal.ejs %>
-
-                <div id="change-quantity-modal" class="modal" tabindex="-1" role="dialog">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Change Quantity: </h5>
-                            </div>
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <div class="alert alert-danger" role="alert" style="display: none;">
-                                        <i class="fas fa-times-circle"></i><span style="padding-left: 10px">Wrong number format!</span>
-                                    </div>
-
-                                    <input name="pokemon" id="pokemon-id-hidden-input" style="display: none;">
-                                    <label for="new-quantity-input">Quantity</label>
-                                    <input type="number" class="form-control" name="quantity" id="new-quantity-input" placeholder="Enter new quantity" min="0">
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                                <button id="submit-new-quantity-form" type="button" class="btn btn-success">Confirm</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <% include ../views/update-shiny-amount-modal.ejs %>
+                    <% include ../views/update-checks-modal.ejs %>
 
 
-                <% include ../views/footer.ejs %>
 
-                    <script>
-                        var data = [];
 
-                        '<% pokemon_data.forEach(function(pokemon) { %>'
-                        data.push('<%- JSON.stringify(pokemon).replace(/[\/\(\)\']/g, "\\$&") %>');
-                        '<% }); %>'
+                        <% include ../views/footer.ejs %>
 
-                        loadData(data);
-                        document.onreadystatechange = function() {
-                            if (document.readyState !== "complete") {
-                                document.querySelector(
-                                    "body").style.visibility = "hidden";
-                                document.querySelector(
-                                    "#loader").style.visibility = "visible";
-                            } else {
-                                document.querySelector(
-                                    "#loader").style.display = "none";
-                                document.querySelector(
-                                    "body").style.visibility = "visible";
-                            }
-                        };
-                    </script>
+                            <script>
+                                var data = [];
+
+                                '<% pokemon_data.forEach(function(pokemon) { %>'
+                                data.push('<%- JSON.stringify(pokemon).replace(/[\/\(\)\']/g, "\\$&") %>');
+                                '<% }); %>'
+
+                                loadData(data);
+                                document.onreadystatechange = function() {
+                                    if (document.readyState !== "complete") {
+                                        document.querySelector(
+                                            "body").style.visibility = "hidden";
+                                        document.querySelector(
+                                            "#loader").style.visibility = "visible";
+                                    } else {
+                                        document.querySelector(
+                                            "#loader").style.display = "none";
+                                        document.querySelector(
+                                            "body").style.visibility = "visible";
+                                    }
+                                };
+                            </script>
 
 </body>
 

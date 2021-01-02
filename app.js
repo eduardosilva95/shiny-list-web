@@ -130,6 +130,18 @@ app.get('/shiny-list', function(req, res) {
                             data["lastModified"] = new Date(0).toString();
                         }
 
+                        if (user_pokemon_data[doc.id] != undefined && user_pokemon_data[doc.id].startSeen != undefined) {
+                            data["startSeen"] = user_pokemon_data[doc.id].startSeen;
+                        } else {
+                            data["startSeen"] = 0;
+                        }
+
+                        if (user_pokemon_data[doc.id] != undefined && user_pokemon_data[doc.id].currentSeen != undefined) {
+                            data["currentSeen"] = user_pokemon_data[doc.id].currentSeen;
+                        } else {
+                            data["currentSeen"] = 0;
+                        }
+
                         data.startDate = data.startDate.toDate().toString();
 
                         pokemon_data.push(data);
@@ -540,6 +552,7 @@ app.post('/update-shiny', function(req, res) {
     var quantity = parseInt(req.body.quantity);
     var isTemporary = req.body.isTemporary ? req.body.isTemporary == "true" : false;
     var collection = isTemporary ? "tempPokemon" : "pokemon";
+    var lastModified = admin.firestore.Timestamp.now();
 
     console.log(req.body);
 
@@ -550,12 +563,12 @@ app.post('/update-shiny', function(req, res) {
             pokemonDoc.set({
                 id: pokemon_id,
                 quantity: quantity,
-                lastModified: admin.firestore.Timestamp.now()
+                lastModified: lastModified
             });
         } else if (quantity > 0) {
             pokemonDoc.update({
                 quantity: quantity,
-                lastModified: admin.firestore.Timestamp.now()
+                lastModified: lastModified
             });
         } else if (doc.exists && quantity == 0) {
             pokemonDoc.delete();
@@ -564,7 +577,38 @@ app.post('/update-shiny', function(req, res) {
 
     console.log("Updating the quantity of shinies of " + pokemon_id + " to " + quantity);
     res.contentType('json');
-    res.send({ pokemon_id: pokemon_id, quantity: quantity });
+    res.send({ pokemon_id: pokemon_id, quantity: quantity, lastModified: lastModified.toDate().toString() });
+
+});
+
+app.post('/update-checks', function(req, res) {
+    var user_id = req.cookies['user']; // user ID
+    var pokemon_id = req.body.pokemon;
+    var startSeen = parseInt(req.body.startSeen);
+    var currentSeen = parseInt(req.body.currentSeen);
+
+    console.log(req.body);
+
+    const pokemonDoc = db.collection('users').doc(user_id).collection("pokemon").doc(pokemon_id);
+
+    let setData = pokemonDoc.get().then(doc => {
+        if (!doc.exists) {
+            pokemonDoc.set({
+                id: pokemon_id,
+                quantity: 0,
+                startSeen: startSeen,
+                currentSeen: currentSeen,
+            });
+        } else {
+            pokemonDoc.update({
+                startSeen: startSeen,
+                currentSeen: currentSeen
+            });
+        }
+    });
+
+    res.contentType('json');
+    res.send({ pokemon_id: pokemon_id, startSeen: startSeen, currentSeen: currentSeen });
 
 });
 
