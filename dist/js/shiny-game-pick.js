@@ -106,7 +106,7 @@ function loadEvents() {
             for (var i = 0; i < event_list.length; i++) {
                 var event = event_list[i];
                 var year = parseInt(new Date(event.startDate).getFullYear());
-                if (!years.includes(year) && event.category != undefined && new Date(event["startDate"]) <= now) {
+                if (!years.includes(year) && event.category == undefined && new Date(event["startDate"]) <= now) {
                     years.push(year);
                 }
             }
