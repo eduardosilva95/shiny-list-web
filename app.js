@@ -612,6 +612,8 @@ app.post('/update-checks', function(req, res) {
 
 });
 
+// FRIENDS FEATURE
+
 app.get('/request-friends', function(req, res) {
     var user_id = req.cookies['user']; // user ID
 
@@ -626,7 +628,7 @@ app.get('/request-friends', function(req, res) {
 
 
 app.get('/friends', function(req, res) {
-    res.render(path.join(__dirname + '/templates/friends-compare.html'), {});
+    res.render(path.join(__dirname + '/templates/under-construct.html'), {});
 });
 
 
@@ -732,6 +734,7 @@ app.post('/friends/shiny-compare', function(req, res) {
     });
 });
 
+// STATS FEATURE
 
 app.get('/request-stats', function(req, res) {
     var user_id = req.cookies['user']; // user ID
@@ -824,6 +827,101 @@ app.get('/teste-stats', function(req, res) {
     res.render(path.join(__dirname + '/templates/stats.html'), { data: statsController.getData() });
 
 });
+
+
+// LUCKY DEX FEATURE
+app.get('/request-lucky-dex', function(req, res) {
+    var user_id = req.cookies['user']; // user ID
+
+    res.contentType('json');
+
+    if (user_id == null) {
+        res.send({ error: "error" });
+    } else {
+        res.send({ success: "success" });
+    }
+});
+
+
+app.get('/lucky-dex', function(req, res) {
+    res.render(path.join(__dirname + '/templates/lucky-dex.html'), );
+});
+
+
+app.get('/lucky-dex-list/:user_id', function(req, res) {
+    var user_id = req.params.user_id; // user ID
+    var user_pokemon_data = {};
+    var pokemon_data = [];
+
+    if (user_id == null) {
+        res.status(404).render(path.join(__dirname + '/templates/404page.html'), );
+        return;
+    }
+
+    const user = db.collection('users').doc(user_id);
+    const pokemon = db.collection('pokemon');
+    const baseQuery = pokemon.where("isMainLucky", "==", true)
+        .where("isTemporary", "==", false).where("isPokemonAvailable", "==", true);
+
+    let userDoc = user.collection("luckyPokemon").get().then(snapshot => {
+            snapshot.forEach(doc => {
+                user_pokemon_data[doc.id] = doc.data();
+            });
+
+            let pokemonDoc = baseQuery.get().then(snapshot2 => {
+                    snapshot2.forEach(doc2 => {
+                        var data = {};
+                        data["id"] = doc2.data().id;
+                        data["name"] = doc2.data().name;
+                        data["image"] = doc2.data().image;
+                        if (user_pokemon_data[doc2.id] != undefined) {
+                            data["hasLucky"] = true;
+                        } else {
+                            data["hasLucky"] = false;
+                        }
+                        pokemon_data.push(data);
+                    });
+
+
+                    res.contentType('json');
+                    res.send({ pokemon_list: pokemon_data });
+
+                })
+                .catch(err => {
+                    console.log('Error getting documents', err);
+                });
+        })
+        .catch(err => {
+            console.log('Error getting documents', err);
+        });
+});
+
+// update lucky dex
+app.post('/update-lucky', function(req, res) {
+    var user_id = req.cookies['user']; // user ID
+    var pokemon_id = req.body.pokemon;
+    var hasLucky = req.body.hasLucky ? req.body.hasLucky == "true" : false;
+    var lastModified = admin.firestore.Timestamp.now();
+
+    const pokemonDoc = db.collection('users').doc(user_id).collection("luckyPokemon").doc(pokemon_id);
+
+    let setData = pokemonDoc.get().then(doc => {
+        if (!doc.exists && hasLucky) {
+            pokemonDoc.set({
+                id: pokemon_id,
+                lastModified: lastModified
+            });
+        } else if (doc.exists && !hasLucky) {
+            pokemonDoc.delete();
+        }
+    });
+
+    console.log("Updating the lucky dex of " + pokemon_id + " to :" + hasLucky);
+    res.contentType('json');
+    res.send({ pokemon_id: pokemon_id, lastModified: lastModified.toDate().toString() });
+
+});
+
 
 app.get('*', function(req, res) {
     res.status(404).render(path.join(__dirname + '/templates/404page.html'), );

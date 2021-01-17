@@ -325,6 +325,18 @@ $(function() {
         });
     });
 
+    $("#link-lucky-dex").click(function() {
+        $.get("/request-lucky-dex", {}, function(result) {
+            if (result.success) {
+                location.href = "/lucky-dex";
+            } else {
+                redirect_url = "/lucky-dex";
+                $("#need-login-error").css("display", "block");
+                $("#login-modal").modal();
+            }
+        });
+    });
+
     $("#register-modal-continue-btn").click(function() {
         var id = $("#id-input").val();
         var name = $("#name-input").val();
