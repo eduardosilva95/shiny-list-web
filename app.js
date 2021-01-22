@@ -390,11 +390,12 @@ app.post('/shiny-simulator', function(req, res) {
                     event = doc.data();
                     event["pokemon"] = {};
 
-                    let eventsPokemonDoc = eventsDB.doc(eventID).collection("pokemon").get().then(snapshot => {
-                        snapshot.forEach(doc => {
-                            event["pokemon"][doc.data().id] = doc.data();
-                            pokemon_list.push(doc.data().id);
-                        });
+                    let eventsPokemonDoc = eventsDB.doc(eventID).get().then(doc => {
+                        for (var key in doc.data().pokemon) {
+                            let eventPokemon = doc.data().pokemon[key];
+                            event["pokemon"][eventPokemon.id] = eventPokemon;
+                            pokemon_list.push(eventPokemon.id);
+                        }
 
                         let eventsPokemonDocData = db.collection('pokemon').get().then(snapshot2 => {
                             snapshot2.forEach(doc => {
