@@ -3,6 +3,9 @@
   "version": "1.4.0",
   "description": "",
   "main": "app.js",
+  "engines": {
+    "node": "12.4"
+  },
   "dependencies": {
     "cookie-parser": "^1.4.4",
     "ejs": "^2.7.1",
