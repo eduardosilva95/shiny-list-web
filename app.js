@@ -387,33 +387,28 @@ app.post('/shiny-simulator', function(req, res) {
                 if (!doc.exists) {
                     res.send({ error: 'error', message: 'event not found' });
                 } else {
-                    event = doc.data();
-                    event["pokemon"] = {};
+                    eventData = doc.data();
 
-                    let eventsPokemonDoc = eventsDB.doc(eventID).get().then(doc => {
-                        for (var key in doc.data().pokemon) {
-                            let eventPokemon = doc.data().pokemon[key];
-                            event["pokemon"][eventPokemon.id] = eventPokemon;
-                            pokemon_list.push(eventPokemon.id);
-                        }
+                    for (var key in eventData.pokemon) {
+                        pokemon_list.push(eventData.pokemon[key].id);
+                    }
 
-                        let eventsPokemonDocData = db.collection('pokemon').get().then(snapshot2 => {
-                            snapshot2.forEach(doc => {
-                                if (pokemon_list.includes(doc.data().id)) {
-                                    var data = doc.data();
-                                    delete data.description;
-                                    pokemon_data.push(data);
-                                }
-                            });
-
-                            res.render(path.join(__dirname + '/templates/shiny-simulator.html'), { event: event, pokemon_data: pokemon_data, pokemon_list: pokemon_list });
+                    let eventsPokemonDocData = db.collection('pokemon').where('id', 'in', pokemon_list).get().then(snapshot2 => {
+                        snapshot2.forEach(doc2 => {
+                            if (pokemon_list.includes(doc2.data().id)) {
+                                var data = doc2.data();
+                                delete data.description;
+                                pokemon_data.push(data);
+                            }
                         });
+
+                        res.render(path.join(__dirname + '/templates/shiny-simulator.html'), { event: eventData, pokemon_data: pokemon_data, pokemon_list: pokemon_list });
                     });
                 }
             })
             .catch(err => {
                 console.log('Error getting document', err);
-                res.send({ error: 'error', message: 'user not found' });
+                res.send({ error: 'error', message: 'event not found' });
             });
     } else {
         const pokemonQuery = db.collection('pokemon');
