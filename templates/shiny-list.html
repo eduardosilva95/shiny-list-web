@@ -118,56 +118,62 @@
 
             <div class="row shinylist">
                 <% pokemon_data.forEach(function(pokemon) { %>
-                    <div class="col-md-3 col-12 cont shinylist-card-design">
-                        <div class="shinylist-card">
-                            <span id="pokemon-id" style="display: none;"><%= pokemon.id %></span>
-                            <% if(pokemon.quantity > 0) { %>
-                                <img id="pokemon-card-img" src="/img/pokemon_icons/<%= pokemon.image.image_shiny %>" class="img-responsive img-shiny" style="height: 60%;" />
-                                <% } else { %>
-                                    <img id="pokemon-card-img" src="/img/pokemon_icons/<%= pokemon.image.image_normal %>" class="img-responsive img-normal" style="height: 60%;" />
-                                    <% } %>
-                                        <div id="pokemon-quantity-label" class="image-label">
-                                            <%= pokemon.quantity %>x</div>
-                                        <% if(pokemon.filters.shadow) { %>
-                                            <img id="pokemon-type-icon" src="/img/ic_shadow.png" class="img-responsive icon-type" />
-                                            <% } else if(pokemon.filters.purified)  { %>
-                                                <img id="pokemon-type-icon" src="/img/ic_purified.png" class="img-responsive icon-type" />
-                                                <% } %>
-                                                    <div class="card-body">
-                                                        <div class="card-title-div">
-                                                            <span class="card-title" title="<%= pokemon.name %>"><%= pokemon.name %></span>
-                                                        </div>
-                                                        <p class="card-text"><strong>Event:</strong>
-                                                            <%= pokemon.event %>
-                                                        </p>
-                                                        <div class="row">
-                                                            <div class="col-md-7">
-                                                                <% if(pokemon.quantity == 0) { %>
-                                                                    <button id="pokemon-remove-btn" class="button-remove" disabled><i class="fas fa-minus"></i></button>
-                                                                    <% } else { %>
-                                                                        <button id="pokemon-remove-btn" class="button-remove"><i class="fas fa-minus"></i></button>
-                                                                        <% } %>
-                                                                            <button id="pokemon-add-btn" class="button-add"><i class="fas fa-plus"></i></button>
+                    <% if(pokemon.isTemporary == isTemporary) { %>
+                        <div class="col-md-3 col-12 cont shinylist-card-design">
+                            <div class="shinylist-card">
+                                <span id="pokemon-id" style="display: none;"><%= pokemon.id %></span>
+                                <% if(pokemon.quantity > 0) { %>
+                                    <img id="pokemon-card-img" src="/img/pokemon_icons/<%= pokemon.image.imageShiny %>" class="img-responsive img-shiny" style="height: 60%;" />
+                                    <% } else { %>
+                                        <img id="pokemon-card-img" src="/img/pokemon_icons/<%= pokemon.image.imageNormal %>" class="img-responsive img-normal" style="height: 60%;" />
+                                        <% } %>
+                                            <div id="pokemon-quantity-label" class="image-label">
+                                                <%= pokemon.quantity %>x</div>
+                                            <% if(pokemon.filters.includes("shadow"))  { %>
+                                                <img id="pokemon-type-icon" src="/img/ic_shadow.png" class="img-responsive icon-type" />
+                                                <% } else if(pokemon.filters.includes("purified"))  { %>
+                                                    <img id="pokemon-type-icon" src="/img/ic_purified.png" class="img-responsive icon-type" />
+                                                    <% } %>
+                                                        <div class="card-body">
+                                                            <div class="card-title-div">
+                                                                <span class="card-title" title="<%= pokemon.name %>"><%= pokemon.name %></span>
                                                             </div>
-                                                            <div class="col-md-5 text-right">
-                                                                <!--<button id="pokemon-change-btn" class="btn btn-secondary">Change</button>-->
-                                                                <div class="dropdown">
-                                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="actions-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            <p class="card-text"><strong>Event:</strong>
+                                                                <% if(pokemon.eventList.length > 0) { %>
+                                                                    <span><%= pokemon.eventList[0] %></span>
+                                                                    <% } else { %>
+                                                                        <span>No Event</span>
+                                                                        <% } %>
+                                                            </p>
+                                                            <div class="row">
+                                                                <div class="col-md-7">
+                                                                    <% if(pokemon.quantity == 0) { %>
+                                                                        <button id="pokemon-remove-btn" class="button-remove" disabled><i class="fas fa-minus"></i></button>
+                                                                        <% } else { %>
+                                                                            <button id="pokemon-remove-btn" class="button-remove"><i class="fas fa-minus"></i></button>
+                                                                            <% } %>
+                                                                                <button id="pokemon-add-btn" class="button-add"><i class="fas fa-plus"></i></button>
+                                                                </div>
+                                                                <div class="col-md-5 text-right">
+                                                                    <!--<button id="pokemon-change-btn" class="btn btn-secondary">Change</button>-->
+                                                                    <div class="dropdown">
+                                                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="actions-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                                       <i class="fas fa-cogs"></i>
                                                                     </button>
-                                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                        <a class="dropdown-item" id="pokemon-update-shiny-btn" style="cursor: pointer;">Update shiny amount</a>
-                                                                        <% if(!pokemon.isTemporary) { %>
-                                                                            <a class="dropdown-item" id="pokemon-update-checks-btn" style="cursor: pointer;">Update number of checks</a>
-                                                                            <% } %>
+                                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                                            <a class="dropdown-item" id="pokemon-update-shiny-btn" style="cursor: pointer;">Update shiny amount</a>
+                                                                            <% if(!pokemon.isTemporary) { %>
+                                                                                <a class="dropdown-item" id="pokemon-update-checks-btn" style="cursor: pointer;">Update number of checks</a>
+                                                                                <% } %>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                            </div>
                         </div>
-                    </div>
-                    <% }); %>
+                        <% } %>
+                            <% }); %>
             </div>
         </div>
 
@@ -189,7 +195,9 @@
                                 data.push('<%- JSON.stringify(pokemon).replace(/[\/\(\)\']/g, "\\$&") %>');
                                 '<% }); %>'
 
-                                loadData(data);
+                                var isTemporary = '<%= isTemporary %>' == "true";
+
+                                loadData(data, isTemporary);
                                 document.onreadystatechange = function() {
                                     if (document.readyState !== "complete") {
                                         document.querySelector(

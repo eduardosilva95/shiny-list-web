@@ -92,7 +92,7 @@
                     <div class="col-md-3 col-12 cont shinylist-card-design">
                         <div class="shinylist-card">
                             <span id="pokemon-id" style="display: none;"><%= pokemon.id %></span>
-                            <img id="pokemon-card-img" src="/img/pokemon_icons/<%= pokemon.image.image_shiny %>" class="img-responsive img-shiny" style="height: 60%;" />
+                            <img id="pokemon-card-img" src="/img/pokemon_icons/<%= pokemon.image.imageShiny %>" class="img-responsive img-shiny" style="height: 60%;" />
                             <% if(pokemon.filters.shadow) { %>
                                 <img id="pokemon-type-icon" src="/img/ic_shadow.png" class="img-responsive icon-type" />
                                 <% } else if(pokemon.filters.purified)  { %>
@@ -102,10 +102,15 @@
                                             <div class="card-title-div">
                                                 <span class="card-title" title="<%= pokemon.name %>"><%= pokemon.name %></span>
                                             </div>
-                                            <span class="card-text" style="padding-top: 10px;"><strong>Event:</strong> <%= pokemon.event %></span>
-                                            <p class="card-text" s><strong>Start Date:</strong>
-                                                <%= pokemon.startDateLabel %>
-                                            </p>
+                                            <span class="card-text" style="padding-top: 10px;"><strong>Event:</strong> <% if(pokemon.eventList.length > 0) { %>
+                                                <span><%= pokemon.eventList[0] %></span>
+                                            <% } else { %>
+                                                <span>No Event</span>
+                                                <% } %>
+                                                    </span>
+                                                    <p class="card-text" s><strong>Start Date:</strong>
+                                                        <%= pokemon.startDateLabel %>
+                                                    </p>
                                         </div>
                         </div>
                     </div>
@@ -125,7 +130,7 @@
                         data.push('<%- JSON.stringify(pokemon).replace(/[\/\(\)\']/g, "\\$&") %>');
                         '<% }); %>'
 
-                        loadData(data);
+                        loadData(data, false);
                     </script>
 
 </body>

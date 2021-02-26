@@ -86,10 +86,10 @@
             var data = [];
 
             '<% pokemon_data.forEach(function(pokemon) { %>'
-            data.push('<%- JSON.stringify(pokemon) %>');
+            data.push('<%- JSON.stringify(pokemon).replace(/[\/\(\)\']/g, "\\$&") %>');
             '<% }); %>'
 
-            loadData('<%= pokemon_list %>', data, '<%- JSON.stringify(event) %>');
+            loadData('<%= pokemon_list %>', data, '<%- JSON.stringify(event).replace(/[\/\(\)\']/g, "\\$&") %>');
         </script>
 
 

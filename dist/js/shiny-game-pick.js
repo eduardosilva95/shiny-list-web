@@ -192,11 +192,16 @@ function buildDynamicEventCard(event) {
 
 
 function buildDynamicPokemonCard(pokemon) {
+    if (!pokemon.image.imageNormal && !pokemon.image.imageShiny) {
+        return "";
+    }
+
+
     var content = "<div class=\"col-md-2\"><a class=\"pokemon-card-btn\"><div id=\"gallery-card\" class=\"gallery-card-unchecked\">";
     content += "<input style=\"display: none;\" value=\"" + pokemon.id + "\">";
     content += "<div class=\"gallery-card-body\"><label class=\"block-check\">";
-    content += "<img src=\"/img/pokemon_icons/" + pokemon.image.image_normal + "\" class=\"img-responsive img-normal\"/>";
-    content += "<img src=\"/img/pokemon_icons/" + pokemon.image.image_shiny + "\" class=\"img-responsive img-shiny\" style=\"display: none;\"/></label>";
+    content += "<img src=\"/img/pokemon_icons/" + pokemon.image.imageNormal + "\" class=\"img-responsive img-normal\"/>";
+    content += "<img src=\"/img/pokemon_icons/" + pokemon.image.imageShiny + "\" class=\"img-responsive img-shiny\" style=\"display: none;\"/></label>";
     content += "<div class=\"mycard-footer text-center\"><span class=\"card-link\" title=\"" + pokemon.name + "\">" + pokemon.name + "</span></div>";
     content += "</div></div></a></div>";
 

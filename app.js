@@ -106,9 +106,9 @@ app.get('/shiny-list', function(req, res) {
     }
 
     const user = db.collection('users').doc(user_id);
-    const pokemon = db.collection('pokemon');
-    const baseQuery = pokemon.where("hasShinyAvailable", "==", true).where("isTemporary", "==", false)
-        .where("startDate", "<=", admin.firestore.Timestamp.now());
+    const pokemon = db.collection('pokemon_v2');
+    const baseQuery = pokemon.where("availability.hasShinyAvailable", "==", true)
+        .where("startDates.shinyStartDate", "<=", admin.firestore.Timestamp.now());
 
     let userDoc = user.collection("pokemon").get().then(snapshot => {
             snapshot.forEach(doc => {
@@ -142,13 +142,13 @@ app.get('/shiny-list', function(req, res) {
                             data["currentSeen"] = 0;
                         }
 
-                        data.startDate = data.startDate.toDate().toString();
+                        data.startDates.shinyStartDate = data.startDates.shinyStartDate.toDate().toString();
 
                         pokemon_data.push(data);
                     });
 
 
-                    res.render(path.join(__dirname + '/templates/shiny-list.html'), { pokemon_data: pokemon_data });
+                    res.render(path.join(__dirname + '/templates/shiny-list.html'), { pokemon_data: pokemon_data, isTemporary: false });
 
 
                 })
@@ -174,9 +174,9 @@ app.get('/shiny-list-temp', function(req, res) {
     }
 
     const user = db.collection('users').doc(user_id);
-    const pokemon = db.collection('pokemon');
-    const baseQuery = pokemon.where("hasShinyAvailable", "==", true).where("isTemporary", "==", true)
-        .where("startDate", "<=", admin.firestore.Timestamp.now());
+    const pokemon = db.collection('pokemon_v2');
+    const baseQuery = pokemon.where("availability.hasShinyAvailable", "==", true)
+        .where("startDates.shinyStartDate", "<=", admin.firestore.Timestamp.now());
 
     let userDoc = user.collection("tempPokemon").get().then(snapshot => {
             snapshot.forEach(doc => {
@@ -198,13 +198,13 @@ app.get('/shiny-list-temp', function(req, res) {
                             data["lastModified"] = new Date(0).toString();
                         }
 
-                        data.startDate = data.startDate.toDate().toString();
+                        data.startDates.shinyStartDate = data.startDates.shinyStartDate.toDate().toString();
 
                         pokemon_data.push(data);
                     });
 
 
-                    res.render(path.join(__dirname + '/templates/shiny-list.html'), { pokemon_data: pokemon_data });
+                    res.render(path.join(__dirname + '/templates/shiny-list.html'), { pokemon_data: pokemon_data, isTemporary: true });
 
 
                 })
@@ -225,16 +225,16 @@ app.get('/future-shiny-list', function(req, res) {
     var user_pokemon_data = {};
     var pokemon_data = [];
 
-    const pokemon = db.collection('pokemon');
-    const baseQuery = pokemon.where("hasShinyAvailable", "==", true)
-        .where("startDate", ">", admin.firestore.Timestamp.fromDate(new Date()))
-        //.where("startDate", "<=", admin.firestore.Timestamp.fromDate(new Date()));
+    const pokemon = db.collection('pokemon_v2');
+    const baseQuery = pokemon.where("availability.hasShinyAvailable", "==", true)
+        .where("startDates.shinyStartDate", ">", admin.firestore.Timestamp.fromDate(new Date()));
+
 
     let pokemonDoc = baseQuery.get().then(snapshot => {
             snapshot.forEach(doc => {
                 var data = doc.data();
-                data.startDateLabel = parseSchedule(data.startDate.seconds * 1000);
-                data.startDate = data.startDate.toDate().toString();
+                data.startDateLabel = parseSchedule(data.startDates.shinyStartDate.seconds * 1000);
+                data.startDates.shinyStartDate = data.startDates.shinyStartDate.toDate().toString();
                 pokemon_data.push(data);
             });
 
@@ -256,14 +256,14 @@ app.get('/future-shiny-list-2', function(req, res) {
     var user_pokemon_data = {};
     var pokemon_data = [];
 
-    const pokemon = db.collection('pokemon');
-    const baseQuery = pokemon.where("hasShinyAvailable", "==", false);
+    const pokemon = db.collection('pokemon_v2');
+    const baseQuery = pokemon.where("availability.hasShinyAvailable", "==", false);
     //.where("startDate", "<=", admin.firestore.Timestamp.fromDate(new Date()));
 
     let pokemonDoc = baseQuery.get().then(snapshot => {
             snapshot.forEach(doc => {
                 var data = doc.data();
-                data["startDate"] = "TBA";
+                data["startDates.shinyStartDate"] = "TBA";
 
                 pokemon_data.push(data);
             });
@@ -305,7 +305,7 @@ app.get('/shiny-list-2', function(req, res) {
             }
         }
 
-        res.render(path.join(__dirname + '/templates/shiny-list.html'), { pokemon_data: pokemon_data });
+        res.render(path.join(__dirname + '/templates/shiny-list.html'), { pokemon_data: pokemon_data, isTemporary: false });
     });
 
 });
@@ -321,14 +321,16 @@ app.get('/shiny-simulator', function(req, res) {
 
 app.get('/pokemon-list', function(req, res) {
 
-    const pokemon = db.collection('pokemon');
+    const pokemon = db.collection('pokemon_v2');
 
     var pokemon_list = [];
 
-    let pokemonDoc = pokemon.where("filters.shadow", "==", false).where("filters.purified", "==", false).get().then(snapshot => {
+    let pokemonDoc = pokemon.get().then(snapshot => {
         snapshot.forEach(doc => {
             var data = doc.data();
-            pokemon_list.push(data);
+            if (!data.filters.includes("shadow") && !data.filters.includes("purified")) {
+                pokemon_list.push(data);
+            }
         });
 
         res.contentType('json');
@@ -393,7 +395,7 @@ app.post('/shiny-simulator', function(req, res) {
                         pokemon_list.push(eventData.pokemon[key].id);
                     }
 
-                    let eventsPokemonDocData = db.collection('pokemon').where('id', 'in', pokemon_list).get().then(snapshot2 => {
+                    let eventsPokemonDocData = db.collection('pokemon_v2').where('id', 'in', pokemon_list).get().then(snapshot2 => {
                         snapshot2.forEach(doc2 => {
                             if (pokemon_list.includes(doc2.data().id)) {
                                 var data = doc2.data();
@@ -411,7 +413,7 @@ app.post('/shiny-simulator', function(req, res) {
                 res.send({ error: 'error', message: 'event not found' });
             });
     } else {
-        const pokemonQuery = db.collection('pokemon');
+        const pokemonQuery = db.collection('pokemon_v2');
         pokemon_list_tmp = req.body.pokemonList.split(",");
         let eventsPokemonDocData = pokemonQuery.get().then(snapshot2 => {
             snapshot2.forEach(doc => {
@@ -672,9 +674,9 @@ app.post('/friends/shiny-compare', function(req, res) {
     console.log(req.body);
 
     const user = db.collection('users');
-    const pokemon = db.collection('pokemon');
-    const baseQuery = pokemon.where("hasShinyAvailable", "==", true)
-        .where("startDate", "<=", admin.firestore.Timestamp.now());
+    const pokemon = db.collection('pokemon_v2');
+    const baseQuery = pokemon.where("availability.hasShinyAvailable", "==", true)
+        .where("startDates.shinyStartDate", "<=", admin.firestore.Timestamp.now());
 
     var pokemon_data = {};
 
@@ -685,8 +687,8 @@ app.post('/friends/shiny-compare', function(req, res) {
             data.id = doc.data().id;
             data.name = doc.data().name;
             data.image = doc.data().image;
-            data.startDate = doc.data().startDate.toDate().toString();
-            data.pokemon_id = doc.data().id_numeric;
+            data.shinyStartDate = doc.data().startDates.shinyStartDate.toDate().toString();
+            data.pokemon_id = doc.data().idNumeric;
 
             data.userAQuantity = 0;
             data.userBQuantity = 0;
@@ -757,9 +759,9 @@ app.get('/stats', function(req, res) {
     statsController.initializeStatsController();
 
     const user = db.collection('users').doc(user_id);
-    const pokemon = db.collection('pokemon');
-    const baseQuery = pokemon.where("hasShinyAvailable", "==", true)
-        .where("startDate", "<=", admin.firestore.Timestamp.now());
+    const pokemon = db.collection('pokemon_v2');
+    const baseQuery = pokemon.where("availability.hasShinyAvailable", "==", true)
+        .where("startDates.shinyStartDate", "<=", admin.firestore.Timestamp.now());
 
     let userData = user.get().then(doc => {
         if (doc.exists) {
@@ -855,9 +857,9 @@ app.get('/lucky-dex-list/:user_id', function(req, res) {
     }
 
     const user = db.collection('users').doc(user_id);
-    const pokemon = db.collection('pokemon');
+    const pokemon = db.collection('pokemon_v2');
     const baseQuery = pokemon.where("isMainLucky", "==", true)
-        .where("isTemporary", "==", false).where("isPokemonAvailable", "==", true);
+        .where("isTemporary", "==", false).where("availability.isPokemonAvailable", "==", true);
 
     let userDoc = user.collection("luckyPokemon").get().then(snapshot => {
             snapshot.forEach(doc => {

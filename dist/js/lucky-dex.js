@@ -45,7 +45,7 @@ function buildDynamicLuckydexCard(pokemon, hasLucky) {
     content += "<div class=\"lucky-dex-card-body\"><label class=\"image-checkbox\">";
     content += "<input type=\"checkbox\" style=\"display: none;\" value=\"" + pokemon.id + "\"" + (hasLucky ? 'checked' : '') + ">";
     content += "<i class=\"fa fa-check hidden\"></i>";
-    content += "<img src=\"/img/pokemon_icons/" + pokemon.image.image_normal + "\" class=\"img-responsive img-normal\"/>";
+    content += "<img src=\"/img/pokemon_icons/" + pokemon.image.imageNormal + "\" class=\"img-responsive img-normal\"/>";
     content += "<div class=\"lucky-dex-card-label text-center\"><span class=\"card-link\" title=\"" + pokemon.name + "\">" + pokemon.name + "</span></div>";
     content += "</label></div></div></div>";
 

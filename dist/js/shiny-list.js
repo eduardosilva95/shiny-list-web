@@ -13,7 +13,7 @@ var list_types = ["normal", "fire", "fighting", "water", "flying", "grass",
     "bug", "dragon", "ghost", "dark", "steel", "fairy", "???"
 ];
 var list_filters = ["shadow", "purified", "regional", "costume", "exclusive", "tradable", "deployable", "transferable", "evolve", "tradeevolve", "itemevolve"];
-var list_events = ["communityday", "researchday", "raidday", "gofest", "safarizone", "gobattleday", "incenseday", "other", "normal"];
+var list_events = ["community day", "research day", "raid day", "go fest", "safari zone", "gobattle day", "incense day", "other", "normal"];
 var list_genders = ["male", "female", "genderless"];
 var list_categories = ["fossil", "baby", "mythical", "legendary", "starter", "nocategory", "pseudo-legendary", "ultrabeast"];
 
@@ -23,13 +23,15 @@ var previousCard = null;
 var nextCard = null;
 var bioContext = "normal";
 
-function loadData(backend_data) {
+function loadData(backend_data, isTemporary) {
     for (i = 0; i < backend_data.length; i++) {
         var data = JSON.parse(backend_data[i].replace(/\r?\n|\r/g, ''));
         pokemon_data[data.id] = data;
-        available++;
-        total += parseInt(data.quantity);
-        unique = parseInt(data.quantity) > 0 ? unique + 1 : unique;
+        if (isTemporary == data.isTemporary) {
+            available++;
+            total += parseInt(data.quantity);
+            unique = parseInt(data.quantity) > 0 ? unique + 1 : unique;
+        }
     }
 
     console.log(pokemon_data);
@@ -48,7 +50,7 @@ $(function() {
         }).appendTo(".shinylist");
 
         $('.shinylist .shinylist-card-design').sort(function(a, b) {
-            return new Date(pokemon_data[$(a).find("#pokemon-id").text()].startDate) >= new Date(pokemon_data[$(b).find("#pokemon-id").text()].startDate) ? 1 : -1;
+            return new Date(pokemon_data[$(a).find("#pokemon-id").text()].startDates.shinyStartDate) >= new Date(pokemon_data[$(b).find("#pokemon-id").text()].startDates.shinyStartDate) ? 1 : -1;
         }).appendTo(".shinylist");
 
     } else {
@@ -178,13 +180,13 @@ $(function() {
         pokemon_img_gender_3.attr("src", "img/female_l_mod_grey.png");
         pokemon_img_gender_4.attr("src", "img/female_shiny_l_grey.png");
 
-        pokemon_img_1.attr("src", BASE_IMG_FOLDER_URL + pokemonData.image.image_normal);
-        pokemon_img_2.attr("src", BASE_IMG_FOLDER_URL + pokemonData.image.image_shiny);
+        pokemon_img_1.attr("src", BASE_IMG_FOLDER_URL + pokemonData.image.imageNormal);
+        pokemon_img_2.attr("src", BASE_IMG_FOLDER_URL + pokemonData.image.imageShiny);
 
-        if (pokemonData.genders.male && pokemonData.genders.female) {
-            if (pokemonData.image.image_normal_2) {
-                pokemon_img_3.attr("src", BASE_IMG_FOLDER_URL + pokemonData.image.image_normal_2);
-                pokemon_img_4.attr("src", BASE_IMG_FOLDER_URL + pokemonData.image.image_shiny_2);
+        if (pokemonData.genders.includes("male") && pokemonData.genders.includes("female")) {
+            if (pokemonData.image.imageNormal2) {
+                pokemon_img_3.attr("src", BASE_IMG_FOLDER_URL + pokemonData.image.imageNormal2);
+                pokemon_img_4.attr("src", BASE_IMG_FOLDER_URL + pokemonData.image.imageShiny2);
             } else {
                 if (bioContext === "normal") {
                     pokemon_img_gender_1.attr("src", "img/genderall_l_mod.png");
@@ -196,17 +198,17 @@ $(function() {
                 pokemon_img_gender_3.css("display", "none");
                 pokemon_img_gender_4.css("display", "none");
             }
-        } else if (pokemonData.genders.male) {
+        } else if (pokemonData.genders.includes("male")) {
             pokemon_img_gender_3.css("display", "none");
             pokemon_img_gender_4.css("display", "none");
 
-        } else if (pokemonData.genders.female) {
+        } else if (pokemonData.genders.includes("female")) {
             pokemon_img_gender_1.css("display", "none");
             pokemon_img_gender_2.css("display", "none");
             pokemon_img_gender_3.attr("src", "img/female_l_mod.png");
-            pokemon_img_3.attr("src", BASE_IMG_FOLDER_URL + pokemonData.image.image_normal);
-            pokemon_img_4.attr("src", BASE_IMG_FOLDER_URL + pokemonData.image.image_shiny);
-        } else if (pokemonData.genders.genderless) {
+            pokemon_img_3.attr("src", BASE_IMG_FOLDER_URL + pokemonData.image.imageNormal);
+            pokemon_img_4.attr("src", BASE_IMG_FOLDER_URL + pokemonData.image.imageShiny);
+        } else if (pokemonData.genders.includes("genderless")) {
             if (bioContext === "normal") {
                 pokemon_img_gender_1.attr("src", "img/genderless_l_mod.png");
                 pokemon_img_gender_2.attr("src", "img/genderless_shiny_l_grey.png");
@@ -218,10 +220,10 @@ $(function() {
             pokemon_img_gender_4.css("display", "none");
         }
 
-        if (pokemonData.filters.shadow) {
+        if (pokemonData.filters.includes("shadow")) {
             pokemon_icon_type.css("display", "initial");
             pokemon_icon_type.attr("src", "/img/ic_shadow.png");
-        } else if (pokemonData.filters.purified) {
+        } else if (pokemonData.filters.includes("purified")) {
             pokemon_icon_type.css("display", "initial");
             pokemon_icon_type.attr("src", "/img/ic_purified.png");
         }
@@ -236,15 +238,16 @@ $(function() {
         pokemon_img_type_2.css("display", "initial");
 
         var types = 0;
-        for (key in pokemonData.types) {
-            if (pokemonData.types[key] == true && types == 0) {
-                pokemon_img_type_1.attr("src", "img/type_" + key + ".png");
+        pokemonData.types.forEach((type) => {
+            if (types == 0) {
+                pokemon_img_type_1.attr("src", "img/type_" + type + ".png");
                 types++;
-            } else if (pokemonData.types[key] == true && types == 1) {
-                pokemon_img_type_2.attr("src", "img/type_" + key + ".png");
+            } else if (types == 1) {
+                pokemon_img_type_2.attr("src", "img/type_" + type + ".png");
                 types++;
             }
-        }
+        });
+
 
         if (types < 2) {
             pokemon_img_type_2.css("display", "none");
@@ -255,13 +258,13 @@ $(function() {
 
         $("#pokemon-bio-id").text(pokemonData.id);
         $("#pokemon-bio-title").text(pokemonData.name);
-        $("#pokemon-bio-pokedex-number").text(pokemonData.id_numeric);
-        $("#pokemon-bio-height").text(pokemonData.height < 0 ? "??? m" : pokemonData.height.toFixed(2) + " m");
+        $("#pokemon-bio-pokedex-number").text(pokemonData.idNumeric);
+        $("#pokemon-bio-height").text(pokemonData.pokemonDimensions.height < 0 ? "??? m" : pokemonData.pokemonDimensions.height.toFixed(2) + " m");
         $("#pokemon-bio-family").text(pokemonData.family.charAt(0).toUpperCase() + pokemonData.family.slice(1).replace("_", ""));
-        $("#pokemon-bio-category").text(pokemonData.category.charAt(0).toUpperCase() + pokemonData.category.slice(1).replace("_", ""));
-        $("#pokemon-bio-weight").text(pokemonData.weight < 0 ? "??? kg" : pokemonData.weight.toFixed(2) + " kg");
+        $("#pokemon-bio-category").text(pokemonData.group.length > 0 ? pokemonData.group[0].charAt(0).toUpperCase() + pokemonData.group[0].slice(1).replace("_", "") : "");
+        $("#pokemon-bio-weight").text(pokemonData.pokemonDimensions.weight < 0 ? "??? kg" : pokemonData.pokemonDimensions.weight.toFixed(2) + " kg");
         $("#pokemon-bio-description").text(pokemonData.description.description_en);
-        $("#pokemon-bio-start-date").text(processDateToBio(pokemonData.startDate));
+        $("#pokemon-bio-start-date").text(processDateToBio(pokemonData.startDates.shinyStartDate));
 
         /* SET STATS INFORMATION */
 
@@ -422,7 +425,7 @@ $(function() {
         $("#sort-date-old-btn").addClass("active");
         $("#sort-date-old-btn").prop("disabled", "true");
         $('.shinylist .shinylist-card-design').sort(function(a, b) {
-            return new Date(pokemon_data[$(a).find("#pokemon-id").text()].startDate) > new Date(pokemon_data[$(b).find("#pokemon-id").text()].startDate) ? 1 : -1;
+            return new Date(pokemon_data[$(a).find("#pokemon-id").text()].startDates.shinyStartDate) > new Date(pokemon_data[$(b).find("#pokemon-id").text()].startDates.shinyStartDate) ? 1 : -1;
         }).appendTo(".shinylist");
     });
 
@@ -431,7 +434,7 @@ $(function() {
         $("#sort-date-new-btn").addClass("active");
         $("#sort-date-new-btn").prop("disabled", "true");
         $('.shinylist .shinylist-card-design').sort(function(a, b) {
-            return new Date(pokemon_data[$(a).find("#pokemon-id").text()].startDate) < new Date(pokemon_data[$(b).find("#pokemon-id").text()].startDate) ? 1 : -1;
+            return new Date(pokemon_data[$(a).find("#pokemon-id").text()].startDates.shinyStartDate) < new Date(pokemon_data[$(b).find("#pokemon-id").text()].startDates.shinyStartDate) ? 1 : -1;
         }).appendTo(".shinylist");
     });
 
@@ -713,56 +716,60 @@ function filterByName(query, pokemon_id, notFlag) {
 }
 
 function filterByRegion(query, pokemon_id, notFlag) {
-    if (pokemon_data[pokemon_id].region != query) {
+    if (pokemon_data[pokemon_id].location.region != query) {
         return notFlag;
     }
     return !notFlag;
 }
 
 function filterByForm(query, pokemon_id, notFlag) {
-    if (pokemon_data[pokemon_id].form != query) {
+    if (pokemon_data[pokemon_id].location.form != query) {
         return notFlag;
     }
     return !notFlag;
 }
 
 function filterByType(query, pokemon_id, notFlag) {
-    if (!pokemon_data[pokemon_id].types[query]) {
-        return notFlag;
+    if (pokemon_data[pokemon_id].types.includes(query)) {
+        return !notFlag;
     }
-    return !notFlag;
+
+    return notFlag;
 }
 
 function filterByFilter(query, pokemon_id, notFlag) {
-    if (!pokemon_data[pokemon_id].filters[query]) {
-        return notFlag;
+    if (pokemon_data[pokemon_id].filters.includes(query)) {
+        return !notFlag;
     }
-    return !notFlag;
+
+    return notFlag;
 }
 
 function filterByGender(query, pokemon_id, notFlag) {
-    if (!pokemon_data[pokemon_id].genders[query]) {
-        return notFlag;
+    if (pokemon_data[pokemon_id].genders.includes(query)) {
+        return !notFlag;
     }
-    return !notFlag;
+
+    return notFlag;
 }
 
 function filterByEvent(query, pokemon_id, notFlag) {
-    if (pokemon_data[pokemon_id].event != query) {
-        return notFlag;
+    if (pokemon_data[pokemon_id].eventList.includes(query)) {
+        return !notFlag;
     }
-    return !notFlag;
+
+    return notFlag;
 }
 
 function filterByIdx(query, pokemon_id, notFlag) {
-    if (!pokemon_data[pokemon_id].id_numeric == parseInt(query.split("#")[0]) || !pokemon_data[pokemon_id].id_type == parseInt(query.split("#")[1])) {
+    if (!pokemon_data[pokemon_id].idNumeric == parseInt(query.split("#")[0]) || !pokemon_data[pokemon_id].id_type == parseInt(query.split("#")[1])) {
         return notFlag;
     }
     return !notFlag;
 }
 
 function filterByIdx2(query, pokemon_id, notFlag) {
-    if (!pokemon_data[pokemon_id].id_numeric == parseInt(query.split("#")[0]) || !pokemon_data[pokemon_id].id_type == parseInt(query.split("#")[1]) || !pokemon_data[pokemon_id].id_2types == parseInt(query.split("#")[2])) {
+    if (!pokemon_data[pokemon_id].idNumeric == parseInt(query.split("#")[0]) || !pokemon_data[pokemon_id].id_type == parseInt(query.split("#")[1]) || !pokemon_data[pokemon_id].id_2types == parseInt(query.split("#")[2])) {
         return notFlag;
     }
     return !notFlag;
@@ -772,7 +779,7 @@ function filterByCategory(query, pokemon_id, notFlag) {
     if (query == "pseudo-legendary") {
         query = "pseudo_legendary";
     }
-    if (pokemon_data[pokemon_id].category != query) {
+    if (pokemon_data[pokemon_id].group[0] != query) {
         return notFlag;
     }
     return !notFlag;
@@ -783,10 +790,15 @@ function filterByCategoryFamily(query, pokemon_id, notFlag) {
     if (query == "pseudo-legendary") {
         query = "pseudo_legendary";
     }
-    if (!pokemon_data[pokemon_id].categoryMembers[query]) {
-        return notFlag;
+
+    let groupFamily = pokemon_data[pokemon_id].groupFamily;
+    for (var i = 0; i < groupFamily.length; i++) {
+        if (groupFamily[i] == query) {
+            return !notFlag;
+        }
     }
-    return !notFlag;
+
+    return notFlag;
 }
 
 function filterByFamilyIds(query, pokemon_id, notFlag) {
@@ -804,14 +816,14 @@ function filterByFamilyNames(query, pokemon_id, notFlag) {
 }
 
 function filterByGeneration(query, pokemon_id, notFlag) {
-    if (pokemon_data[pokemon_id].generation != query) {
+    if (pokemon_data[pokemon_id].location.generation != query) {
         return notFlag;
     }
     return !notFlag;
 }
 
 function filterById(query, pokemon_id, notFlag) {
-    if (pokemon_data[pokemon_id].id_numeric != query) {
+    if (pokemon_data[pokemon_id].idNumeric != query) {
         return notFlag;
     }
     return !notFlag;
@@ -825,12 +837,12 @@ function filterByHave(pokemon_id, notFlag) {
 }
 
 function filterByIdRange(query, pokemon_id, notFlag) {
-    if (!isNaN(query.split("-")[0]) && pokemon_data[pokemon_id].id_numeric >= parseInt(query.split("-")[0]) &&
-        !isNaN(query.split("-")[1]) && pokemon_data[pokemon_id].id_numeric <= parseInt(query.split("-")[1])) {
+    if (!isNaN(query.split("-")[0]) && pokemon_data[pokemon_id].idNumeric >= parseInt(query.split("-")[0]) &&
+        !isNaN(query.split("-")[1]) && pokemon_data[pokemon_id].idNumeric <= parseInt(query.split("-")[1])) {
         return !notFlag;
-    } else if (query.split("-")[0] == "" && pokemon_data[pokemon_id].id_numeric <= parseInt(query.split("-")[1])) {
+    } else if (query.split("-")[0] == "" && pokemon_data[pokemon_id].idNumeric <= parseInt(query.split("-")[1])) {
         return !notFlag;
-    } else if (query.split("-")[1] == "" && pokemon_data[pokemon_id].id_numeric >= parseInt(query.split("-")[0])) {
+    } else if (query.split("-")[1] == "" && pokemon_data[pokemon_id].idNumeric >= parseInt(query.split("-")[0])) {
         return !notFlag;
     }
     return notFlag;
@@ -851,7 +863,7 @@ function filterByQuantity(query, pokemon_id, notFlag) {
 }
 
 function filterByYear(query, pokemon_id, notFlag) {
-    if (new Date(pokemon_data[pokemon_id].startDate).getFullYear() != parseInt(query)) {
+    if (new Date(pokemon_data[pokemon_id].startDates.shinyStartDate).getFullYear() != parseInt(query)) {
         return notFlag;
     }
     return !notFlag;
@@ -870,11 +882,11 @@ function getFamilyPathShinyQuantity(path) {
 }
 
 function getFamilyMemberImg(familyMemberId, isShiny) {
-    return isShiny ? pokemon_data[familyMemberId].image.image_shiny : pokemon_data[familyMemberId].image.image_normal;
+    return isShiny ? pokemon_data[familyMemberId].image.imageShiny : pokemon_data[familyMemberId].image.imageNormal;
 }
 
 function getFamilyTreeLabel(familyMemberId) {
-    var name = pokemon_data[familyMemberId].name_species;
+    var name = pokemon_data[familyMemberId].nameSpecies;
     return name.charAt(0).toUpperCase() + name.slice(1);
 }
 
@@ -931,19 +943,19 @@ function updateShinyToBe(pokemon_id, quantity, card) {
         if (quantity == 0) {
             card.querySelector("#pokemon-card-img").classList.remove("img-shiny");
             card.querySelector("#pokemon-card-img").classList.add("img-normal");
-            card.querySelector("#pokemon-card-img").src = BASE_IMG_FOLDER_URL + pokemon_data[pokemon_id].image.image_normal;
+            card.querySelector("#pokemon-card-img").src = BASE_IMG_FOLDER_URL + pokemon_data[pokemon_id].image.imageNormal;
             card.querySelector("#pokemon-remove-btn").disabled = true;
             card.querySelector("#pokemon-add-btn").disabled = false;
         } else if (pokemon_data[pokemon_id].isTemporary) {
             card.querySelector("#pokemon-card-img").classList.remove("img-normal");
             card.querySelector("#pokemon-card-img").classList.add("img-shiny");
-            card.querySelector("#pokemon-card-img").src = BASE_IMG_FOLDER_URL + pokemon_data[pokemon_id].image.image_shiny;
+            card.querySelector("#pokemon-card-img").src = BASE_IMG_FOLDER_URL + pokemon_data[pokemon_id].image.imageShiny;
             card.querySelector("#pokemon-add-btn").disabled = true;
             card.querySelector("#pokemon-remove-btn").disabled = false;
         } else {
             card.querySelector("#pokemon-card-img").classList.remove("img-normal");
             card.querySelector("#pokemon-card-img").classList.add("img-shiny");
-            card.querySelector("#pokemon-card-img").src = BASE_IMG_FOLDER_URL + pokemon_data[pokemon_id].image.image_shiny;
+            card.querySelector("#pokemon-card-img").src = BASE_IMG_FOLDER_URL + pokemon_data[pokemon_id].image.imageShiny;
             card.querySelector("#pokemon-remove-btn").disabled = false;
         }
 
@@ -970,6 +982,10 @@ function updateShinyToBe(pokemon_id, quantity, card) {
 
 
 function buildDynamicFamilyTree(familyTree, index) {
+    if (familyTree.filter((member) => pokemon_data.hasOwnProperty(member)).length != familyTree.length) {
+        return;
+    }
+
     var content = "<div class=\"pokemon-family-tree-path text-center\">";
     if (familyTree.length == 1) {
         content += "<div class=\"pokemon-family-tree-path-img-singular\">";

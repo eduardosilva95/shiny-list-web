@@ -22,8 +22,8 @@ function loadData(list, data, event) {
     for (var i = 0; i < pokemons.length; i++) {
         p = JSON.parse(pokemons[i]);
         pokemon_data.push(p);
-        $("#pokemon_" + p.id + "_normal").attr("src", BASE_IMAGE_URL + p.image.image_normal + "?raw=true");
-        $("#pokemon_" + p.id + "_shiny").attr("src", BASE_IMAGE_URL + p.image.image_shiny + "?raw=true");
+        $("#pokemon_" + p.id + "_normal").attr("src", BASE_IMAGE_URL + p.image.imageNormal + "?raw=true");
+        $("#pokemon_" + p.id + "_shiny").attr("src", BASE_IMAGE_URL + p.image.imageShiny + "?raw=true");
     }
 
     pokemon_list = list.split(',');
