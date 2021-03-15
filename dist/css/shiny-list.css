@@ -67,10 +67,12 @@
 
 .img-normal {
     background-color: rgb(204, 132, 132);
+    cursor: pointer;
 }
 
 .img-shiny {
     background-color: rgb(132, 204, 132);
+    cursor: pointer;
 }
 
 .card-title-div {
@@ -182,4 +184,12 @@
     opacity: 1;
     font-weight: bold;
     border-color: transparent !important;
+}
+
+.pokemon-family-tree-img {
+    cursor: pointer;
+}
+
+.pokemon-family-tree-label {
+    max-width: 128px;
 }
