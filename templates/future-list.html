@@ -92,7 +92,7 @@
                     <div class="col-md-3 col-12 cont shinylist-card-design">
                         <div class="shinylist-card">
                             <span id="pokemon-id" style="display: none;"><%= pokemon.id %></span>
-                            <img id="pokemon-card-img" src="/img/pokemon_icons/<%= pokemon.image.imageShiny %>" class="img-responsive img-shiny" style="height: 60%;" />
+                            <img id="pokemon-card-img" src="/img/pokemon_icons/<%= pokemon.image.imageShiny %>" class="img-responsive img-shiny" style="height: 60%;" loading="lazy" />
                             <% if(pokemon.filters.shadow) { %>
                                 <img id="pokemon-type-icon" src="/img/ic_shadow.png" class="img-responsive icon-type" />
                                 <% } else if(pokemon.filters.purified)  { %>

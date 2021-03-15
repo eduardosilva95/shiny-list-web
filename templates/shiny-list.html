@@ -32,7 +32,6 @@
 
     <% include ../views/navbar.ejs %>
 
-        <div id="loader"></div>
         <div class="container cont">
 
 
@@ -123,9 +122,9 @@
                             <div class="shinylist-card">
                                 <span id="pokemon-id" style="display: none;"><%= pokemon.id %></span>
                                 <% if(pokemon.quantity > 0) { %>
-                                    <img id="pokemon-card-img" src="/img/pokemon_icons/<%= pokemon.image.imageShiny %>" class="img-responsive img-shiny" style="height: 60%;" />
+                                    <img id="pokemon-card-img" src="/img/pokemon_icons/<%= pokemon.image.imageShiny %>" class="img-responsive img-shiny" style="height: 60%;" loading="lazy" />
                                     <% } else { %>
-                                        <img id="pokemon-card-img" src="/img/pokemon_icons/<%= pokemon.image.imageNormal %>" class="img-responsive img-normal" style="height: 60%;" />
+                                        <img id="pokemon-card-img" src="/img/pokemon_icons/<%= pokemon.image.imageNormal %>" class="img-responsive img-normal" style="height: 60%;" loading="lazy" />
                                         <% } %>
                                             <div id="pokemon-quantity-label" class="image-label">
                                                 <%= pokemon.quantity %>x</div>
@@ -198,19 +197,6 @@
                                 var isTemporary = '<%= isTemporary %>' == "true";
 
                                 loadData(data, isTemporary);
-                                document.onreadystatechange = function() {
-                                    if (document.readyState !== "complete") {
-                                        document.querySelector(
-                                            "body").style.visibility = "hidden";
-                                        document.querySelector(
-                                            "#loader").style.visibility = "visible";
-                                    } else {
-                                        document.querySelector(
-                                            "#loader").style.display = "none";
-                                        document.querySelector(
-                                            "body").style.visibility = "visible";
-                                    }
-                                };
                             </script>
 
 </body>

@@ -148,6 +148,9 @@ app.get('/shiny-list', function(req, res) {
                     });
 
 
+                    pokemon_data = pokemon_data.sort((a, b) => (a.idNumeric > b.idNumeric) ? 1 : -1)
+
+
                     res.render(path.join(__dirname + '/templates/shiny-list.html'), { pokemon_data: pokemon_data, isTemporary: false });
 
 
@@ -203,6 +206,8 @@ app.get('/shiny-list-temp', function(req, res) {
                         pokemon_data.push(data);
                     });
 
+                    pokemon_data = pokemon_data.sort((a, b) => (a.idNumeric > b.idNumeric) ? 1 : -1)
+
 
                     res.render(path.join(__dirname + '/templates/shiny-list.html'), { pokemon_data: pokemon_data, isTemporary: true });
 
@@ -238,6 +243,7 @@ app.get('/future-shiny-list', function(req, res) {
                 pokemon_data.push(data);
             });
 
+            pokemon_data = pokemon_data.sort((a, b) => new Date(a.startDates.shinyStartDate) > new Date(b.startDates.shinyStartDate) ? 1 : -1);
 
             res.render(path.join(__dirname + '/templates/future-list.html'), { pokemon_data: pokemon_data });
 
@@ -268,6 +274,7 @@ app.get('/future-shiny-list-2', function(req, res) {
                 pokemon_data.push(data);
             });
 
+            pokemon_data = pokemon_data.sort((a, b) => new Date(a.startDates.shinyStartDate) > new Date(b.startDates.shinyStartDate) ? 1 : -1);
 
             res.render(path.join(__dirname + '/templates/future-list.html'), { pokemon_data: pokemon_data });
 
@@ -290,12 +297,12 @@ app.get('/shiny-list-2', function(req, res) {
     var user_pokemon_data = {};
     var pokemon_data = [];
 
-    fs.readFile(path.join(__dirname, 'dist/json/shiny_firestore.json'), (err, data) => {
+    fs.readFile(path.join(__dirname, 'dist/json/shiny_firestore_v2.json'), (err, data) => {
         if (err) throw err;
         let loaded_data = JSON.parse(data);
-        for (var key in loaded_data.pokemon) {
-            if (loaded_data.pokemon.hasOwnProperty(key)) {
-                var data = loaded_data.pokemon[key];
+        for (var key in loaded_data.pokemon_v2) {
+            if (loaded_data.pokemon_v2.hasOwnProperty(key)) {
+                var data = loaded_data.pokemon_v2[key];
                 data["quantity"] = 2;
                 pokemon_data.push(data);
 
@@ -304,6 +311,8 @@ app.get('/shiny-list-2', function(req, res) {
 
             }
         }
+
+        pokemon_data = pokemon_data.sort((a, b) => (a.idNumeric > b.idNumeric) ? 1 : -1)
 
         res.render(path.join(__dirname + '/templates/shiny-list.html'), { pokemon_data: pokemon_data, isTemporary: false });
     });
@@ -395,7 +404,7 @@ app.post('/shiny-simulator', function(req, res) {
                         pokemon_list.push(eventData.pokemon[key].id);
                     }
 
-                    let eventsPokemonDocData = db.collection('pokemon_v2').where('id', 'in', pokemon_list).get().then(snapshot2 => {
+                    let eventsPokemonDocData = db.collection('pokemon_v2').get().then(snapshot2 => {
                         snapshot2.forEach(doc2 => {
                             if (pokemon_list.includes(doc2.data().id)) {
                                 var data = doc2.data();
@@ -495,6 +504,7 @@ app.post('/google-signin', function(req, res) {
                 // TODO !!!!
                 res.send({ error: 1, msg: "NEED_REGISTER", id: uid, name: name });
             } else {
+                user.update({ lastAccessDate: admin.firestore.Timestamp.now() });
                 res.send({ user_id: doc.data().id, picture: doc.data().image, username: doc.data().username });
             }
         })
@@ -522,7 +532,6 @@ app.post('/register', function(req, res) {
         startDate: admin.firestore.Timestamp.now(),
         lastAccessDate: admin.firestore.Timestamp.now(),
         errorCode: 0,
-        version: "1.3.7"
     });
 
     res.contentType('json');
