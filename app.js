@@ -243,7 +243,9 @@ app.get('/future-shiny-list', function(req, res) {
                 pokemon_data.push(data);
             });
 
-            pokemon_data = pokemon_data.sort((a, b) => new Date(a.startDates.shinyStartDate) > new Date(b.startDates.shinyStartDate) ? 1 : -1);
+
+            pokemon_data = pokemon_data.sort((a, b) => (a.idNumeric > b.idNumeric) ? 1 : -1);
+            pokemon_data = pokemon_data.sort((a, b) => new Date(a.startDates.shinyStartDate) >= new Date(b.startDates.shinyStartDate) ? 1 : -1);
 
             res.render(path.join(__dirname + '/templates/future-list.html'), { pokemon_data: pokemon_data });
 
@@ -274,7 +276,7 @@ app.get('/future-shiny-list-2', function(req, res) {
                 pokemon_data.push(data);
             });
 
-            pokemon_data = pokemon_data.sort((a, b) => new Date(a.startDates.shinyStartDate) > new Date(b.startDates.shinyStartDate) ? 1 : -1);
+            pokemon_data = pokemon_data.sort((a, b) => (a.idNumeric > b.idNumeric) ? 1 : -1);
 
             res.render(path.join(__dirname + '/templates/future-list.html'), { pokemon_data: pokemon_data });
 
