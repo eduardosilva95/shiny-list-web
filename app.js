@@ -879,10 +879,7 @@ app.get('/lucky-dex-list/:user_id', function(req, res) {
 
             let pokemonDoc = baseQuery.get().then(snapshot2 => {
                     snapshot2.forEach(doc2 => {
-                        var data = {};
-                        data["id"] = doc2.data().id;
-                        data["name"] = doc2.data().name;
-                        data["image"] = doc2.data().image;
+                        var data = doc2.data();
                         if (user_pokemon_data[doc2.id] != undefined) {
                             data["hasLucky"] = true;
                         } else {
@@ -911,6 +908,7 @@ app.post('/update-lucky', function(req, res) {
     var pokemon_id = req.body.pokemon;
     var hasLucky = req.body.hasLucky ? req.body.hasLucky == "true" : false;
     var lastModified = admin.firestore.Timestamp.now();
+    var quantity = parseInt(req.body.quantity);
 
     const pokemonDoc = db.collection('users').doc(user_id).collection("luckyPokemon").doc(pokemon_id);
 
@@ -918,6 +916,7 @@ app.post('/update-lucky', function(req, res) {
         if (!doc.exists && hasLucky) {
             pokemonDoc.set({
                 id: pokemon_id,
+                quantity: quantity,
                 lastModified: lastModified
             });
         } else if (doc.exists && !hasLucky) {
