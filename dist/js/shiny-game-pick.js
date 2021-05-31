@@ -93,8 +93,11 @@ $(function() {
 
 function loadEvents() {
     $("#future-events-div").empty();
-    $("#past-events-div").empty();
     $("#active-events-div").empty();
+
+    // clear all past events already created
+    $(".past-event-div").remove();
+
 
     $.get("/event-list", {}, function(result) {
         events_data = {};
@@ -106,10 +109,11 @@ function loadEvents() {
             for (var i = 0; i < event_list.length; i++) {
                 var event = event_list[i];
                 var year = parseInt(new Date(event.startDate).getFullYear());
-                if (!years.includes(year) && event.category == undefined && new Date(event["startDate"]) <= now) {
+                if (!years.includes(year) && event.category == "none" && new Date(event["startDate"]) <= now) {
                     years.push(year);
                 }
             }
+
             years.sort(function(a, b) { return b - a; }).forEach(year => buildPastEventsSubDiv(year, year));
             buildPastEventsSubDiv("cd", "Community Day");
             buildPastEventsSubDiv("go-fest-safari", "Go Fest & Safari Zone");
@@ -218,32 +222,18 @@ function sortEventsSections() {
         return new Date(events_data[$(a).find("#event-id").val()].startDate) > new Date(events_data[$(b).find("#event-id").val()].startDate) ? 1 : -1;
     }).appendTo("#future-events-div");
 
-    $('#2021-events-div .event-card-design').sort(function(a, b) {
-        return new Date(events_data[$(a).find("#event-id").val()].startDate) < new Date(events_data[$(b).find("#event-id").val()].startDate) ? 1 : -1;
-    }).appendTo("#2021-events-div");
-
-    $('#2020-events-div .event-card-design').sort(function(a, b) {
-        return new Date(events_data[$(a).find("#event-id").val()].startDate) < new Date(events_data[$(b).find("#event-id").val()].startDate) ? 1 : -1;
-    }).appendTo("#2020-events-div");
-
-    $('#2019-events-div .event-card-design').sort(function(a, b) {
-        return new Date(events_data[$(a).find("#event-id").val()].startDate) < new Date(events_data[$(b).find("#event-id").val()].startDate) ? 1 : -1;
-    }).appendTo("#2019-events-div");
-
-    $('#cd-events-div .event-card-design').sort(function(a, b) {
-        return new Date(events_data[$(a).find("#event-id").val()].startDate) < new Date(events_data[$(b).find("#event-id").val()].startDate) ? 1 : -1;
-    }).appendTo("#cd-events-div");
-
-    $('#go-fest-safari-events-div .event-card-design').sort(function(a, b) {
-        return new Date(events_data[$(a).find("#event-id").val()].startDate) < new Date(events_data[$(b).find("#event-id").val()].startDate) ? 1 : -1;
-    }).appendTo("#go-fest-safari-events-div");
+    $(".past-event-div-content").each(function() {
+        $(this).find('.event-card-design').sort(function(a, b) {
+            return new Date(events_data[$(a).find("#event-id").val()].startDate) < new Date(events_data[$(b).find("#event-id").val()].startDate) ? 1 : -1;
+        }).appendTo(this);
+    })
 }
 
 
 function buildPastEventsSubDiv(key, label) {
-    var content = "<div class=\"row\"><div class=\"col-md-12 col-12\"><br>";
+    var content = "<div class=\"row past-event-div\"><div class=\"col-md-12 col-12\"><br>";
     content += "<p style=\"color: #fff; font-size: 23px; opacity: .7; border-bottom: 3px solid #ffd700; width: fit-content; height: 45px;\">" + label + "</p>";
-    content += "<div class=\"row\"><div class=\"d-flex flex-row flex-nowrap\" style=\"overflow-y: auto;\" id=\"" + key + "-events-div\"></div></div></div></div>";
+    content += "<div class=\"row\"><div class=\"d-flex flex-row flex-nowrap past-event-div-content\" style=\"overflow-y: auto;\" id=\"" + key + "-events-div\"></div></div></div></div>";
 
     $("#events-div").append(content);
 
