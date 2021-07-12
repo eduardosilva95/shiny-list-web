@@ -1315,7 +1315,7 @@ app.get('/request-friends', function(req, res) {
 
 
 app.get('/friends', function(req, res) {
-    res.render(path.join(__dirname + '/templates/under-construct.html'),
+    res.render(path.join(__dirname + '/templates/under-construct.html'));
 });
 
 
