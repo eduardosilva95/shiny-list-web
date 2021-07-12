@@ -396,10 +396,11 @@ function loadMoveModal(moveId) {
     $("#move-pvp-energy").text(move.pvpSettings.moveStats.energyDelta);
 
     if (move.moveAttackType == "charged") {
-        $("#move-pve-img").attr("src", "/img/charge_" + move.pveSettings.moveStats.nbars + "_" + move.type + ".png");
+        var moveType = move.type.charAt(0).toUpperCase() + move.type.slice(1);
+        $("#move-pve-img").attr("src", "/img/charge_" + move.pveSettings.moveStats.nbars + "_" + moveType + ".png");
         $("#move-pve-img").css("display", "initial");
 
-        $("#move-pvp-img").attr("src", "/img/charge_" + move.pvpSettings.moveStats.nbars + "_" + move.type + ".png");
+        $("#move-pvp-img").attr("src", "/img/charge_" + move.pvpSettings.moveStats.nbars + "_" + moveType + ".png");
         $("#move-pvp-img").css("display", "initial");
     } else {
         $("#move-pve-img").attr("src", "");
