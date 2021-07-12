@@ -1,6 +1,21 @@
-<script type="text/javascript" src="/js/login.js">
-</script>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-app.js"></script>
+
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+<script src="https://www.gstatic.com/firebasejs/7.14.5/firebase-analytics.js"></script>
+
+<!-- Add Firebase products that you want to use -->
+<script src="https://www.gstatic.com/firebasejs/7.14.5/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.5/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.5/firebase-storage.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
 <script type="text/javascript" src="js/toastr.js"></script>
+
+<link rel="stylesheet" href="css/toastr.css">
 
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark justify-content-between" style="background-color: #1d2024;">
     <a class="navbar-brand" href="./"><img src="img/shinylist_icon.png" style="height: 40px"></a>
@@ -10,26 +25,34 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link header" id="link-shiny-list"><img src="img/shiny.png"></i>Shiny List</a>
+                <a class="nav-link header" href="./pokedex"><img src="img/pokedex.png"></i>Pokédex</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link header" id="link-shiny-list-temp"><img src="img/shiny_temp.png"></i>Shiny List (Temporary)</a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link header" href="./future-shiny-list"><img src="img/calendar.png">Next Shinies</a>
+                <a class="nav-link header need-user-link" id="link-shiny-list"><img src="img/shiny.png"></i>Shiny List</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link header" id="link-friends"><img src="img/friends.png">Friends</a>
+                <a class="nav-link header need-user-link" id="link-shiny-list-temp"><img src="img/shiny_temp.png"></i>Shiny List (Temporary)</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link header dropdown-toggle" href="#" id="navbar-future-list-dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="img/calendar.png">Next Pokémon
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbar-future-list-dropdown">
+                    <a class="dropdown-item" href="./future-list?type=pokemon">Pokémon</a>
+                    <a class="dropdown-item" href="./future-list?type=shiny">Shiny</a>
+                </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link header" id="link-stats"><img src="img/stats.png">Stats</a>
+                <a class="nav-link header need-user-link" id="link-lucky-list"><img src="img/lucky.png">Lucky List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link header need-user-link" id="link-friends"><img src="img/friends.png">Friends</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link header" href="./moves"><img src="img/battle.png">Move List</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link header" href="./shiny-simulator"><img src="img/pokemon_go.png">Shiny Simulator</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link header" id="link-lucky-dex"><img src="img/trade_v3.png">LuckyDex</a>
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">
@@ -44,7 +67,8 @@
                         </a>
                         <div class="dropdown-menu" id="profile-menu" aria-labelledby="profile-btn">
                             <a class="dropdown-item header" id="view-profile-btn"><i class="fas fa-user"></i><span style="padding-left: 10px;">Profile</span></a>
-                            <a class="dropdown-item header"><i class="fas fa-cog"></i><span style="padding-left: 10px;">Settings</span></a>
+                            <a class="dropdown-item header" style="cursor: pointer;" id="view-medals-btn"><i class="fas fa-medal"></i><span style="padding-left: 10px;">Medals</span></a>
+                            <a class="dropdown-item header" style="cursor: pointer;"><i class="fas fa-cog"></i><span style="padding-left: 10px;">Settings</span></a>
                             <div class="dropdown-divider"></div>
                             <button class="dropdown-item header" onclick="signOut();"><i class="fas fa-sign-out-alt"></i><span style="padding-left: 10px;">Sign out</span></button>
                         </div>
@@ -59,3 +83,4 @@
 <% include ../views/login-modal.ejs %>
     <% include ../views/profile-modal.ejs %>
         <% include ../views/register-modal.ejs %>
+            <% include ../views/medals-modal.ejs %>

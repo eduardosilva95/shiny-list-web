@@ -156,8 +156,7 @@ function loadPokemons() {
             var pokemon_list = result.pokemon_list;
             for (var i = 0; i < pokemon_list.length; i++) {
                 var pokemon = pokemon_list[i];
-                var content = buildDynamicPokemonCard(pokemon);
-                $("#pokemon-list-div").append(content);
+                buildDynamicPokemonCard(pokemon);
             }
             $("#home-page-div").css("display", "none");
             $("#pokemon-div").css("display", "block");
@@ -200,15 +199,20 @@ function buildDynamicPokemonCard(pokemon) {
         return "";
     }
 
+    var imagesToLoad = [];
+
     var content = "<div class=\"col-md-2\"><a class=\"pokemon-card-btn\"><div id=\"gallery-card\" class=\"gallery-card-unchecked\">";
     content += "<input style=\"display: none;\" value=\"" + pokemon.id + "\">";
     content += "<div class=\"gallery-card-body\"><label class=\"block-check\">";
-    content += "<img src=\"/img/pokemon_icons/" + pokemon.image.imageNormal + "\" class=\"img-responsive img-normal\" loading=\"lazy\" />";
-    content += "<img src=\"/img/pokemon_icons/" + pokemon.image.imageShiny + "\" class=\"img-responsive img-shiny\" loading=\"lazy\" style=\"display: none;\"/></label>";
+    content += "<img id=\"simulator-pokemon-" + pokemon.id + "-img\" class=\"img-responsive img-normal\" loading=\"lazy\" />";
+    imagesToLoad.push({ "url": "pokemon_icons/" + pokemon.image.imageNormal, "target": "simulator-pokemon-" + pokemon.id + "-img", "id": pokemon.id, "compoundId": null });
+    content += "<img id=\"simulator-pokemon-" + pokemon.id + "-shiny-img\" class=\"img-responsive img-shiny\" loading=\"lazy\" style=\"display: none;\"/></label>";
+    imagesToLoad.push({ "url": "pokemon_icons/" + pokemon.image.imageShiny, "target": "simulator-pokemon-" + pokemon.id + "-shiny-img", "id": pokemon.id, "compoundId": "SHINY" });
     content += "<div class=\"mycard-footer text-center\"><span class=\"card-link\" title=\"" + pokemon.name + "\">" + pokemon.name + "</span></div>";
     content += "</div></div></a></div>";
 
-    return content;
+    $("#pokemon-list-div").append(content);
+    loadImages(imagesToLoad);
 
 }
 
@@ -237,4 +241,10 @@ function buildPastEventsSubDiv(key, label) {
 
     $("#events-div").append(content);
 
+}
+
+function loadImages(images) {
+    images.forEach(image => {
+        loadImageFromFirebaseAndCache(image.url, image.target, image.id, image.compoundId);
+    })
 }

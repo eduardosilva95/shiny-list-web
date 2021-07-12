@@ -17,28 +17,38 @@
                 </div>
 
                 <div class="pokemon-bio-modal-gender-div text-center">
-                    <img id="pokemon-bio-gender-img-1">
-                    <img id="pokemon-bio-gender-img-2">
-                    <img id="pokemon-bio-gender-img-3">
-                    <img id="pokemon-bio-gender-img-4">
+                    <img id="pokemon-bio-gender-img-1" class="pokemon-bio-gender-img">
+                    <img id="pokemon-bio-gender-img-2" class="pokemon-bio-gender-img">
+                    <img id="pokemon-bio-gender-img-3" class="pokemon-bio-gender-img">
+                    <img id="pokemon-bio-gender-img-4" class="pokemon-bio-gender-img">
                 </div>
 
 
                 <ul class="nav nav-tabs" id="pokemon-bio-tabs" role="tablist" style="padding-top: 20px;">
                     <li class="nav-item">
-                        <a class="nav-link active" id="pokemon-bio-tab" data-toggle="tab" href="#pokemon-bio-info-div" role="tab" aria-controls="home" aria-selected="true">Pokemon Bio</a>
+                        <a class="nav-link active" id="pokemon-bio-tab" data-toggle="tab" href="#pokemon-bio-info-div" role="tab" aria-controls="info" aria-selected="true">Pokémon Bio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="pokemon-stats-tab" data-toggle="tab" href="#pokemon-bio-stats-div" role="tab" aria-controls="profile" aria-selected="false">Personal Stats</a>
+                        <a class="nav-link" id="pokemon-moves-tab" data-toggle="tab" href="#pokemon-bio-moves-div" role="tab" aria-controls="moves" aria-selected="false">Moves</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pokemon-stats-tab" data-toggle="tab" href="#pokemon-bio-stats-div" role="tab" aria-controls="stats" aria-selected="false">Personal Stats</a>
                     </li>
                 </ul>
 
-                <div class="tab-content" id="myTabContent">
-
+                <div class="tab-content">
                     <div class="tab-pane fade show active pokemon-bio-info-div" id="pokemon-bio-info-div" role="tabpanel" aria-labelledby="pokemon-bio-tab">
                         <div class="row">
                             <div class="col-md">
                                 <p><strong># Pokedex: </strong><span id="pokemon-bio-pokedex-number"></span></p>
+                            </div>
+                            <div class="col-md">
+                                <p><strong>Family: </strong><span id="pokemon-bio-family"></span></p>
+                            </div>
+                        </div>
+                        <p><strong>Category: </strong><span id="pokemon-bio-category"></span></p>
+                        <div class="row">
+                            <div class="col-md">
                                 <div class="row" style="margin-bottom: 15px;">
                                     <div class="col-md-3">
                                         <strong>Types: </strong>
@@ -53,13 +63,24 @@
                                 <p><strong>Height: </strong><span id="pokemon-bio-height"></span></p>
                             </div>
                             <div class="col-md">
-                                <p><strong>Family: </strong><span id="pokemon-bio-family"></span></p>
-                                <p><strong>Category: </strong><span id="pokemon-bio-category"></span></p>
+                                <p><strong>Group: </strong><span id="pokemon-bio-group"></span></p>
                                 <p style="padding-top: 3px;"><strong>Weight: </strong><span id="pokemon-bio-weight"></span></p>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md">
+                                <p><strong>Attack: </strong><span id="pokemon-bio-base-stat-attack"></span></p>
+                            </div>
+                            <div class="col-md">
+                                <p><strong>Defense: </strong><span id="pokemon-bio-base-stat-defense"></span></p>
+                            </div>
+                            <div class="col-md">
+                                <p><strong>Stamina: </strong><span id="pokemon-bio-base-stat-stamina"></span></p>
+                            </div>
+                        </div>
                         <p><strong>Description: </strong><span id="pokemon-bio-description"></span></p>
-                        <p><strong>Shiny available since: </strong><span id="pokemon-bio-start-date"></span></p>
+                        <p><strong>Pokémon available since: </strong><span id="pokemon-bio-start-date"></span></p>
+                        <p><strong>Shiny available since: </strong><span id="pokemon-bio-shiny-start-date"></span></p>
 
                         <div id="family-trees-div"></div>
 
@@ -76,7 +97,26 @@
                                 <p><strong>Percentage (%): </strong><span id="pokemon-stats-checks-percentage-2"></span></p>
                             </div>
                         </div>
+                    </div>
 
+
+                    <div class="tab-pane fade pokemon-bio-moves-div" id="pokemon-bio-moves-div" role="tabpanel" aria-labelledby="pokemon-moves-tab">
+                        <div class="row" style="padding-top: 10px;">
+                            <div class="col-md">
+                                <div class="text-center">
+                                    <span class="pokemon-bio-moves-title"><strong>Fast Moves</strong></span>
+                                </div>
+                                <div class="pokemon-bio-moves-list" id="pokemon-fast-moves" style="padding-top: 10px;">
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="text-center">
+                                    <span class="pokemon-bio-moves-title"><strong>Charged Moves</strong></span>
+                                </div>
+                                <div class="pokemon-bio-moves-list" id="pokemon-charged-moves" style="padding-top: 10px;">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

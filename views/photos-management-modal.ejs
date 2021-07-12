@@ -1,0 +1,51 @@
+<div class="modal fade" id="photos-management-modal" role="dialog">
+    <div class="modal-dialog modal-lg" style="max-width: 1100px;">
+        <div class="modal-content" style="overflow-y: scroll; max-height: 650px;">
+            <div class="modal-header">
+                <h5 class="modal-title">Manage Photos</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: red;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="photos-div">
+
+                    <div class="text-center" style="color: #fff; font-size: 20px; opacity: .7; font-style: italic;">
+                        <span><strong>Total: </strong><span id="photos-total-count"></span></span>
+                    </div>
+
+                    <div class="text-center" style="margin-top: 5px;">
+                        <div class="upload-photo-div">
+                            <div class="upload-photo-dropzone" id="upload-photo-dropzone">
+                                <div class="upload-photo-labels empty-files">
+                                    <span class="upload-photo-label-warning"><i class="fas fa-exclamation-triangle" style="margin-right: 10px;"></i>You should choose one photo as profile picture</span>
+                                    <span class="upload-photo-label-empty-warning">There are no photos uploaded</span>
+                                    <img id="upload-photo-icon" src="http://100dayscss.com/codepen/upload.svg" class="upload-icon" />
+                                    <div class="upload-photo-label-add">
+                                        Drag your photos to this area or
+                                        <label class="upload-photo-add-btn" for="upload-photo-input">select to upload</label>
+                                    </div>
+                                </div>
+
+                                <input id="upload-photo-input" accept="image/*" type="file" class="upload-input" />
+                                <div class="upload-photo-gallery"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--<button type="button" class="upload-photo-btn" style="margin-top: 10px;" name="uploadbutton">Upload file</button>-->
+
+                </div>
+
+                <% var data= 'photos-loading'; %>
+                    <% include ../views/loading.ejs %>
+
+
+            </div>
+            <div class="modal-footer">
+                <button id="photos-management-modal-cancel-btn" class="btn btn-danger" style="color: white;"><i class="fas fa-times-circle"></i><span style="padding-left:10px">Cancel</i></button>
+                <button id="photos-management-modal-save-btn" class="btn btn-warning" style="color: white;"><i class="fas fa-save"></i><span style="padding-left:10px">Save</i></button>
+            </div>
+        </div>
+    </div>
+</div>

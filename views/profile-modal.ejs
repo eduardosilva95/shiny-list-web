@@ -1,8 +1,10 @@
+<script type="text/javascript" src="/js/profile.js"></script>
+
 <div class="modal fade" id="profile-modal" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content" style="width: 400px;">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Profile</h5>
+                <h5 class="modal-title">Profile</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: red;">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -17,21 +19,24 @@
                         <input class="form-control" id="profile-nickname-input" style="display: none; height: 27px; width:unset">
                     </p>
                     <p><strong>Member since: </strong><span id="profile-start-date"></span></p>
-                    <p><strong>Pokémon Caught: </strong><span id="profile-pokemon-caught-span"></span>
-                        <input class="form-control" id="profile-pokemon-caught-input" style="display: none; height: 27px; width:unset">
+                    <p><strong>Level (40+): </strong><span id="profile-level-span"></span>
+                        <input type="number" min="40" max="50" class="form-control" id="profile-level-input" style="display: none; height: 27px; width:unset">
+                    </p>
+                    <p><strong>XP: </strong><span id="profile-xp-span"></span>
+                        <input type="number" min="0" class="form-control" id="profile-xp-input" style="display: none; height: 27px; width:unset">
                     </p>
                 </div>
 
-                <div class="text-right">
-                    <button id="profile-modal-edit-btn" class="btn btn-warning" style="border-radius: 50%;color: white;"><i class="fas fa-pen"></i></button>
-                </div>
-
-                
             </div>
             <div class="modal-footer">
-                <button id="profile-modal-cancel-btn" class="btn btn-danger" style="display: none;color: white;"><i class="fas fa-times-circle"></i><span style="padding-left:10px">Cancel</i></button>
-                <button id="profile-modal-save-btn" class="btn btn-warning" style="display: none;color: white;"><i class="fas fa-save"></i><span style="padding-left:10px">Save</i></button>
+                <button id="profile-modal-edit-photos-btn" class="btn btn-warning" style="color: white;" title="Manage pictures"><i class="far fa-images" style="margin-right: 10px;"></i>Manage photos</button>
+                <button id="profile-modal-edit-btn" class="btn btn-warning" style="color: white;" title="Edit profile"><i class="fas fa-pen" style="margin-right: 10px;"></i>Edit profile</button>
+                <button id="profile-modal-cancel-btn" class="btn btn-danger" style="display: none;color: white;"><i class="fas fa-times-circle" style="margin-right: 10px;"></i>Cancel</button>
+                <button id="profile-modal-save-btn" class="btn btn-warning" style="display: none;color: white;"><i class="fas fa-save" style="margin-right: 10px;"></i>Save</button>
             </div>
         </div>
     </div>
 </div>
+
+
+<% include ../views/photos-management-modal.ejs %>

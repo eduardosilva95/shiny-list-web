@@ -1,0 +1,335 @@
+{
+    "search": {
+    	"SEARCH_POKEMON_BY_POKEDEX_NUMBER": {
+        	"id": "SEARCH_POKEMON_BY_POKEDEX_NUMBER",
+        	"title": "Pokédex number",
+        	"description": "Search by number to show all the Pokémon matching that Pokédex number. For example, searching for 25 will show all the Pikachu in your list",
+        	"enableFunc": ["pokemonId"]
+        },
+        "SEARCH_POKEMON_BY_NAME": {
+        	"id": "SEARCH_POKEMON_BY_NAME",
+        	"title": "Name",
+        	"description": "Search by the Pokémon name. For example, searching Pikachu will show all the Pikachu in your Pokémon list",
+        	"enableFunc": ["pokemonName"]
+        },
+        "SEARCH_POKEMON_BY_REGION": {
+        	"id": "SEARCH_POKEMON_BY_REGION",
+        	"title": "Region",
+        	"description": "Search for Pokémon from a certain region (kanto, johto, hoenn, ...)",
+        	"enableFunc": ["pokemonRegion"]
+        },
+        "SEARCH_POKEMON_BY_FORM": {
+        	"id": "SEARCH_POKEMON_BY_FORM",
+        	"title": "Form",
+        	"description": "Add <strong>%</strong> before alola or galar to to show any Alolan or Galar Pokémon in your list",
+        	"enableFunc": ["pokemonForm"]
+        },
+        "SEARCH_POKEMON_BY_EVENT": {
+        	"id": "SEARCH_POKEMON_BY_EVENT",
+        	"title": "Event",
+        	"description": "Search for Pokémon that had a special event related to them (Community Day, Raid Day, ...)",
+        	"enableFunc": ["pokemonEvent"]
+        },
+         "SEARCH_POKEMON_BY_GENDER": {
+        	"id": "SEARCH_POKEMON_BY_GENDER",
+        	"title": "Gender",
+        	"description": "Search for Pokémon that have that gender (male, female, genderless)",
+        	"enableFunc": ["pokemonGender"]
+        },
+        "SEARCH_POKEMON_BY_FILTERS": {
+        	"id": "SEARCH_POKEMON_BY_FILTERS",
+        	"title": "Keywords",
+        	"description": "Search by some keywords like <strong>costume, regional, shadow, purified, exclusive, tradable, deployable, transferable, evolve, tradeevolve, itemevolve, baby, legendary, mythical, starter, fossil, pseudo-legendary, ultrabeast<strong>",
+        	"enableFunc": ["pokemonFilters"]
+        },
+        "SEARCH_POKEMON_BY_GENERATION": {
+        	"id": "SEARCH_POKEMON_BY_GENERATION",
+        	"title": "Generation",
+        	"description": "Add <strong>gen</strong> before the number of a generation to show all Pokémon of that generation. You can also select a range of generations with the character '-' (gen2-3, gen1-4, ...)",
+        	"enableFunc": ["pokemonGen"]
+        },
+        "SEARCH_POKEMON_BY_HAVING": {
+        	"id": "SEARCH_POKEMON_BY_HAVING",
+        	"title": "Have/!Have",
+        	"description": "Search have to show all Pokémon that you have at least one shiny. The opposite !have search will show the list of Pokémon that you don't have",
+        	"enableFunc": ["pokemonHave"]
+        },
+        "SEARCH_POKEMON_BY_TYPE": {
+        	"id": "SEARCH_POKEMON_BY_TYPE",
+        	"title": "Pokémon Type",
+        	"description": "Enter a Pokémon type to show all Pokemon that match that type. For example, searching for grass will show all grass-type Pokémon in your list",
+        	"enableFunc": ["pokemonType"]
+        },
+        "SEARCH_POKEMON_BY_FAMILY_NAME": {
+        	"id": "SEARCH_POKEMON_BY_FAMILY_NAME",
+        	"title": "Evolutionary family",
+        	"description": "Add <strong>+</strong> before a Pokémon’s name. For example, searching for +Pikachu will show any Pichu, Pikachu, and Raichu in your list",
+        	"enableFunc": ["pokemonFamilyName"]
+        },
+        "SEARCH_POKEMON_BY_FAMILY_NUMBER": {
+        	"id": "SEARCH_POKEMON_BY_FAMILY_NUMBER",
+        	"title": "Evolutionary family (with Pokédex number)",
+        	"description": "Add <strong>+</strong> before a Pokémon’s Pokédex number. For example, searching for +25 will show any Pichu, Pikachu, and Raichu in your list",
+        	"enableFunc": ["pokemonFamilyId"]
+        },
+        "SEARCH_POKEMON_BY_POKEDEX_NUMBER_RANGE": {
+        	"id": "SEARCH_POKEMON_BY_POKEDEX_NUMBER_RANGE",
+        	"title": "Pokédex number range",
+        	"description": "Type <strong>-10</strong> to find all your Pokémon with Pokédex number equal to or less than 10 or type <strong>10-</strong> to find all your Pokémon with Pokédex number equal to or higher than 10. You can also type <strong>10-20</strong> to find all your Pokémon with Pokédex number between 10 and 20",
+        	"enableFunc": ["pokemonIdRange"]
+        },
+        "SEARCH_POKEMON_BY_QUANTITY": {
+        	"id": "SEARCH_POKEMON_BY_QUANTITY",
+        	"title": "Quantity",
+        	"description": "Type <strong>quantity5</strong> to find all Pokémon that you have 2 shiny. Also you can type <strong>quantity5-</strong> to find the Pokémon that you have less or equal than 5 shiny or type <strong>quantity5-</strong> to find the Pokémon that you have at least 5 shiny. You can also type <strong>quantity5-7</strong> to find the Pokémon that you have between 5 and 7 shiny",
+        	"enableFunc": ["pokemonQuantity"]
+        },
+        "SEARCH_POKEMON_BY_YEAR": {
+        	"id": "SEARCH_POKEMON_BY_YEAR",
+        	"title": "Year/YearPokemon/YearShiny",
+        	"description": "Search for Pokémon that was released or that had its shiny released on that year (Year2017, YearPokemon2018, YearShiny2019, ...). You can also select a range of released Pokémon with the character '-'. (Year2017-2018, YearPokemon2018-2019, YearShiny2019-2021, ...)",
+        	"enableFunc": ["pokemonYear"]
+        },
+        "SEARCH_POKEMON_BY_SECOND_ID": {
+        	"id": "SEARCH_POKEMON_BY_SECOND_ID",
+        	"title": "#",
+        	"description": "Search Pokémon that have secondary IDs (26#61, #31, ...)",
+        	"enableFunc": ["pokemonSecondId"]
+        },
+        "SEARCH_POKEMON_BY_MOVE": {
+        	"id": "SEARCH_POKEMON_BY_MOVE",
+        	"title": "@moves",
+        	"description": "Search for Pokémon that can learn a certain move (@charm, @frenzy plant, ...). You can also use numbers after the character '@' to select the type of move (@1charm, @2frenzy plant, ...)",
+        	"enableFunc": ["pokemonMove"]
+        },
+        "SEARCH_POKEMON_BY_MOVE_THIRD": {
+        	"id": "SEARCH_POKEMON_BY_MOVE_THIRD",
+        	"title": "@move/@3move",
+        	"description": "Search for Pokémon that can have a 3rd move/2nd charge move",
+        	"enableFunc": ["pokemonMove"]
+        },
+        "SEARCH_POKEMON_BY_MOVE_SPECIAL": {
+        	"id": "SEARCH_POKEMON_BY_MOVE_SPECIAL",
+        	"title": "@special",
+        	"description": "Search for Pokémon that have Exclusive or Legacy moves. You can also use numbers after the character '@' to select the type of move (@1special, @2special, @3special)",
+        	"enableFunc": ["pokemonMove"]
+        },
+        "SEARCH_POKEMON_BY_MOVE_TYPE": {
+        	"id": "SEARCH_POKEMON_BY_MOVE_TYPE",
+        	"title": "@type",
+        	"description": "Search for Pokémon that have moves with a certain type (@fire, @dragon, ...). You can also use numbers after the character '@' to select the type of move (@1fire, @2dragon, ...)",
+        	"enableFunc": ["pokemonMove"]
+        }
+    },
+
+	 "sort": {
+		"SORT_POKEMON_BY_POKEDEX_NUMBER_ASC": {
+	    	"id": "sort-pokedex-number-asc",
+	    	"title": "# Pokédex (1 -> ...)",
+	    	"icon": "fas fa-sort-numeric-down",
+	    	"attribute": "id",
+	    	"active": true
+	    },
+	    "SORT_POKEMON_BY_POKEDEX_NUMBER_DESC": {
+	    	"id": "sort-pokedex-number-desc",
+	    	"title": "# Pokédex (... -> 1)",
+	    	"icon": "fas fa-sort-numeric-down-alt",
+	    	"attribute": "id"
+	    },
+	    "SORT_POKEMON_BY_NAME_ASC": {
+	    	"id": "sort-pokemon-name-asc",
+	    	"title": "Alphabetically (A -> Z)",
+	    	"icon": "fas fa-sort-alpha-down",
+	    	"attribute": "name"
+	    },
+	    "SORT_POKEMON_BY_NAME_DESC": {
+	    	"id": "sort-pokemon-name-desc",
+	    	"title": "Alphabetically (Z -> A)",
+	    	"icon": "fas fa-sort-alpha-down-alt",
+	    	"attribute": "name"
+	    },
+	    "SORT_POKEMON_BY_FAMILY_NAME_ASC": {
+	    	"id": "sort-pokemon-family-asc",
+	    	"title": "Family (A -> Z)",
+	    	"icon": "fas fa-sort-alpha-down",
+	    	"attribute": "family"
+	    },
+	    "SORT_POKEMON_BY_FAMILY_NAME_DESC": {
+	    	"id": "sort-pokemon-family-desc",
+	    	"title": "Family (Z -> A)",
+	    	"icon": "fas fa-sort-alpha-down-alt",
+	    	"attribute": "family"
+	    },
+	    "SORT_POKEMON_BY_POKEMON_DATE_ASC": {
+	    	"id": "sort-pokemon-date-asc",
+	    	"title": "Date (Pokémon) [Oldest]",
+	    	"icon": "far fa-clock",
+	    	"attribute": "startDates,pokemonStartDate",
+	    	"isDateAttribute": true
+	    },
+	    "SORT_POKEMON_BY_POKEMON_DATE_DESC": {
+	    	"id": "sort-pokemon-date-desc",
+	    	"title": "Date (Pokémon) [Most Recent]",
+	    	"icon": "far fa-clock",
+	    	"attribute": "startDates,pokemonStartDate",
+	    	"isDateAttribute": true
+	    },
+	    "SORT_POKEMON_BY_POKEMON_SHINY_DATE_ASC": {
+	    	"id": "sort-pokemon-shiny-date-asc",
+	    	"title": "Date (Shiny) [Oldest]",
+	    	"icon": "far fa-clock",
+	    	"attribute": "startDates,shinyStartDate",
+	    	"isDateAttribute": true
+	    },
+	    "SORT_POKEMON_BY_POKEMON_SHINY_DATE_DESC": {
+	    	"id": "sort-pokemon-shiny-date-desc",
+	    	"title": "Date (Shiny) [Most Recent])",
+	    	"icon": "far fa-clock",
+	    	"attribute": "startDates,shinyStartDate",
+	    	"isDateAttribute": true
+	    },
+	    "SORT_POKEMON_BY_CHANGED_DATE_ASC": {
+	    	"id": "sort-pokemon-changed-date-asc",
+	    	"title": "Changed [Oldest]",
+	    	"icon": "fas fa-clock",
+	    	"attribute": "lastModified",
+	    	"isDateAttribute": true
+	    },
+	    "SORT_POKEMON_BY_CHANGED_DATE_DESC": {
+	    	"id": "sort-pokemon-changed-date-desc",
+	    	"title": "Changed [Most Recent])",
+	    	"icon": "fas fa-clock",
+	    	"attribute": "lastModified",
+	    	"isDateAttribute": true
+	    },
+	    "SORT_POKEMON_BY_QUANTITY_ASC": {
+	    	"id": "sort-pokemon-shiny-quantity-asc",
+	    	"title": "Quantity (1 -> ...)",
+	    	"icon": "fas fa-sort-amount-down-alt",
+	    	"attribute": "quantity"
+	    },
+	    "SORT_POKEMON_BY_QUANTITY_DESC": {
+	    	"id": "sort-pokemon-shiny-quantity-desc",
+	    	"title": "Quantity (... -> 1)",
+	    	"icon": "fas fa-sort-amount-down",
+	    	"attribute": "quantity"
+	    }
+	},
+
+	"filter": [
+		{
+			"label": "Filters",
+			"id": "filter-list-filters-div",
+	    	"inputs": [
+	    		{
+					"id": "filter-list-shadow-checkbox",
+	    			"type": "checkbox",
+	    			"label": "Shadow",
+	    			"attribute": "filter",
+	    			"value": "shadow",
+	    			"image": "img/ic_shadow.png"
+	    		},
+	    		{
+					"id": "filter-list-purified-checkbox",
+	    			"type": "checkbox",
+	    			"label": "Purified",
+	    			"attribute": "filter",
+	    			"value": "purified",
+	    			"image": "img/ic_purified.png"
+	    			
+	    		},
+	    		{
+					"id": "filter-list-costume-checkbox",
+	    			"type": "checkbox",
+	    			"label": "Costume",
+	    			"attribute": "filter",
+	    			"value": "costume",
+	    			"image": "img/party_hat.png"
+	    		},
+	    		{
+					"id": "filter-list-regional-checkbox",
+	    			"type": "checkbox",
+	    			"label": "Regional",
+	    			"attribute": "filter",
+	    			"value": "regional",
+	    			"image": "img/planet_earth.png"
+	    		},
+	    		{
+					"id": "filter-list-mega-checkbox",
+	    			"type": "checkbox",
+	    			"label": "Mega",
+	    			"attribute": "filter",
+	    			"value": "mega",
+	    			"image": "img/ic_mega.png"
+	    		},
+	    		{
+					"id": "filter-list-shiny-checkbox",
+	    			"type": "checkbox",
+	    			"label": "Have Shiny",
+	    			"attribute": "have",
+	    			"value": true,
+	    			"image": "img/ic_shiny.png"
+	    		},
+	    		{
+					"id": "filter-list-shiny-not-checkbox",
+	    			"type": "checkbox",
+	    			"label": "Don't Have Shiny",
+	    			"attribute": "have",
+	    			"value": false,
+	    			"image": "img/ic_shiny_not.png"
+	    		}
+	    	]
+	    },
+	    {
+			"label": false,
+			"id": "filter-list-pokemon-year-div",
+	    	"inputs": [
+	    		{
+					"id": "filter-list-pokemon-year-slider",
+	    			"type": "slider",
+	    			"label": "Pokémon Year",
+	    			"attribute": "pokemonStartDate",
+	    			"step": 1,
+	    			"min": false,
+	    			"max": false,
+	    			"minMaxDyn": "startDates,pokemonStartDate",
+	    			"isDateAttribute": true
+	    		}
+	    	]
+	    },
+	    {
+			"label": false,
+			"id": "filter-list-shiny-year-div",
+	    	"inputs": [
+	    		{
+					"id": "filter-list-shiny-year-slider",
+	    			"type": "slider",
+	    			"label": "Shiny Year",
+	    			"attribute": "shinyStartDate",
+	    			"step": 1,
+	    			"min": false,
+	    			"max": false,
+	    			"minMaxDyn": "startDates,shinyStartDate",
+	    			"isDateAttribute": true
+	    		}
+	    	]
+	    },
+	    {
+			"label": false,
+			"id": "filter-list-quantity-div",
+	    	"inputs": [
+	    		{
+					"id": "filter-list-quantity-slider",
+	    			"type": "slider",
+	    			"label": "Quantity",
+	    			"attribute": "quantity",
+	    			"step": 1,
+	    			"min": false,
+	    			"max": false,
+	    			"minMaxDyn": "quantity"
+	    		}
+	    	]
+	    }
+	],
+	"stats": true
+}

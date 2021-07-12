@@ -9,20 +9,24 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="alert alert-success" role="alert" >
+                <div class="alert alert-success" role="alert">
                     <i class="fas fa-check-circle"></i><span style="padding-left: 10px;">Looks like it's the first time you logged in on <b>Shiny List</b>. <br> Please fill the following fields to continue.</span>
                 </div>
 
                 <input type="text" style="display: none;" id="id-input" name="id">
                 <input type="text" style="display: none;" id="name-input" name="name">
-            
+
                 <div class="form-group">
                     <label for="nickname-input">Nickname</label>
                     <input type="text" class="form-control" id="nickname-input" name="nickname" placeholder="Enter nickname">
                 </div>
                 <div class="form-group">
-                    <label for="pokemon-caught-input">Pókemon Caught</label>
-                    <input type="number" min="0" class="form-control" id="pokemon-caught-input" name="pokemon_caught" placeholder="Pókemon Caught (optional)">
+                    <label for="level-input">Level (40+)</label>
+                    <input type="number" min="40" max="50" class="form-control" id="level-input" name="level" placeholder="Level (optional)">
+                </div>
+                <div class="form-group">
+                    <label for="xp-input">XP</label>
+                    <input type="number" min="0" class="form-control" id="xp-input" name="xp" placeholder="XP (optional)">
                 </div>
 
             </div>

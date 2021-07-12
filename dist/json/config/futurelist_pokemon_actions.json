@@ -1,0 +1,55 @@
+{
+	"sort": {
+		"SORT_POKEMON_BY_POKEDEX_NUMBER_ASC": {
+	    	"id": "sort-pokedex-number-asc",
+	    	"title": "# Pokédex (1 -> ...)",
+	    	"icon": "fas fa-sort-numeric-down",
+	    	"attribute": "id"
+	    },
+	    "SORT_POKEMON_BY_POKEDEX_NUMBER_DESC": {
+	    	"id": "sort-pokedex-number-desc",
+	    	"title": "# Pokédex (... -> 1)",
+	    	"icon": "fas fa-sort-numeric-down-alt",
+	    	"attribute": "id"
+	    },
+	    "SORT_POKEMON_BY_NAME_ASC": {
+	    	"id": "sort-pokemon-name-asc",
+	    	"title": "Alphabetically (A -> Z)",
+	    	"icon": "fas fa-sort-alpha-down",
+	    	"attribute": "name"
+	    },
+	    "SORT_POKEMON_BY_NAME_DESC": {
+	    	"id": "sort-pokemon-name-desc",
+	    	"title": "Alphabetically (Z -> A)",
+	    	"icon": "fas fa-sort-alpha-down-alt",
+	    	"attribute": "name"
+	    },
+	    "SORT_POKEMON_BY_FAMILY_NAME_ASC": {
+	    	"id": "sort-pokemon-family-asc",
+	    	"title": "Family (A -> Z)",
+	    	"icon": "fas fa-sort-alpha-down",
+	    	"attribute": "family"
+	    },
+	    "SORT_POKEMON_BY_FAMILY_NAME_DESC": {
+	    	"id": "sort-pokemon-family-desc",
+	    	"title": "Family (Z -> A)",
+	    	"icon": "fas fa-sort-alpha-down-alt",
+	    	"attribute": "family"
+	    },
+	    "SORT_POKEMON_BY_POKEMON_DATE_ASC": {
+	    	"id": "sort-pokemon-date-asc",
+	    	"title": "Date (Pokémon) [Oldest]",
+	    	"icon": "far fa-clock",
+	    	"attribute": "startDates,pokemonStartDate",
+	    	"isDateAttribute": true
+	    },
+	    "SORT_POKEMON_BY_POKEMON_DATE_DESC": {
+	    	"id": "sort-pokemon-date-desc",
+	    	"title": "Date (Pokémon) [Most Recent]",
+	    	"icon": "far fa-clock",
+	    	"attribute": "startDates,pokemonStartDate",
+	    	"isDateAttribute": true,
+	    	"active": true
+	    }
+	}
+}

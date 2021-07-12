@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Englebert');
 @import url('//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+.modal-content {
+    border: none;
+}
+
 .modal-body,
 .modal-footer,
 .modal-header {
@@ -59,6 +63,33 @@
     border-bottom: 3px solid #ffc107;
 }
 
+#profile .dropdown-item:hover {
+    background-color: #ffc107;
+    color: white;
+}
+
+.dropdown-developer {
+    cursor: pointer;
+    background-color: rgb(132, 204, 132);
+    color: white !important;
+    position: relative;
+}
+
+.dropdown-developer img {
+    width: 16px;
+    margin-right: 10px;
+}
+
+.dropdown-developer span {
+    margin-right: 10px;
+}
+
+.dropdown-developer-icon {
+    position: absolute;
+    right: 5px;
+    top: calc(50% - 8px);
+}
+
 #profile-btn {
     display: block;
     height: 40px;
@@ -109,90 +140,6 @@
     top: 64px !important;
     padding-bottom: 20px;
     z-index: 100;
-}
-
-
-/* POKEMON BIO MODAL STYLES */
-
-.pokemon-bio-modal-img-div {
-    position: relative;
-}
-
-#pokemon-bio-type-icon {
-    position: absolute;
-    top: 200px;
-    right: 130px;
-}
-
-#pokemon-bio-is-shiny-icon {
-    position: absolute;
-    top: 30px;
-    right: 130px;
-}
-
-.pokemon-bio-modal-gender-div img {
-    width: 50px;
-    height: 50px;
-}
-
-.pokemon-bio-modal-gender-div img:hover {
-    cursor: pointer;
-}
-
-#pokemon-bio-title {
-    color: #fff;
-    opacity: 0.7;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-.pokemon-bio-info-div {
-    padding-top: 10px;
-    color: #fff;
-    opacity: 0.7;
-    font-size: 14px;
-}
-
-.pokemon-bio-types img {
-    width: 25px;
-    height: 25px;
-}
-
-.pokemon-family-tree-path-img {
-    float: left;
-    margin: 2px;
-}
-
-.pokemon-family-tree-path-img-singular {
-    float: left;
-    margin-left: calc((100% - 128px) / 2);
-}
-
-.pokemon-family-tree-path-img-double {
-    float: left;
-    margin-left: calc((100% - 290px) / 2);
-}
-
-.pokemon-family-tree-path-icon {
-    float: left;
-    margin-top: 60px;
-}
-
-.pokemon-family-tree-path-img p,
-.pokemon-family-tree-path-img-singular p,
-.pokemon-family-tree-path-img-double p {
-    text-align: center;
-    font-weight: bold;
-}
-
-.pokemon-family-tree-path img {
-    width: 128px;
-    height: 128px;
-}
-
-.pokemon-family-tree-path img {
-    width: 128px;
-    height: 128px;
 }
 
 .profile-pic-img-div {
@@ -373,3 +320,359 @@
 .date-div {
     border: solid 1px white;
 }
+
+
+/* MEDALS MODAL */
+
+.medals-modal-vl {
+    border-left: 1px solid rgba(255, 255, 255, 0.7);
+    height: 95%;
+    position: absolute;
+    left: 50%;
+}
+
+.medals-modal-hr {
+    opacity: 0.3;
+    width: 90%;
+    border-color: rgba(255, 255, 255, 0.7);
+}
+
+.medal-div {
+    padding-top: 10px;
+    cursor: pointer;
+}
+
+#medal-title {
+    color: #fff;
+    opacity: 0.7;
+    font-size: 20px;
+}
+
+.medal-modal-img-div {
+    position: relative;
+}
+
+.medal-modal-img-div img {
+    width: 128px;
+}
+
+.medal-modal-icon-div img {
+    width: 50px;
+    cursor: pointer;
+}
+
+.medal-total {
+    color: #fff;
+    opacity: 0.7;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.medal-description-title {
+    color: #fff;
+    opacity: 0.7;
+    font-size: 14px;
+}
+
+.medal-description-div img {
+    width: 50px;
+}
+
+.medal-description-div {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+.medal-description-div span {
+    color: #fff;
+    opacity: 0.7;
+    font-size: 16px;
+}
+
+.modal-description-hr {
+    color: #fff;
+    opacity: 0.7;
+    width: 100%;
+}
+
+
+/* PHOTOS MODAL */
+
+
+/*#list-photos-div {
+    display: flex;
+}
+
+.user-photo {
+    position: relative;
+    width: 250px;
+    border: solid 2px rgba(255, 255, 255, 0.7);
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.user-photo-img {
+    position: relative;
+    width: 100%;
+}
+
+.user-photo.active {
+    border: solid 2px rgba(255, 215, 0, 0.8) !important;
+}
+
+.user-photo-actions {
+    position: absolute;
+    z-index: 2;
+    display: none;
+    top: 50%;
+    left: 50%;
+}
+
+.double-actions {
+    left: calc((100% - 60px) / 2) !important;
+}
+
+.double-actions .user-photo-activate-btn {
+    margin-left: 10px;
+}
+
+.user-photo:hover .user-photo-img {
+    opacity: .2;
+}
+
+.user-photo:hover .user-photo-actions {
+    display: block;
+}
+
+.user-photo-actions button {
+    cursor: pointer;
+    border: none;
+    border-radius: 50%;
+    color: white;
+    width: 32px;
+    height: 32px;
+}*/
+
+.upload-photo-div {
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+}
+
+.upload-photo-dropzone {
+    position: relative;
+    width: 100%;
+    min-height: 330px;
+    border: 2px dashed rgba(255, 255, 255, 0.7);
+    border-radius: 3px;
+    text-align: center;
+}
+
+.is-dragover {
+    background-color: #666;
+    /*color: #343a40 !important;*/
+}
+
+.upload-photo-labels {
+    position: absolute;
+    margin: 10px;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.empty-files {
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.upload-icon {
+    width: 128px;
+    margin: 20px;
+}
+
+.upload-photo-labels span,
+.upload-photo-label-add {
+    font-size: 13px;
+    color: #f3f3f3;
+    display: inline-block;
+    font-weight: 700;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    line-height: 1.5;
+}
+
+.upload-photo-labels .upload-photo-label-empty-warning {
+    display: none;
+}
+
+.empty-files.upload-photo-labels .upload-photo-label-empty-warning {
+    display: block !important;
+}
+
+.upload-photo-label-warning {
+    display: block;
+}
+
+.empty-files .upload-photo-label-warning {
+    display: none !important;
+}
+
+.empty-files .upload-photo-label-add {
+    display: flex;
+    flex-direction: column;
+}
+
+.upload-photo-add-btn {
+    background-color: #f3f3f3;
+    color: #666 !important;
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    border: 1px solid #d2d2d2;
+}
+
+.upload-photo-add-btn:hover {
+    border-color: #b3b3b3;
+    color: #333;
+    background-color: #dfdfdf;
+}
+
+.upload-photo-add-btn:active {
+    background: #ffefb1;
+    box-shadow: none;
+}
+
+.empty-files .upload-photo-add-btn {
+    margin-top: 10px;
+}
+
+.upload-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    opacity: 0;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.upload-photo-btn {
+    display: block;
+    width: 140px;
+    height: 40px;
+    background: #ffc107;
+    color: #fff;
+    border-radius: 3px;
+    border: 0;
+    transition: all 0.3s ease-in-out;
+    font-size: 14px;
+}
+
+.upload-photo-btn:hover {
+    background: #e0a800;
+}
+
+.upload-photo-gallery {
+    margin-top: 50px;
+    margin-left: 10px;
+    margin-right: 5px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.upload-photo-gallery-div {
+    position: relative;
+    height: 230px;
+    max-width: 200px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border-radius: .25rem;
+    border: 1px solid rgba(255, 255, 255, .7);
+}
+
+.upload-photo-gallery-div.active {
+    border: 1px solid #ffc107;
+}
+
+.upload-photo-gallery-header {
+    height: 15%;
+    color: rgba(255, 255, 255, 0.7);
+    background-color: #545b62;
+}
+
+.upload-photo-gallery-header-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.upload-photo-gallery-header-content span {
+    margin: 7px;
+    font-size: 12px;
+    max-width: 68%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.upload-photo-gallery-actions button {
+    margin-top: 7px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    z-index: 3;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.upload-photo-gallery-actions button:hover {
+    color: white;
+}
+
+.upload-photo-gallery-actions button.disabled {
+    cursor: not-allowed;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.upload-photo-gallery-div.active .upload-photo-gallery-actions .upload-photo-gallery-activate-btn,
+.upload-photo-gallery-div.active .upload-photo-gallery-actions .upload-photo-gallery-activate-btn.disabled {
+    cursor: not-allowed;
+    color: #ffc107 !important;
+}
+
+.upload-photo-gallery-img {
+    width: 100%;
+    height: 85%;
+}
+
+
+/*
+.upload-photo-gallery-remove-btn {
+    position: absolute;
+    right: 0;
+    background: transparent;
+    color: red;
+    border: none;
+    z-index: 3;
+    cursor: pointer;
+}*/

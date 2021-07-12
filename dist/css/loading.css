@@ -1,0 +1,85 @@
+/* CSS CODE FROM: https://codepen.io/dd-monsoon/pen/KgpXpk */
+
+.u-bounce {
+    -webkit-animation: bounce 1000ms infinite;
+    animation: bounce 1000ms infinite;
+}
+
+.u-flash {
+    -webkit-animation: flash 3000ms infinite;
+    animation: flash 3000ms infinite;
+}
+
+.u-rubber-band {
+    -webkit-animation: rubberBand 1200ms infinite;
+    animation: rubberBand 1200ms infinite;
+}
+
+.u-flip {
+    -webkit-animation: flip 1400ms infinite;
+    animation: flip 1400ms infinite;
+    -webkit-animation-timing-function: cubic-bezier(0.1, 0.67, 0.88, 0.34);
+    animation-timing-function: cubic-bezier(0.1, 0.67, 0.88, 0.34);
+}
+
+.u-tada {
+    -webkit-animation: tada 1200ms infinite;
+    animation: tada 1200ms infinite;
+}
+
+.u-pulse {
+    -webkit-animation: pulse 1000ms infinite;
+    animation: pulse 1000ms infinite;
+}
+
+.u-swing {
+    -webkit-animation: swing 3000ms infinite;
+    animation: swing 3000ms infinite;
+}
+
+
+/* Pokeball draw code */
+
+.o-pokeball {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    border: solid 2px black;
+    position: relative;
+    background: linear-gradient(to bottom, #EEEEEE 0%, #FFFFFF 100%);
+    margin: 10px auto;
+    box-sizing: unset;
+}
+
+.o-pokeball:before,
+.o-pokeball:after {
+    content: "";
+    display: block;
+}
+
+.o-pokeball,
+.o-pokeball:before,
+.o-pokeball:after {
+    transition: all 600ms cubic-bezier(0.67, 0.4, 0.36, 0.75);
+}
+
+.o-pokeball:before {
+    width: 50px;
+    height: 24px;
+    border-bottom: solid 2px black;
+    border-radius: 25px 25px 0 0;
+    background: linear-gradient(to bottom, #d10000 0%, #ff0000 50%);
+}
+
+.o-pokeball:after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background: linear-gradient(to bottom, #fff 0%, #ccc 100%);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px black, 0 0 0 2px #ddd, 0 0 0 3.5714285714px black, 0 0 5px 2.9411764706px rgba(0, 0, 0, 0.4);
+}

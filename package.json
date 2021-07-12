@@ -1,7 +1,6 @@
 {
   "name": "shinylist",
-  "version": "1.5.3",
-  "description": "",
+  "version": "2.0.0",
   "main": "app.js",
   "engines": {
     "node": "12.4"
@@ -35,5 +34,6 @@
   "bugs": {
     "url": "https://github.com/eduardosilva95/shiny-list-web/issues"
   },
-  "homepage": "https://github.com/eduardosilva95/shiny-list-web#readme"
+  "homepage": "https://github.com/eduardosilva95/shiny-list-web#readme",
+  "description": ""
 }

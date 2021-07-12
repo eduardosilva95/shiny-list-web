@@ -1,0 +1,104 @@
+<div class="modal fade" id="move-info-modal" tabindex="-1" role="dialog" aria-labelledby="move-info-modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p id="move-id" style="display: none;"></p>
+                <div class="text-center">
+                    <p id="move-title"></p>
+                </div>
+
+
+                <ul class="nav nav-tabs" id="move-info-tabs" role="tablist" style="padding-top: 20px;">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="details-tab" data-toggle="tab" href="#details-div" role="tab" aria-controls="info" aria-selected="true">Move Details</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pokemon-tab" data-toggle="tab" href="#pokemon-div" role="tab" aria-controls="moves" aria-selected="false">Pokémon</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane fade show active move-details-div" id="details-div" role="tabpanel" aria-labelledby="details-tab">
+                        <div class="row">
+                            <div class="col-md">
+                                <p><strong>Type: </strong><img id="move-type-icon"></img>
+                                </p>
+                            </div>
+                            <div class="col-md right-align">
+                                <p><strong>Move: </strong><span id="move-type-name"></span></p>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <p><strong>PvE</strong></p>
+                        </div>
+                        <div class="row">
+                            <div class="col-md">
+                                <p><strong>Power: </strong><span id="move-pve-power"></span></p>
+                            </div>
+                            <div class="col-md right-align">
+                                <p><strong>Energy: </strong><span id="move-pve-energy"></span></p>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <img id="move-pve-img" style="display: none;">
+                        </div>
+
+                        <div class="text-center" style="padding-top: 20px;">
+                            <p><strong>PvP</strong></p>
+                        </div>
+                        <div class="row">
+                            <div class="col-md">
+                                <p><strong>Power: </strong><span id="move-pvp-power"></span></p>
+                            </div>
+                            <div class="col-md right-align">
+                                <p><strong>Energy: </strong><span id="move-pvp-energy"></span></p>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <img id="move-pvp-img" style="display: none;">
+                        </div>
+
+                        <div id="move-pvp-buff-div" style="display: none;">
+                            <div class="text-center" style="padding-top: 20px;">
+                                <p><strong>PvP Buffs (Chance: <span id="move-pvp-buff-chance"></span>%)</strong></p>
+                            </div>
+                            <div class="row">
+                                <div class="col-md">
+                                    <div class="text-center">
+                                        <span><strong>Me</strong></span>
+                                    </div>
+                                    <div class="move-pvp-buffs-list" id="move-pvp-buffs-attacker" style="padding-top: 10px;">
+                                    </div>
+                                </div>
+                                <div class="col-md">
+                                    <div class="text-center">
+                                        <span><strong>Opponent</strong></span>
+                                    </div>
+                                    <div class="move-pvp-buffs-list" id="move-pvp-buffs-target" style="padding-top: 10px;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade move-pokemon-div" id="pokemon-div" role="tabpanel" aria-labelledby="pokemon-tab">
+                        <div class="text-center" style="padding-top: 20px;">
+                            <p><strong>Pokémon that know this move</strong></p>
+                        </div>
+
+                        <div class="row" id="move-pokemon-list-div" style="padding-right: 15px;">
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,49 @@
+{
+    "search": {
+        "SEARCH_MOVE_BY_NAME": {
+        	"id": "SEARCH_MOVE_BY_NAME",
+        	"title": "Move Name",
+        	"description": "Search by the Move name (charm, frenzy plant, ...). You can also use numbers at the start of the text to select the type of move (1charm, 2frenzy plant, ...)",
+        	"enableFunc": ["moveName"]
+        },
+        "SEARCH_MOVE_BY_TYPE": {
+        	"id": "SEARCH_MOVE_BY_TYPE",
+        	"title": "Move Type",
+        	"description": "Search for moves with a certain type (@fire, @dragon, ...). You can also use numbers at the start of the text to select the type of move (1fire, 2dragon, ...)",
+        	"enableFunc": ["moveType"]
+        },
+        "SEARCH_MOVE_BY_PVP_BUFFS": {
+        	"id": "SEARCH_MOVE_BY_PVP_BUFFS",
+        	"title": "Buffs",
+        	"description": "Search for moves that have PvP Buffs.",
+        	"enableFunc": ["movePvPBuffs"]
+        }
+    },
+
+	 "sort": {
+	    "SORT_MOVE_BY_NAME_ASC": {
+	    	"id": "sort-move-name-asc",
+	    	"title": "Alphabetically (A -> Z)",
+	    	"icon": "fas fa-sort-alpha-down",
+	    	"attribute": "name"
+	    },
+	    "SORT_MOVE_BY_NAME_DESC": {
+	    	"id": "sort-move-name-desc",
+	    	"title": "Alphabetically (Z -> A)",
+	    	"icon": "fas fa-sort-alpha-down-alt",
+	    	"attribute": "name"
+	    },
+	    "SORT_MOVE_BY_TYPE_ASC": {
+	    	"id": "sort-move-type-asc",
+	    	"title": "Type (A -> Z)",
+	    	"icon": "fas fa-sort-alpha-down",
+	    	"attribute": "type"
+	    },
+	    "SORT_MOVE_BY_TYPE_DESC": {
+	    	"id": "sort-move-type-desc",
+	    	"title": "Type (Z -> A)",
+	    	"icon": "fas fa-sort-alpha-down-alt",
+	    	"attribute": "type"
+	    }
+	}
+}

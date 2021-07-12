@@ -40104,6 +40104,231 @@
                 }
             }
         },
+        "HALLOWEEN_2019": {
+            "id": "HALLOWEEN_2019",
+            "name": "Halloween 2019",
+            "start_date": "2019-10-17T20:00:00Z",
+            "end_date": "2019-11-01T20:00:00Z",
+            "image": "https://pokemongolive.com/img/posts/halloween2019.jpg",
+            "pokemon": {
+                "0092_00_GASTLY": {
+                    "id": "0092_00_GASTLY",
+                    "name": "Gastly"
+                },
+                "0200_00_MISDREAVUS": {
+                    "id": "0200_00_MISDREAVUS",
+                    "name": "Misdreavus"
+                },
+                "0353_00_SHUPPET": {
+                    "id": "0353_00_SHUPPET",
+                    "name": "Shuppet"
+                },
+                "0355_00_DUSKULL": {
+                    "id": "0355_00_DUSKULL",
+                    "name": "Duskull"
+                },
+                "0261_00_POOCHYENA": {
+                    "id": "0261_00_POOCHYENA",
+                    "name": "Poochyena"
+                },
+                "0228_00_HOUNDOUR": {
+                    "id": "0228_00_HOUNDOUR",
+                    "name": "Houndour"
+                },
+                "0425_00_DRIFLOON": {
+                    "id": "0425_00_DRIFLOON",
+                    "name": "Drifloon"
+                },
+                "0302_00_SABLEYE": {
+                    "id": "0302_00_SABLEYE",
+                    "name": "Sableye"
+                },
+                "0562_00_YAMASK": {
+                    "id": "0562_00_YAMASK",
+                    "name": "Yamask"
+                },
+                "0215_00_SNEASEL": {
+                    "id": "0215_00_SNEASEL",
+                    "name": "Sneasel"
+                },
+                "0025_pm0025_00_pgo_fall2019_PIKACHU_FALL_2019": {
+                    "id": "0025_pm0025_00_pgo_fall2019_PIKACHU_FALL_2019",
+                    "name": "Pikachu (Mimikyu Costume)"
+                }
+            }
+        },
+        "HOLIDAY_2019": {
+            "id": "HOLIDAY_2019",
+            "name": "Holiday 2019",
+            "start_date": "2019-12-23T23:00:00Z",
+            "end_date": "2020-01-01T22:59:00Z",
+            "image": "https://pokemongolive.com/img/posts/holiday2018pokemon.jpg",
+            "pokemon": {
+                "0225_00_DELIBIRD": {
+                    "id": "0225_00_DELIBIRD",
+                    "name": "Delibird"
+                },
+                "0361_00_SNORUNT": {
+                    "id": "0361_00_SNORUNT",
+                    "name": "Snorunt"
+                },
+                "0459_00_SNOVER": {
+                    "id": "0459_00_SNOVER",
+                    "name": "Snover"
+                },
+                "0215_00_SNEASEL": {
+                    "id": "0215_00_SNEASEL",
+                    "name": "Sneasel"
+                },
+                "0220_00_SWINUB": {
+                    "id": "0220_00_SWINUB",
+                    "name": "Swinub"
+                },
+                "0234_00_08_STANTLER_BELLS": {
+                    "id": "0234_00_08_STANTLER_BELLS",
+                    "name": "Stantler (Bells)"
+                },
+                "0172_00_08_PICHU_WINTER_BEANIE": {
+                    "id": "0172_00_08_PICHU_WINTER_BEANIE",
+                    "name": "Pichu (Winter Beanie)"
+                },
+                "0025_00_08_PIKACHU_WINTER_BEANIE": {
+                    "id": "0025_00_08_PIKACHU_WINTER_BEANIE",
+                    "name": "Pikachu (Winter Beanie)"
+                }
+            }
+        },
+        "SPRING_EVENT_2020": {
+            "id": "SPRING_EVENT_2020",
+            "name": "Spring Event 2020",
+            "start_date": "2020-04-09T07:00:00Z",
+            "end_date": "2020-04-16T21:00:00Z",
+            "image": "https://pokemongolive.com/img/posts/spring2020.jpg",
+            "pokemon": {
+                "0183_00_MARILL": {
+                    "id": "0183_00_MARILL",
+                    "name": "Marill"
+                },
+                "0102_00_EXEGGCUTE": {
+                    "id": "0102_00_EXEGGCUTE",
+                    "name": "Exeggcute"
+                },
+                "0113_00_CHANSEY": {
+                    "id": "0113_00_CHANSEY",
+                    "name": "Chansey"
+                },
+                "0179_00_MAREEP": {
+                    "id": "0179_00_MAREEP",
+                    "name": "Mareep"
+                },
+                "0255_00_TORCHIC": {
+                    "id": "0255_00_TORCHIC",
+                    "name": "Torchic"
+                },
+                "0025_00_12_PIKACHU_FLOWER_HAT": {
+                    "id": "0025_00_12_PIKACHU_FLOWER_HAT",
+                    "name": "Pikachu (Flower Hat)"
+                },
+                "0427_00_12_BUNEARY_FLOWER_CROWN": {
+                    "id": "0427_00_12_BUNEARY_FLOWER_CROWN",
+                    "name": "Buneary (Flower Crown)"
+                },
+                "0133_00_07_EEVEE_FLOWER_CROWN": {
+                    "id": "0133_00_07_EEVEE_FLOWER_CROWN",
+                    "name": "Eevee (Flower Crown)"
+                },
+                "0447_00_RIOLU": {
+                    "id": "0447_00_RIOLU",
+                    "name": "Riolu"
+                },
+                "0440_00_HAPPINY": {
+                    "id": "0440_00_HAPPINY",
+                    "name": "Happiny"
+                },
+                "0175_00_12_TOGEPI_FLOWER_CROWN": {
+                    "id": "0175_00_12_TOGEPI_FLOWER_CROWN",
+                    "name": "Togepi (Flower Crown)"
+                },
+                "0172_00_07_PICHU_FLOWER_CROWN": {
+                    "id": "0172_00_07_PICHU_FLOWER_CROWN",
+                    "name": "Pichu (Flower Crown)"
+                }
+            }
+        },
+        "SAFARI_ZONE_LIVERPOOL": {
+            "id": "SAFARI_ZONE_LIVERPOOL",
+            "name": "Safari Zone Liverpool",
+            "start_date": "2020-04-17T09:00:00Z",
+            "end_date": "2020-04-19T17:00:00Z",
+            "image": "https://lh3.googleusercontent.com/87lWbcuyn1wwVtWGJkR5AiA8cJdrn2Sp5Adch2Ggc0DJyhxlimiBm_QkD_tlQOlHEEaVne5XFeqCK9TiepfC=s0",
+            "pokemon": {
+                "0054_00_PSYDUCK": {
+                    "id": "0054_00_PSYDUCK",
+                    "odd": 128,
+                    "name": "Psyduck"
+                },
+                "0060_00_POLIWAG": {
+                    "id": "0060_00_POLIWAG",
+                    "odd": 128,
+                    "name": "Poliwag"
+                },
+                "0072_00_TENTACOOL": {
+                    "id": "0072_00_TENTACOOL",
+                    "odd": 128,
+                    "name": "Tentacool"
+                },
+                "0098_00_KRABBY": {
+                    "id": "0098_00_KRABBY",
+                    "odd": 128,
+                    "name": "Krabby"
+                },
+                "0116_00_HORSEA": {
+                    "id": "0116_00_HORSEA",
+                    "odd": 128,
+                    "name": "Horsea"
+                },
+                "0147_00_DRATINI": {
+                    "id": "0147_00_DRATINI",
+                    "odd": 128,
+                    "name": "Dratini"
+                },
+                "0170_00_CHINCHOU": {
+                    "id": "0170_00_CHINCHOU",
+                    "odd": 128,
+                    "name": "Chinchou"
+                },
+                "0258_00_MUDKIP": {
+                    "id": "0258_00_MUDKIP",
+                    "odd": 128,
+                    "name": "Mudkip"
+                },
+                "0318_00_CARVANHA": {
+                    "id": "0318_00_CARVANHA",
+                    "odd": 128,
+                    "name": "Carvanha"
+                },
+                "0320_00_WAILMER": {
+                    "id": "0320_00_WAILMER",
+                    "odd": 128,
+                    "name": "Wailmer"
+                },
+                "0345_00_LILEEP": {
+                    "id": "0345_00_LILEEP",
+                    "odd": 128,
+                    "name": "Lileep"
+                },
+                "0347_00_ANORITH": {
+                    "id": "0347_00_ANORITH",
+                    "odd": 128,
+                    "name": "Anorith"
+                },
+                "0025_00_13_PIKACHU_SAFARI_HAT": {
+                    "id": "0025_00_13_PIKACHU_SAFARI_HAT",
+                    "odd": 128,
+                    "name": "Pikachu (Safari Hat)"
+                }
+            }
+        },
         "BUDDY_EVENT_2020": {
             "id": "BUDDY_EVENT_2020",
             "name": "Buddy Up 2020",
@@ -40471,6 +40696,20 @@
                 "0572_00_MINCCINO": {
                     "id": "0572_00_MINCCINO",
                     "name": "Minccino"
+                }
+            }
+        },
+        "COMMUNITY_DAY_JUNE_2020": {
+            "id": "COMMUNITY_DAY_JUNE_2020",
+            "name": "Community Day June 2020: Weedle",
+            "start_date": "2020-06-20T10:00:00Z",
+            "end_date": "2020-06-20T16:00:00Z",
+            "image": "https://pokemongolive.com/img/posts/communityday-jun2020.jpg",
+            "pokemon": {
+                "0013_00_WEEDLE": {
+                    "id": "0013_00_WEEDLE",
+                    "odd": 32,
+                    "name": "Weedle"
                 }
             }
         },

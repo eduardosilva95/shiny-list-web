@@ -1,0 +1,670 @@
+/* ACTIONS DIV */
+
+.left-actions-container {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.right-actions-container {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#list-search-help,
+#btn-stats-list {
+    color: #ffc107;
+    cursor: pointer;
+}
+
+#list-search-help:hover,
+#btn-stats-list:hover {
+    color: black;
+}
+
+.has-search .form-control {
+    padding-left: 2.375rem;
+    width: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+    .has-search .form-control {
+        width: 100%;
+    }
+}
+
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+}
+
+.dropdown-sort-list.active {
+    background-color: #ffc107;
+}
+
+.search-filters-btn {
+    color: #ffc107 !important;
+    font-weight: bold;
+}
+
+.search-filters-btn:hover {
+    text-decoration: underline !important;
+    cursor: pointer;
+}
+
+.filter-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.filter-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 200;
+    width: 225px;
+}
+
+.filter-dropdown:hover .filter-dropdown-content {
+    display: block;
+}
+
+.filter-dropdown-content .container {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.filter-list-checkbox-icon {
+    width: 30px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.filter-list-slider input {
+    background: transparent;
+    border: none;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.filter-list-slider input:focus {
+    outline: none !important;
+    background: transparent;
+    border: none !important;
+    font-weight: bold;
+    color: #007bff;
+}
+
+
+/* LIST CARD */
+
+.list {
+    display: flex;
+    justify-content: space-around;
+    flex-flow: row wrap;
+    align-items: stretch;
+}
+
+.list-card {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    background-color: #545b62;
+    color: rgba(255, 255, 255, 0.7);
+    background-clip: border-box;
+    border-radius: .25rem;
+    height: 350px;
+    margin-bottom: 14px;
+    flex-grow: 1;
+}
+
+.list-card-shiny {
+    box-shadow: 0 4px 8px 0 rgba(255, 215, 0, 0.8), 0 6px 20px 0 rgba(255, 215, 0, 0.8);
+}
+
+.list-card-design .simple-card {
+    height: 280px !important;
+}
+
+.list-card-design .simple-card .pokemon-card-img {
+    height: 200px !important;
+    background-color: #C8C8FF !important;
+    cursor: pointer;
+}
+
+.list-card-design .simple-card .icon-type {
+    top: 140px
+}
+
+.pokemon-card-img {
+    height: 60%;
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+}
+
+.image-number-label {
+    position: absolute;
+    left: 16px;
+    font-size: 20px;
+    color: #545b62;
+    font-weight: bold;
+}
+
+.image-quantity-label {
+    position: absolute;
+    top: 170px;
+    left: 16px;
+    font-size: 24px;
+    color: white;
+    font-weight: bold;
+}
+
+.icon-type {
+    position: absolute;
+    top: 150px;
+    right: 16px;
+    width: 50px;
+}
+
+.img-normal {
+    background-color: rgb(204, 132, 132);
+    cursor: pointer;
+}
+
+.img-shiny {
+    background-color: rgb(132, 204, 132);
+    cursor: pointer;
+}
+
+.card-title-div {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 18.75px;
+    font-weight: 500;
+}
+
+.button-add {
+    background-color: rgb(132, 204, 132);
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 22px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.button-add:hover {
+    background-color: rgb(78, 182, 78);
+}
+
+.button-add:disabled {
+    background-color: rgb(132, 204, 132);
+    cursor: initial;
+}
+
+.button-remove {
+    background-color: rgb(204, 132, 132);
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 22px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.button-remove:hover {
+    background-color: rgb(182, 78, 78);
+}
+
+.button-remove:disabled {
+    background-color: rgb(204, 132, 132);
+    cursor: initial;
+}
+
+.list-card .dropdown .btn-secondary:hover {
+    color: #545b62 !important;
+    background-color: #fff !important;
+}
+
+#change-quantity-modal h5,
+#change-quantity-modal label {
+    color: white;
+}
+
+
+/* POKEMON BIO MODAL STYLES */
+
+.nav-tabs {
+    border: none !important;
+}
+
+.nav-link {
+    color: #fff;
+    font-weight: bold;
+    opacity: 0.7;
+}
+
+.nav-link:hover {
+    color: #fff !important;
+    opacity: 1;
+    font-weight: bold;
+    border-color: transparent !important;
+}
+
+.nav-link.active {
+    color: #fff !important;
+    font-weight: bold !important;
+    opacity: 0.7 !important;
+    border-color: transparent !important;
+    background-color: transparent !important;
+    border-bottom: solid 3px #ffc107 !important;
+}
+
+.pokemon-bio-modal-img-div {
+    position: relative;
+}
+
+#pokemon-bio-type-icon {
+    position: absolute;
+    top: 200px;
+    right: 130px;
+    width: 50px;
+}
+
+#pokemon-bio-is-shiny-icon {
+    position: absolute;
+    top: 30px;
+    right: 130px;
+}
+
+.pokemon-bio-modal-gender-div img {
+    width: 50px;
+    height: 50px;
+}
+
+.pokemon-bio-modal-gender-div img:hover {
+    cursor: pointer;
+}
+
+#pokemon-bio-title {
+    color: #fff;
+    opacity: 0.7;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.pokemon-bio-info-div {
+    padding-top: 10px;
+    color: #fff;
+    opacity: 0.7;
+    font-size: 14px;
+}
+
+.pokemon-bio-types img {
+    width: 25px;
+    height: 25px;
+}
+
+.pokemon-family-tree-path-img {
+    float: left;
+    margin: 2px;
+    position: relative;
+}
+
+.pokemon-family-tree-path-img-singular {
+    float: left;
+    margin-left: calc((100% - 128px) / 2);
+    position: relative;
+}
+
+.pokemon-family-tree-path-img-double {
+    float: left;
+    margin-left: calc((100% - 290px) / 2);
+    position: relative;
+}
+
+.pokemon-family-tree-path-icon {
+    position: relative;
+    float: left;
+    padding-top: 60px;
+}
+
+.pokemon-family-tree-path-mega-icon {
+    position: absolute;
+    width: 20px !important;
+    height: 20px !important;
+    top: 30px;
+}
+
+.pokemon-family-tree-path-img p,
+.pokemon-family-tree-path-img-singular p,
+.pokemon-family-tree-path-img-double p {
+    text-align: center;
+    font-weight: bold;
+}
+
+.pokemon-family-tree-path img {
+    width: 128px;
+    height: 128px;
+}
+
+.pokemon-family-tree-path img {
+    width: 128px;
+    height: 128px;
+}
+
+.pokemon-family-tree-icon {
+    position: absolute;
+    width: 30px !important;
+    height: 30px !important;
+    bottom: 40px;
+    right: 10px;
+}
+
+.pokemon-family-tree-icon.costume-icon {
+    bottom: 60px;
+}
+
+.pokemon-family-tree-img {
+    cursor: pointer;
+}
+
+.pokemon-family-tree-label {
+    max-width: 128px;
+}
+
+.pokemon-bio-moves-title {
+    color: #fff;
+    opacity: 0.7;
+    font-size: 14px;
+}
+
+.move-pvp-buffs-list div {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+.pokemon-move-tm-icon {
+    width: 50px;
+}
+
+.pokemon-bio-move {
+    cursor: pointer;
+}
+
+.pokemon-move-other-icon {
+    width: 30px;
+}
+
+.pokemon-move-type-icon {
+    width: 30px;
+    padding-left: 5px;
+}
+
+.pokemon-move-text {
+    color: #fff;
+    font-size: 12px;
+    padding-left: 5px;
+}
+
+
+/* MOVE LIST */
+
+.move-card {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    background-color: transparent;
+    background-clip: border-box;
+    border-radius: .25rem;
+    height: 250px;
+    margin-bottom: 14px;
+    flex-grow: 1;
+}
+
+.move-card img {
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.move-card .card-title-div {
+    text-align: center;
+    color: #fff;
+    opacity: .7;
+}
+
+#move-title {
+    color: #fff;
+    opacity: 0.7;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.move-details-div,
+.move-pokemon-div {
+    padding-top: 10px;
+    color: #fff;
+    opacity: 0.7;
+    font-size: 14px;
+}
+
+#move-type-icon {
+    width: 25px;
+    height: 25px;
+}
+
+.move-details-div .right-align {
+    padding-left: 200px;
+}
+
+.pokemon-bio-moves-list div {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+.move-pvp-buff-icon {
+    width: 50px;
+    padding-left: 5px;
+    padding-bottom: 5px;
+}
+
+.move-pvp-buff-text {
+    color: #fff;
+    font-size: 50px;
+    padding-left: 5px;
+    font-weight: bold;
+}
+
+.move-pokemon-card-design {
+    padding-bottom: 5px;
+}
+
+.move-pokemon-img {
+    cursor: pointer;
+}
+
+.move-pokemon-card {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    background-color: #C8C8FF;
+    flex-grow: 1;
+    width: 70px;
+    padding-right: 5px;
+}
+
+.move-pokemon-card .icon-type {
+    width: 25px;
+    position: absolute;
+    top: 40px;
+    right: 0;
+}
+
+.move-pokemon-card .pokemon-move-tm-icon {
+    width: 25px;
+    position: absolute;
+    top: 50px;
+    left: 2px;
+}
+
+.move-pokemon-card .pokemon-move-other-icon {
+    width: 20px;
+    position: absolute;
+    top: 45px;
+    left: 2px;
+}
+
+
+/* LUCKY LIST STYLES */
+
+.lucky-dex-card {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    background-color: rgba(204, 132, 132, 0.3);
+    background-clip: border-box;
+    border-radius: .25rem;
+    height: 200px;
+    margin-bottom: 14px;
+}
+
+.lucky-dex-card-checked {
+    background-color: rgba(132, 204, 132, 0.3) !important;
+}
+
+.lucky-dex-card-body {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+}
+
+.lucky-dex-card img {
+    width: 100%;
+}
+
+label {
+    margin-bottom: 0 !important;
+}
+
+.lucky-dex-card-label {
+    height: 25px;
+    background: transparent;
+    font-weight: bold;
+    font-size: 15px;
+    text-indent: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.lucky-dex-card .lucky-dex-card-label {
+    color: white;
+}
+
+.lucky-dex-card-checked .lucky-dex-card-label {
+    color: #84CC84 !important;
+}
+
+.image-checkbox {
+    cursor: pointer;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: 4px solid transparent;
+    margin-bottom: 0;
+    outline: 0;
+}
+
+.image-checkbox input[type="checkbox"] {
+    display: none;
+}
+
+.image-checkbox .fa {
+    position: absolute;
+    color: #84CC84;
+    padding: 10px;
+    top: 0;
+    right: 0;
+}
+
+.lucky-dex-card .fa {
+    display: none !important;
+}
+
+.lucky-dex-card-checked .fa {
+    display: block !important;
+}
+
+
+/* STATS MODAL */
+
+.stats-modal-note {
+    color: #fff;
+    font-size: 15px;
+    opacity: .7;
+    font-style: italic;
+    float: right;
+}
+
+.dropdown-stats-list.active {
+    background-color: #ffc107;
+}
+
+#stats-table tr th {
+    border: none;
+}
+
+#stats-table tr td {
+    border-color: #ffc107;
+}
+
+#stats-table {
+    color: #fff;
+    opacity: .7;
+}
+
+.stats-table-row-icon {
+    width: 32px;
+    height: 32px;
+}
+
+.stats-table-region-icon {
+    width: 24px;
+    height: 42px;
+}
