@@ -19,70 +19,73 @@
                     </div>
 
                     <div class="col-md-6">
-                        <div id="edit-medal-count-div">
+                        <% var data= 'medals-loading'; %>
+                            <% include ../views/loading.ejs %>
 
-                            <div class="text-center">
-                                <p id="medal-title"></p>
-                            </div>
+                                <div id="edit-medal-count-div">
 
-                            <div class="medal-modal-img-div text-center">
-                                <img id="medal-img-1" class="text-center">
-                                <img id="medal-img-2" style="display: none;">
-                                <img id="medal-img-3" style="display: none;">
-                                <img id="medal-img-4" style="display: none;">
-                                <img id="medal-img-5" style="display: none;">
-                            </div>
+                                    <div class="text-center">
+                                        <p id="medal-title"></p>
+                                    </div>
 
-                            <div class="medal-modal-icon-div text-center">
-                                <img id="medal-icon-1">
-                                <img id="medal-icon-2">
-                                <img id="medal-icon-3">
-                                <img id="medal-icon-4">
-                                <img id="medal-icon-5">
-                            </div>
+                                    <div class="medal-modal-img-div text-center">
+                                        <img id="medal-img-1" class="text-center" onload="endLoading()">
+                                        <img id="medal-img-2" style="display: none;" onload="endLoading()">
+                                        <img id="medal-img-3" style="display: none;" onload="endLoading()">
+                                        <img id="medal-img-4" style="display: none;" onload="endLoading()">
+                                        <img id="medal-img-5" style="display: none;" onload="endLoading()">
+                                    </div>
 
-                            <div class="text-center" style="padding-top: 15px;">
-                                <p class="medal-total">
-                                    <span>Total:</span>
-                                    <span id="medal-total"></span>
-                                    <input type="number" min="0" class="form-control" id="medal-total-input" style="display: none; height: 27px; width:unset">
-                                    <button id="medal-total-edit-btn" class="btn btn-warning" style="border-radius: 50%;color: white;">
+                                    <div class="medal-modal-icon-div text-center">
+                                        <img id="medal-icon-1">
+                                        <img id="medal-icon-2">
+                                        <img id="medal-icon-3">
+                                        <img id="medal-icon-4">
+                                        <img id="medal-icon-5">
+                                    </div>
+
+                                    <div class="text-center" style="padding-top: 15px;">
+                                        <p class="medal-total">
+                                            <span>Total:</span>
+                                            <span id="medal-total"></span>
+                                            <input type="number" min="0" class="form-control" id="medal-total-input" style="display: none; height: 27px; width:unset">
+                                            <button id="medal-total-edit-btn" class="btn btn-warning" style="border-radius: 50%;color: white;">
                                         <i class="fas fa-sync"></i>
                                     </button>
-                                    <button id="medal-total-save-btn" class="btn btn-success" style="border-radius: 50%;color: white; display: none;">
+                                            <button id="medal-total-save-btn" class="btn btn-success" style="border-radius: 50%;color: white; display: none;">
                                         <i class="far fa-save"></i>
                                     </button>
-                                    <button id="medal-total-cancel-btn" class="btn btn-danger" style="border-radius: 50%;color: white; display: none;">
+                                            <button id="medal-total-cancel-btn" class="btn btn-danger" style="border-radius: 50%;color: white; display: none;">
                                         <i class="fas fa-times"></i>
                                     </button>
-                                </p>
-                            </div>
+                                        </p>
+                                    </div>
 
-                            <div class="text-center" style="padding-top: 15px;">
-                                <p class="medal-description-title">Description</p>
-                            </div>
+                                    <div class="text-center" style="padding-top: 15px;">
+                                        <p class="medal-description-title">Description</p>
+                                    </div>
 
-                            <div class="medal-description-div">
-                                <img id="medal-bronze-description-img">
-                                <span id="medal-bronze-description-text"></span>
-                            </div>
+                                    <div class="medal-description-div">
+                                        <img id="medal-bronze-description-img" onload="endLoading()">
+                                        <span id="medal-bronze-description-text"></span>
+                                    </div>
 
-                            <div class="medal-description-div">
-                                <img id="medal-silver-description-img">
-                                <span id="medal-silver-description-text"></span>
-                            </div>
+                                    <div class="medal-description-div">
+                                        <img id="medal-silver-description-img" onload="endLoading()">
+                                        <span id="medal-silver-description-text"></span>
+                                    </div>
 
-                            <div class="medal-description-div">
-                                <img id="medal-gold-description-img">
-                                <span id="medal-gold-description-text"></span>
-                            </div>
+                                    <div class="medal-description-div">
+                                        <img id="medal-gold-description-img" onload="endLoading()">
+                                        <span id="medal-gold-description-text"></span>
+                                    </div>
 
-                            <div class="medal-description-div" style="border-bottom: none;">
-                                <img id="medal-platinum-description-img">
-                                <span id="medal-platinum-description-text"></span>
-                            </div>
+                                    <div class="medal-description-div" style="border-bottom: none;">
+                                        <img id="medal-platinum-description-img" onload="endLoading()">
+                                        <span id="medal-platinum-description-text"></span>
+                                    </div>
 
-                        </div>
+                                </div>
                     </div>
                 </div>
 

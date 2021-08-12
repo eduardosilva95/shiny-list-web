@@ -533,6 +533,8 @@ function buildDynamicMoveCard(move) {
 function buildDynamicLuckydexCard(pokemon) {
     var imagesToLoad = [];
 
+    var name = pokemon.nameSpecies.charAt(0).toUpperCase() + pokemon.nameSpecies.slice(1);
+
     var content = "<div class=\"col-md-2 list-card-design\"><div class=\"" + (pokemon.hasLucky ? 'lucky-dex-card lucky-dex-card-checked' : 'lucky-dex-card') + "\">";
     content += "<div class=\"lucky-dex-card-body\"><label class=\"image-checkbox\">";
     content += "<span id=\"card-id\" style=\"display: none;\">" + pokemon.id + "</span>";
@@ -543,7 +545,7 @@ function buildDynamicLuckydexCard(pokemon) {
     content += "<img id=\"" + pokemon.id + "lucky-image\" class=\"img-responsive pokemon-card-img list-card-img\" loading=\"lazy\"/>"
     imagesToLoad.push({ "url": "pokemon_icons/" + pokemon.image.imageNormal, "target": pokemon.id + "lucky-image", "id": pokemon.id, "compoundId": null });
 
-    content += "<div class=\"lucky-dex-card-label text-center\"><span class=\"card-link\" title=\"" + pokemon.name + "\">" + pokemon.name + "</span></div>";
+    content += "<div class=\"lucky-dex-card-label text-center\"><span class=\"card-link\" title=\"" + name + "\">" + name + "</span></div>";
     content += "</label></div></div></div>";
 
     $("#list-div").append(content);
@@ -701,28 +703,43 @@ function updateShinyToBe(pokemon_id, quantity, card) {
         setPokemonPropertyDataOnCache(result.pokemon_id, "quantity", result.quantity);
         setPokemonPropertyDataOnCache(result.pokemon_id, "lastModified", result.lastModified);
 
-        $(card).children("#pokemon-quantity-label").text(quantity + "x");
+        $(card).children("#pokemon-quantity-label").text(result.quantity + "x");
         $(card).children("#" + result.pokemon_id + "-image").toggleClass("img-shiny", quantity > 0);
         $(card).children("#" + result.pokemon_id + "-image").toggleClass("img-normal", quantity == 0);
         imagesToLoad.push({
-            "url": "pokemon_icons/" + (quantity > 0 ? pokemon_data[pokemon_id].image.imageShiny : pokemon_data[pokemon_id].image.imageNormal),
+            "url": "pokemon_icons/" + (result.quantity > 0 ? pokemon_data[pokemon_id].image.imageShiny : pokemon_data[pokemon_id].image.imageNormal),
             "target": result.pokemon_id + "-image",
             "id": pokemon_id,
-            "compoundId": quantity > 0 ? "SHINY" : null
+            "compoundId": result.quantity > 0 ? "SHINY" : null
         });
-        $(card).find("#pokemon-remove-btn").prop("disabled", quantity == 0);
-        $(card).find("#pokemon-add-btn").prop("disabled", quantity > 0 && (pokemon_data[pokemon_id].isTemporary || quantity == maxShinyCount));
-        $(card).toggleClass("list-card-shiny", quantity > 0);
 
-        $("#total-count").text(parseInt($("#total-count").text()) + (quantity - original_quantity));
+        loadImages(imagesToLoad);
 
-        if (original_quantity == 0 && quantity > 0) {
+        $(card).find("#pokemon-remove-btn").prop("disabled", result.quantity == 0);
+        $(card).find("#pokemon-add-btn").prop("disabled", result.quantity > 0 && (pokemon_data[pokemon_id].isTemporary || quantity == maxShinyCount));
+        $(card).toggleClass("list-card-shiny", result.quantity > 0);
+
+        $("#total-count").text(parseInt($("#total-count").text()) + (result.quantity - original_quantity));
+
+        if (original_quantity == 0 && result.quantity > 0) {
             $("#unique-count").text(parseInt($("#unique-count").text()) + 1);
         } else if (original_quantity > 0 && quantity == 0) {
             $("#unique-count").text(parseInt($("#unique-count").text()) - 1);
         }
 
         $("#percentage-count").text(((parseInt($("#unique-count").text()) / parseInt($("#available-count").text())) * 100).toFixed(1) + " %");
+
+        // update actions
+        var minMax = getMinMaxFromAttributes("quantity", null);
+        updateSliderMinMax("filter-list-quantity-slider", "min", minMax[0]);
+        updateSliderMinMax("filter-list-quantity-slider", "max", minMax[1]);
+
+        search();
+        $(".dropdown-sort-list.active").prop("disabled", false);
+        $(".dropdown-sort-list.active").click();
+        $(".dropdown-sort-list.active").prop("disabled", true);
+
+
 
         $('#change-quantity-modal').modal('hide')
 
@@ -731,6 +748,7 @@ function updateShinyToBe(pokemon_id, quantity, card) {
         } else {
             $("#change-quantity-modal .alert-danger").css("display", "none");
         }
+
     });
 }
 

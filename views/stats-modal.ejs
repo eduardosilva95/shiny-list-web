@@ -26,10 +26,11 @@
                         <span id="stats-select-text">Event</span>
                     </button>
                     <div class="dropdown-menu" id="stats-select-dropdown-div" aria-labelledby="stats-select">
-                        <button type="button" id="" class="dropdown-item dropdown-stats-list active" disabled><span>Event</span></button>
-                        <button type="button" id="" class="dropdown-item dropdown-stats-list"><span>Type</span></button>
-                        <button type="button" id="" class="dropdown-item dropdown-stats-list"><span>Region</span></button>
-                        <button type="button" id="" class="dropdown-item dropdown-stats-list"><span>Group</span></button>
+                        <button type="button" class="dropdown-item dropdown-stats-list active" disabled><span>Event</span></button>
+                        <button type="button" class="dropdown-item dropdown-stats-list"><span>Type</span></button>
+                        <button type="button" class="dropdown-item dropdown-stats-list"><span>Region</span></button>
+                        <button type="button" class="dropdown-item dropdown-stats-list"><span>Group</span></button>
+                        <button type="button" class="dropdown-item dropdown-stats-list"><span>Year</span></button>
                     </div>
                 </div>
 
@@ -39,7 +40,7 @@
                     <thead>
                         <tr>
                             <th></th>
-                            <th scope="col">Event</th>
+                            <th scope="col" id="stats-type-col"></th>
                             <th scope="col">Unique</th>
                             <th scope="col">Available</th>
                             <th scope="col">Total</th>

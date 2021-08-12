@@ -440,12 +440,13 @@
     -ms-flex-direction: column;
     flex-direction: column;
     min-width: 0;
-    background-color: transparent;
+    background-color: #545b62;
     background-clip: border-box;
-    border-radius: .25rem;
     height: 250px;
     margin-bottom: 14px;
     flex-grow: 1;
+    padding: 10px;
+    border-radius: 15px;
 }
 
 .move-card img {

@@ -1,5 +1,6 @@
 var medals = {};
 var medalOpenId = null;
+var medals_loading_counter = 0;
 
 function loadMedals() {
     $.get("/medals", {}, function(result) {
@@ -251,7 +252,7 @@ function loadMedalInfo(medal) {
         target = value[1];
 
         loadImageFromFirebase("medals/" + target.image, "medal-img-" + i);
-        //document.getElementById("medal-img-" + i).src = "img/" + target.image;
+        startLoading();
 
         if (target.number == medal.targetIdx) {
             $("#medal-img-" + i).css("display", "initial");
@@ -289,16 +290,36 @@ function loadMedalInfo(medal) {
     loadImageFromFirebase("medals/" + medal.targets["1"].image, "medal-bronze-description-img");
     $("#medal-bronze-description-text").text(medal.description.plural.badge_en.replace("{0}", medal.targets[1].targetGoal)
         .replace("{0:0.#}", medal.targets[1].targetGoal));
+    startLoading();
 
     loadImageFromFirebase("medals/" + medal.targets["2"].image, "medal-silver-description-img");
     $("#medal-silver-description-text").text(medal.description.plural.badge_en.replace("{0}", medal.targets[2].targetGoal)
         .replace("{0:0.#}", medal.targets[2].targetGoal));
+    startLoading();
 
     loadImageFromFirebase("medals/" + medal.targets["3"].image, "medal-gold-description-img");
     $("#medal-gold-description-text").text(medal.description.plural.badge_en.replace("{0}", medal.targets[3].targetGoal)
         .replace("{0:0.#}", medal.targets[3].targetGoal));
+    startLoading();
 
     loadImageFromFirebase("medals/" + medal.targets["4"].image, "medal-platinum-description-img");
     $("#medal-platinum-description-text").text(medal.description.plural.badge_en.replace("{0}", medal.targets[4].targetGoal)
         .replace("{0:0.#}", medal.targets[4].targetGoal));
+    startLoading();
+}
+
+function startLoading() {
+    if (medals_loading_counter == 0) {
+        $("#edit-medal-count-div").css("display", "none");
+        $("#medals-loading").css("display", "block");
+    }
+    medals_loading_counter++;
+}
+
+function endLoading() {
+    medals_loading_counter--;
+    if (medals_loading_counter == 0) {
+        $("#edit-medal-count-div").css("display", "block");
+        $("#medals-loading").css("display", "none");
+    }
 }

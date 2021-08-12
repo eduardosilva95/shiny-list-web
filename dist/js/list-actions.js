@@ -57,8 +57,11 @@ function loadActions(actions, page) {
         $("#filter-list-div").css("display", "initial");
     }
 
+    // load stats
     if (!actions || !actions.stats) {
         $("#stats-list-div").remove();
+    } else {
+        $("#stats-list-div").css("display", "initial");
     }
 
 
@@ -170,6 +173,25 @@ function registerSlider(slider) {
 
     setFiltersOnCache(slider.id, values[0] + "-" + values[1]);
 }
+
+function updateSliderMinMax(sliderId, property, value) {
+    var min = property == "min" ? value : $("#" + sliderId).slider("option", "min");
+    var max = property == "max" ? value : $("#" + sliderId).slider("option", "max");
+    var selectedMin = property == "min" && $("#" + sliderId).slider("values")[0] == $("#" + sliderId).slider("option", "min") ? value : $("#" + sliderId).slider("values")[0];
+    var selectedMax = property == "max" && $("#" + sliderId).slider("values")[1] == $("#" + sliderId).slider("option", "max") ? value : $("#" + sliderId).slider("values")[1];
+    var values = [selectedMin, selectedMax];
+
+    $("#" + sliderId).slider({
+        min: min,
+        max: max,
+        values: values
+    });
+
+    $("#" + sliderId + "-label").val(values[0] + " - " + values[1]);
+
+    setFiltersOnCache(sliderId, values[0] + "-" + values[1]);
+}
+
 
 function getMinMaxFromAttributes(attr1, attr2) {
     var min, max;
@@ -731,7 +753,7 @@ function desactivateAndEnableSortOptions() {
 
 $(document).on("click", ".dropdown-sort-list", function() {
     desactivateAndEnableSortOptions();
-    $(this).addClass("active");
+    $(this).toggleClass("active", true);
     $(this).prop("disabled", "true");
 
     var attr = $(this).data("attribute").split(",");
@@ -742,6 +764,9 @@ $(document).on("click", ".dropdown-sort-list", function() {
     }
 
     var data = openedPage == "moves" ? move_data : pokemon_data;
+
+    // by default the list are sorted by id
+    sortPokemonByAttribute("id", false, data);
 
     if (isDate) {
         if (attr.length == 1) {
@@ -760,28 +785,52 @@ $(document).on("click", ".dropdown-sort-list", function() {
 
 
 function sortPokemonByAttribute(attribute, reversed, data) {
-
-    $('.list .list-card-design').sort(function(a, b) {
-        return data[$(a).find("#card-id").text()][attribute] > data[$(b).find("#card-id").text()][attribute] && !reversed ? 1 : -1;
-    }).appendTo(".list");
+    if (!reversed) {
+        $('.list .list-card-design').sort(function(a, b) {
+            return data[$(a).find("#card-id").text()][attribute] >= data[$(b).find("#card-id").text()][attribute] && !reversed ? 1 : -1;
+        }).appendTo(".list");
+    } else {
+        $('.list .list-card-design').sort(function(a, b) {
+            return data[$(a).find("#card-id").text()][attribute] < data[$(b).find("#card-id").text()][attribute] && !reversed ? 1 : -1;
+        }).appendTo(".list");
+    }
 }
 
 function sortPokemonByTwoAttr(attr1, attr2, reversed, data) {
-    $('.list .list-card-design').sort(function(a, b) {
-        return data[$(a).find("#card-id").text()][attr1][attr2] > data[$(b).find("#card-id").text()][attr1][attr2] && !reversed ? 1 : -1;
-    }).appendTo(".list");
+    if (!reversed) {
+        $('.list .list-card-design').sort(function(a, b) {
+            return data[$(a).find("#card-id").text()][attr1][attr2] >= data[$(b).find("#card-id").text()][attr1][attr2] && !reversed ? 1 : -1;
+        }).appendTo(".list");
+    } else {
+        $('.list .list-card-design').sort(function(a, b) {
+            return data[$(a).find("#card-id").text()][attr1][attr2] < data[$(b).find("#card-id").text()][attr1][attr2] && !reversed ? 1 : -1;
+        }).appendTo(".list");
+    }
+
 }
 
 function sortPokemonByDate(attribute, reversed, data) {
-    $('.list .list-card-design').sort(function(a, b) {
-        return new Date(data[$(a).find("#card-id").text()][attribute]) >= new Date(data[$(b).find("#card-id").text()][attribute]) && !reversed ? 1 : -1;
-    }).appendTo(".list");
+    if (!reversed) {
+        $('.list .list-card-design').sort(function(a, b) {
+            return new Date(data[$(a).find("#card-id").text()][attribute]) >= new Date(data[$(b).find("#card-id").text()][attribute]) ? 1 : -1;
+        }).appendTo(".list");
+    } else {
+        $('.list .list-card-design').sort(function(a, b) {
+            return new Date(data[$(a).find("#card-id").text()][attribute]) < new Date(data[$(b).find("#card-id").text()][attribute]) ? 1 : -1;
+        }).appendTo(".list");
+    }
 }
 
 function sortPokemonByDateWithTwoAttr(attr1, attr2, reversed, data) {
-    $('.list .list-card-design').sort(function(a, b) {
-        return new Date(data[$(a).find("#card-id").text()][attr1][attr2]) >= new Date(data[$(b).find("#card-id").text()][attr1][attr2]) && !reversed ? 1 : -1;
-    }).appendTo(".list");
+    if (!reversed) {
+        $('.list .list-card-design').sort(function(a, b) {
+            return new Date(data[$(a).find("#card-id").text()][attr1][attr2]) >= new Date(data[$(b).find("#card-id").text()][attr1][attr2]) && !reversed ? 1 : -1;
+        }).appendTo(".list");
+    } else {
+        $('.list .list-card-design').sort(function(a, b) {
+            return new Date(data[$(a).find("#card-id").text()][attr1][attr2]) < new Date(data[$(b).find("#card-id").text()][attr1][attr2]) && !reversed ? 1 : -1;
+        }).appendTo(".list");
+    }
 }
 
 /* FILTER */

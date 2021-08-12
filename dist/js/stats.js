@@ -2,6 +2,7 @@ var eventsObject = {};
 var typesObject = {};
 var regionsObject = {};
 var groupsObject = {};
+var yearsObject = {};
 
 $(function() {
     $(document).on("click", ".dropdown-stats-list", function() {
@@ -23,6 +24,8 @@ $(function() {
             updateRegionTable();
         } else if ($(this).children().text().toLowerCase() == "group") {
             updateGroupTable();
+        } else if ($(this).children().text().toLowerCase() == "year") {
+            updateYearTable();
         }
 
 
@@ -107,6 +110,15 @@ function loadStatsData(data) {
             updateObject(obj, data[i]);
         });
 
+        // UPDATE YEAR STATS
+        var year = new Date(data[i].startDates.shinyStartDate).getFullYear()
+        obj = yearsObject.values.find(a => a.id == year);
+        if (!obj) {
+            obj = { id: year, label: year, icon: null }
+            yearsObject.values.push(obj);
+        }
+        updateObject(obj, data[i]);
+
 
     };
     $("#stats-unique-count").text(statsUnique);
@@ -147,6 +159,7 @@ function updateObject(obj, data) {
 
 function updateEventTable() {
     $("#stats-table tbody").empty();
+    $("#stats-table th#stats-type-col").text(eventsObject.label);
     var generalRow = eventsObject.values.find(ev => ev.id == "general");
 
     eventsObject.values.filter(ev => ev.id != "general").sort((a, b) => a.label > b.label ? 1 : -1).forEach((row) => {
@@ -158,6 +171,7 @@ function updateEventTable() {
 
 function updateTypeTable() {
     $("#stats-table tbody").empty();
+    $("#stats-table th#stats-type-col").text(typesObject.label);
     typesObject.values.sort((a, b) => a.label > b.label ? 1 : -1).forEach((row) => {
         buildStatsTableRow(row, null);
     })
@@ -165,6 +179,7 @@ function updateTypeTable() {
 
 function updateRegionTable() {
     $("#stats-table tbody").empty();
+    $("#stats-table th#stats-type-col").text(regionsObject.label);
     regionsObject.values.sort((a, b) => a.generation > b.generation ? 1 : -1).forEach((row) => {
         buildStatsTableRow(row, "stats-table-region-icon");
     })
@@ -172,6 +187,7 @@ function updateRegionTable() {
 
 function updateGroupTable() {
     $("#stats-table tbody").empty();
+    $("#stats-table th#stats-type-col").text(groupsObject.label);
     var generalRow = groupsObject.values.find(gr => gr.id == "general");
     groupsObject.values.filter(gr => gr.id != "general").sort((a, b) => a.label > b.label ? 1 : -1).forEach((row) => {
         buildStatsTableRow(row, null);
@@ -179,9 +195,21 @@ function updateGroupTable() {
     buildStatsTableRow(generalRow, null);
 }
 
+function updateYearTable() {
+    $("#stats-table tbody").empty();
+    $("#stats-table th#stats-type-col").text(yearsObject.label);
+    yearsObject.values.sort((a, b) => a.label > b.label ? 1 : -1).forEach((row) => {
+        buildStatsTableRow(row, "stats-table-year-icon");
+    })
+}
+
 function buildStatsTableRow(row, iconClass) {
-    var content = "<tr><td>";
-    content += "<img class=\"" + (iconClass != null ? iconClass : "stats-table-row-icon") + "\" src=\"" + row.icon + "\"></td>";
+    var content = "<tr>";
+    if (row.icon) {
+        content += "<td><img class=\"" + (iconClass != null ? iconClass : "stats-table-row-icon") + "\" src=\"" + row.icon + "\"></td>";
+    } else {
+        content += "<td></td>";
+    }
     content += "<td scope=\"row\"><strong>" + row.label + "</strong></td>"
     content += "<td>" + row.unique + "</td>"
     content += "<td>" + row.available + "</td>"
@@ -211,6 +239,11 @@ function initStats() {
 
     groupsObject = {
         label: "Group",
+        values: []
+    }
+
+    yearsObject = {
+        label: "Year",
         values: []
     }
 
