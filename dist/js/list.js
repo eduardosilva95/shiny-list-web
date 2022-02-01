@@ -448,7 +448,7 @@ function buildDynamicPokemonCard(pokemon, page, isMegaPage) {
         return;
     }
 
-    var content = "<div class=\"col-md-3 col-12 cont list-card-design\">";
+    var content = "<div class=\"cont list-card-design\">";
 
     if (page == "shinylist" && pokemon.quantity > 0) {
         content += "<div class=\"list-card list-card-shiny\">";
@@ -503,10 +503,10 @@ function buildDynamicPokemonCard(pokemon, page, isMegaPage) {
 
     // update shiny buttons
     if (page == "shinylist") {
-        content += "<div class=\"row\"><div class=\"col-md-7\">";
+        content += "<div class=\"pokemon-card-footer\"><div>";
         content += "<button id=\"pokemon-remove-btn\" class=\"pokemon-card-update-qt button-remove\"" + (pokemon.quantity == 0 ? "disabled" : "") + "><i class=\"fas fa-minus\"></i></button>";
         content += "<button id=\"pokemon-add-btn\" class=\"pokemon-card-update-qt button-add\"" + (pokemon.maxShinyCount != null && pokemon.quantity >= pokemon.maxShinyCount ? "disabled" : "") + "><i class=\"fas fa-plus\"></i></button></div>";
-        content += "<div class=\"col-md-5 text-right\"><div class=\"dropdown\"><button class=\"btn btn-secondary dropdown-toggle\" type=\"button\" id=\"actions-dropdown\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\"><i class=\"fas fa-cogs\"></i></button>";
+        content += "<div class=\"text-right\"><div class=\"dropdown\"><button class=\"btn btn-secondary dropdown-toggle\" type=\"button\" id=\"actions-dropdown\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\"><i class=\"fas fa-cogs\"></i></button>";
         content += "<div class=\"dropdown-menu\" aria-labelledby=\"dropdownMenuButton\"><a class=\"dropdown-item\" id=\"pokemon-update-shiny-btn\" style=\"cursor: pointer;\">Update shiny amount</a>";
         if (!pokemon.isTemporary) {
             content += "<a class=\"dropdown-item\" id=\"pokemon-update-checks-btn\" style=\"cursor: pointer;\">Update number of checks</a>";
@@ -521,7 +521,7 @@ function buildDynamicPokemonCard(pokemon, page, isMegaPage) {
 }
 
 function buildDynamicMoveCard(move) {
-    var content = "<div class=\"col-md-2 col-12 cont list-card-design\"><div class=\"list-card move-card\">";
+    var content = "<div class=\"cont list-card-design\"><div class=\"list-card move-card\">";
     content += "<span id=\"card-id\" style=\"display: none;\">" + move.id + "</span>";
     content += "<span id=\"card-type\" style=\"display: none;\">move</span>";
     content += "<img src=\"/img/type_" + move.type + ".png\" class=\"img-responsive list-card-img\" style=\"height: 60%;\" loading=\"lazy\"/>"
@@ -535,7 +535,7 @@ function buildDynamicLuckydexCard(pokemon) {
 
     var name = pokemon.nameSpecies.charAt(0).toUpperCase() + pokemon.nameSpecies.slice(1);
 
-    var content = "<div class=\"col-md-2 list-card-design\"><div class=\"" + (pokemon.hasLucky ? 'lucky-dex-card lucky-dex-card-checked' : 'lucky-dex-card') + "\">";
+    var content = "<div class=\"list-card-design\"><div class=\"" + (pokemon.hasLucky ? 'lucky-dex-card lucky-dex-card-checked' : 'lucky-dex-card') + "\">";
     content += "<div class=\"lucky-dex-card-body\"><label class=\"image-checkbox\">";
     content += "<span id=\"card-id\" style=\"display: none;\">" + pokemon.id + "</span>";
     content += "<input id=\"pokemon-id\" type=\"checkbox\" style=\"display: none;\" value=\"" + pokemon.id + "\"" + (pokemon.hasLucky ? 'checked' : '') + ">";
@@ -782,6 +782,10 @@ function processDateToBio(date) {
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
     date = new Date(date);
+
+    if (date.getTime() === TBA_DATE_TIMESTAMP) {
+        return "TBA";
+    }
 
     return (date.getDate() < 10 ? '0' : '') + date.getDate() + " " + months[date.getMonth()] +
         " " + date.getFullYear() + " " + (date.getHours() < 10 ? '0' : '') + date.getHours() + ":" + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();

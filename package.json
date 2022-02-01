@@ -1,39 +1,39 @@
 {
-  "name": "shinylist",
-  "version": "2.0.1",
-  "main": "app.js",
-  "engines": {
-    "node": "12.4"
-  },
-  "dependencies": {
-    "cookie-parser": "^1.4.4",
-    "ejs": "^2.7.1",
-    "express": "^4.17.1",
-    "firebase": "^6.6.2",
-    "firebase-admin": "^8.7.0",
-    "firebase-functions": "^3.3.0",
-    "md5": "^2.2.1",
-    "multer": "^1.4.2",
-    "mysql": "^2.17.1",
-    "open": "^7.0.4",
-    "promise-mysql": "^4.1.1",
-    "request": "^2.88.0",
-    "toastr": "^2.1.4",
-    "xmlhttprequest": "^1.8.0"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "start": "node app.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/eduardosilva95/shiny-list-web.git"
-  },
-  "author": "Eduardo Silva",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/eduardosilva95/shiny-list-web/issues"
-  },
-  "homepage": "https://github.com/eduardosilva95/shiny-list-web#readme",
-  "description": ""
+    "name": "shinylist",
+    "version": "2.1.0",
+    "main": "app.js",
+    "engines": {
+        "node": "12.4"
+    },
+    "dependencies": {
+        "cookie-parser": "^1.4.4",
+        "ejs": "^2.7.1",
+        "express": "^4.17.1",
+        "firebase": "9.0.2",
+        "firebase-admin": "^9.11.1",
+        "firebase-functions": "^3.3.0",
+        "grpc": "^1.24.11",
+        "md5": "^2.2.1",
+        "multer": "^1.4.2",
+        "mysql": "^2.17.1",
+        "open": "^7.0.4",
+        "promise-mysql": "^4.1.1",
+        "request": "^2.88.2",
+        "toastr": "^2.1.4",
+        "xmlhttprequest": "^1.8.0"
+    },
+    "scripts": {
+        "start": "node app.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/eduardosilva95/shiny-list-web.git"
+    },
+    "author": "Eduardo Silva",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/eduardosilva95/shiny-list-web/issues"
+    },
+    "homepage": "https://github.com/eduardosilva95/shiny-list-web#readme",
+    "description": ""
 }

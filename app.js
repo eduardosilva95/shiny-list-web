@@ -19,18 +19,13 @@ var open = require('open');
 
 // FIREBASE 
 
-const admin = require('firebase-admin');
-const firebase = require('firebase');
+const firebase = require('firebase-admin');
 require("firebase/storage");
 
 const serviceAccount = require("./service-key.json");
 
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: "https://shiny-pogo.firebaseio.com"
-});
-
 firebase.initializeApp({
+    credential: firebase.credential.cert(serviceAccount),
     apiKey: "AIzaSyDmRmAEccwcgxz5SUmwEuqklfypdM0qC3k",
     authDomain: "shiny-pogo.firebaseapp.com",
     databaseURL: "https://shiny-pogo.firebaseio.com",
@@ -40,7 +35,7 @@ firebase.initializeApp({
     appId: "1:608457625867:web:686af4fa599f39a906d20e",
 })
 
-let db = admin.firestore();
+let db = firebase.firestore();
 var storage = firebase.storage();
 
 
@@ -109,7 +104,7 @@ app.get('/pokemon-list', function(req, res) {
                 var data = doc.data();
 
                 // REMOVE ALL LANGUAGES THAT WE'RE NOT USE TO REDUCE THE DATA SIZE
-                var description = data.description.description_en;
+                var description = data.description.descriptionMale ? data.description.descriptionMale.description_en : data.description.descriptionGeneric.description_en;
                 delete data.description;
                 data.description = { description_en: description };
 
@@ -154,7 +149,7 @@ app.get('/pokemon-list/:config', function(req, res) {
             snapshot.forEach(doc => {
                 var data = doc.data();
                 // REMOVE ALL LANGUAGES THAT WE'RE NOT USE TO REDUCE THE DATA SIZE
-                var description = data.description.description_en;
+                var description = data.description.descriptionMale ? data.description.descriptionMale.description_en : data.description.descriptionGeneric.description_en;
                 delete data.description;
                 data.description = { description_en: description };
 
@@ -397,7 +392,7 @@ app.post('/shiny-list-data/:user_id', function(req, res) {
                             var data = doc.data();
 
                             // REMOVE ALL LANGUAGES THAT WE'RE NOT USE TO REDUCE THE DATA SIZE
-                            var description = data.description.description_en;
+                            var description = data.description.descriptionMale ? data.description.descriptionMale.description_en : data.description.descriptionGeneric.description_en;
                             delete data.description;
                             data.description = { description_en: description };
 
@@ -602,7 +597,7 @@ app.post('/lucky-list-data/:user_id', function(req, res) {
                         var data = doc.data();
 
                         // REMOVE ALL LANGUAGES THAT WE'RE NOT USE TO REDUCE THE DATA SIZE
-                        var description = data.description.description_en;
+                        var description = data.description.descriptionMale ? data.description.descriptionMale.description_en : data.description.descriptionGeneric.description_en;
                         delete data.description;
                         data.description = { description_en: description };
 
@@ -650,7 +645,7 @@ app.post('/update-lucky', function(req, res) {
     var user_id = req.cookies['user']; // user ID
     var pokemon_id = req.body.pokemon;
     var hasLucky = req.body.hasLucky ? req.body.hasLucky == "true" : false;
-    var lastModified = admin.firestore.Timestamp.now();
+    var lastModified = firebase.firestore.Timestamp.now();
     var quantity = parseInt(req.body.quantity);
 
     const pokemonDoc = db.collection('users').doc(user_id).collection("luckyPokemon").doc(pokemon_id);
@@ -781,15 +776,55 @@ app.get('/event-list', function(req, res) {
 
 
             event.startDate = event.startDate.toDate().toString();
+            event.endDate = event.endDate.toDate().toString();
+
+            var collator = new Intl.Collator([], { numeric: true });
+            event.pokemon.sort((a, b) => collator.compare(a.id, b.id));
 
             events_list.push(event);
         });
 
-        res.contentType('json');
-        res.send({ event_list: events_list });
+        fs.readFile(path.join(__dirname, "dist/json/config/events_actions.json"), (err, data) => {
+            if (err) throw err;
+            let loaded_data = JSON.parse(data);
+
+            res.contentType('json');
+            res.send({ event_list: events_list, actions: loaded_data });
+        });
+
 
     }).catch(err => {
         console.log('Error getting documents', err);
+    });
+});
+
+
+// test event list request
+app.get('/event-list-test', function(req, res) {
+    var events_list = [];
+
+    fs.readFile(path.join(__dirname, 'dist/json/events.json'), (err, data) => {
+        if (err) throw err;
+        let loaded_data = JSON.parse(data);
+        for (var key in loaded_data.event_list) {
+            if (loaded_data.event_list.hasOwnProperty(key)) {
+                var event = loaded_data.event_list[key];
+
+                var collator = new Intl.Collator([], { numeric: true });
+                event.pokemon.sort((a, b) => collator.compare(a.id, b.id));
+
+
+                events_list.push(event);
+            }
+        }
+
+        fs.readFile(path.join(__dirname, "dist/json/config/events_actions.json"), (err, data) => {
+            if (err) throw err;
+            let loaded_data = JSON.parse(data);
+
+            res.contentType('json');
+            res.send({ event_list: events_list, actions: loaded_data });
+        });
     });
 });
 
@@ -800,6 +835,7 @@ app.post('/shiny-simulator', function(req, res) {
     var pokemon_data = [];
 
     var eventID = req.body.eventID;
+    var isPremium = req.body.isPremium === "true";
 
     if (eventID != undefined) {
         const eventsDB = db.collection('events');
@@ -811,7 +847,9 @@ app.post('/shiny-simulator', function(req, res) {
                     eventData = doc.data();
 
                     for (var key in eventData.pokemon) {
-                        pokemon_list.push(eventData.pokemon[key].id);
+                        if (isPremium || !eventData.pokemon[key].isPremium) {
+                            pokemon_list.push(eventData.pokemon[key].id);
+                        }
                     }
 
                     let eventsPokemonDocData = db.collection('pokemon_v2').get().then(snapshot2 => {
@@ -823,7 +861,7 @@ app.post('/shiny-simulator', function(req, res) {
                             }
                         });
 
-                        res.render(path.join(__dirname + '/templates/shiny-simulator.html'), { event: eventData, pokemon_data: pokemon_data, pokemon_list: pokemon_list });
+                        res.render(path.join(__dirname + '/templates/shiny-simulator.html'), { event: eventData, pokemon_data: pokemon_data, isPremium: isPremium });
                     });
                 }
             })
@@ -974,7 +1012,7 @@ app.post('/update-profile', function(req, res) {
                 playerXP: xp
             },
             lastDates: {
-                lastModifiedStats: admin.firestore.Timestamp.now()
+                lastModifiedStats: firebase.firestore.Timestamp.now()
             }
         })
 
@@ -1007,7 +1045,7 @@ app.post('/google-signin', function(req, res) {
                     var isDeveloper = data.developerUserIds.includes(doc.data().id);
                     user.update({
                         lastDates: {
-                            lastWebAccessDate: admin.firestore.Timestamp.now(),
+                            lastWebAccessDate: firebase.firestore.Timestamp.now(),
                         },
                     });
                     res.send({ user_id: doc.data().id, picture: doc.data().image, username: doc.data().nickname, version: data.versionWeb, isDeveloper: isDeveloper });
@@ -1064,8 +1102,8 @@ app.post('/register', function(req, res) {
                 playerXP: xp
             },
             lastDates: {
-                lastModifiedStats: admin.firestore.Timestamp.now(),
-                lastWebAccessDate: admin.firestore.Timestamp.now(),
+                lastModifiedStats: firebase.firestore.Timestamp.now(),
+                lastWebAccessDate: firebase.firestore.Timestamp.now(),
             },
             errorCode: 0,
         });
@@ -1079,7 +1117,7 @@ app.post('/register', function(req, res) {
                     db.collection('app').doc("web").get().then(snapshot => {
                         var data = snapshot.data();
                         var isDeveloper = data.developerUserIds.includes(doc.data().id);
-                        user.update({ lastWebAccessDate: admin.firestore.Timestamp.now() });
+                        user.update({ lastWebAccessDate: firebase.firestore.Timestamp.now() });
                         res.send({ success: "success", user_id: doc.data().id, picture: doc.data().image, username: doc.data().username, version: data.versionWeb, isDeveloper: isDeveloper });
                     });
                 }
@@ -1109,7 +1147,7 @@ app.post('/update-last-access', function(req, res) {
             } else {
                 user.update({
                     lastDates: {
-                        lastWebAccessDate: admin.firestore.Timestamp.now(),
+                        lastWebAccessDate: firebase.firestore.Timestamp.now(),
                     },
                 });
                 res.send({ success: true });
@@ -1203,7 +1241,7 @@ app.post('/update-medal', function(req, res) {
     var user_id = req.cookies['user']; // user ID
     var medal_id = req.body.medal;
     var total = parseInt(req.body.total);
-    var lastModified = admin.firestore.Timestamp.now();
+    var lastModified = firebase.firestore.Timestamp.now();
 
     const medalDoc = db.collection('users').doc(user_id).collection("medals").doc(medal_id);
 
@@ -1239,7 +1277,7 @@ app.post('/update-shiny', function(req, res) {
     var quantity = parseInt(req.body.quantity);
     var isTemporary = req.body.isTemporary ? req.body.isTemporary == "true" : false;
     var collection = isTemporary ? "tempPokemon" : "pokemon";
-    var lastModified = admin.firestore.Timestamp.now();
+    var lastModified = firebase.firestore.Timestamp.now();
 
     console.log(req.body);
 
@@ -1315,7 +1353,7 @@ app.get('/request-friends', function(req, res) {
 
 
 app.get('/friends', function(req, res) {
-    res.render(path.join(__dirname + '/templates/under-construct.html'));
+    res.render(path.join(__dirname + '/templates/under-construct.html'), {});
 });
 
 
@@ -1365,7 +1403,7 @@ app.post('/friends/shiny-compare', function(req, res) {
     const user = db.collection('users');
     const pokemon = db.collection('pokemon_v2');
     const baseQuery = pokemon.where("availability.hasShinyAvailable", "==", true)
-        .where("startDates.shinyStartDate", "<=", admin.firestore.Timestamp.now());
+        .where("startDates.shinyStartDate", "<=", firebase.firestore.Timestamp.now());
 
     var pokemon_data = {};
 

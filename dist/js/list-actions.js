@@ -5,6 +5,7 @@ var list_filters = new Set();
 var list_events = new Set();
 var list_genders = new Set();
 var list_categories = new Set();
+var list_events_categories = new Set();
 
 var enableFunctions = [];
 var filterCacheKey = null;
@@ -265,7 +266,6 @@ $(function() {
     }
 });
 
-// on submit btn
 $(function() {
     $('#btn-search-list').click(function() {
         search();
@@ -318,7 +318,7 @@ function search() {
 
         if (openedPage === "shinylist" || openedPage === "luckylist") {
             setCounters(unique, total, available);
-        } else {
+        } else if (openedPage !== "events") {
             setCounters(null, available, null);
         }
     }
@@ -383,6 +383,12 @@ function evaluateByQuery(query, card_id) {
         return filterByPokemonMove(query, card_id, notFlag);
     } else if (enableFunctions.includes("movePvPBuffs") && query == "buffs") {
         return filterByPvPBuffs(query, card_id, notFlag);
+    } else if (enableFunctions.includes("eventYear") && checkFilterWithRange(query, "year")) {
+        return filterByEventYear(query.slice(4), card_id, notFlag, "both");
+    } else if (enableFunctions.includes("eventYear") && checkFilterWithRange(query, "yearstart")) {
+        return filterByEventYear(query.slice(9), card_id, notFlag, "start");
+    } else if (enableFunctions.includes("eventYear") && checkFilterWithRange(query, "yearend")) {
+        return filterByEventYear(query.slice(7), card_id, notFlag, "end");
 
         // FILTER POKEMON BY LISTS LOADED
     } else if (enableFunctions.includes("pokemonRegion") && list_regions.has(query.toLowerCase())) {
@@ -403,6 +409,8 @@ function evaluateByQuery(query, card_id) {
         return filterByCategoryFamily(query.slice(1), card_id, notFlag);
     } else if (enableFunctions.includes("moveType") && list_types.has(query.toLowerCase())) {
         return filterByMove(query, card_id, notFlag);
+    } else if (enableFunctions.includes("eventCategory") && list_events_categories.has(query.toLowerCase().replace(" ", ""))) {
+        return filterByEventCategory(query, card_id, notFlag);
 
         // REMAINING FILTERS
     } else if (enableFunctions.includes("pokemonSecondId") && query.split("#").length == 2 && !isNaN(query.split("#")[0])) {
@@ -421,6 +429,8 @@ function evaluateByQuery(query, card_id) {
         return filterByName(query, card_id, notFlag);
     } else if (enableFunctions.includes("moveName") && query != "") {
         return filterByMove(query, card_id, notFlag);
+    } else if (enableFunctions.includes("eventName") && query != "") {
+        return filterByEventName(query, card_id, notFlag);
     } else {
         return !notFlag && query == "";
     }
@@ -741,6 +751,59 @@ function filterByPvPBuffs(query, move_id, notFlag) {
     return hasPvPBuffs && !notFlag;
 }
 
+function filterByEventName(query, event_id, notFlag) {
+    if (events_data[event_id].name.toLowerCase().includes(query.toLowerCase())) {
+        return !notFlag;
+    }
+    return notFlag;
+}
+
+function filterByEventCategory(query, event_id, notFlag) {
+    if (events_data[event_id].category && events_data[event_id].category.toLowerCase().replace("_", "") === query.replace(" ", "")) {
+        return !notFlag;
+    }
+    return notFlag;
+}
+
+function filterByEventYear(query, event_id, notFlag, filter) {
+    var eventYears = [];
+    if (filter == "start") {
+        eventYears.push(new Date(events_data[event_id].startDate).getFullYear());
+    } else if (filter == "end") {
+        eventYears.push(new Date(events_data[event_id].endDate).getFullYear());
+    } else if (filter == "both") {
+        eventYears.push(new Date(events_data[event_id].startDate).getFullYear());
+        if (!eventYears.includes(new Date(events_data[event_id].endDate).getFullYear())) {
+            eventYears.push(new Date(events_data[event_id].endDate).getFullYear());
+        }
+    }
+
+    if (!isNaN(query) && eventYears.includes(parseInt(query))) {
+        return !notFlag;
+    } else if (!isNaN(query.split("-")[0]) && !isNaN(query.split("-")[1])) {
+        for (var i = 0; i < eventYears.length; i++) {
+            if (eventYears[i] >= parseInt(query.split("-")[0]) && eventYears[i] <= parseInt(query.split("-")[1])) {
+                return !notFlag;
+            }
+        }
+
+    } else if (query.split("-")[0] == "") {
+        for (var i = 0; i < eventYears.length; i++) {
+            if (eventYears[i] <= parseInt(query.split("-")[1])) {
+                return !notFlag;
+            }
+        }
+    } else if (query.split("-")[1] == "") {
+        for (var i = 0; i < eventYears.length; i++) {
+            if (eventYears[i] >= parseInt(query.split("-")[0])) {
+                return !notFlag;
+            }
+        }
+    }
+
+    return notFlag;
+}
+
 
 // SORT OPTIONS
 
@@ -763,35 +826,51 @@ $(document).on("click", ".dropdown-sort-list", function() {
         isDate = false
     }
 
-    var data = openedPage == "moves" ? move_data : pokemon_data;
+    var data;
+    if (openedPage === "moves") {
+        data = move_data;
+    } else if (openedPage === "events") {
+        data = events_data;
+    } else {
+        data = pokemon_data;
+    }
 
-    // by default the list are sorted by id
-    sortPokemonByAttribute("id", false, data);
+    if (openedPage !== "events") {
+        // by default the list are sorted by id
+        sortPokemonByAttribute("id", false, data);
 
-    if (isDate) {
-        if (attr.length == 1) {
-            sortPokemonByDate(attr[0], $(this).attr("id").includes("desc"), data);
-        } else if (attr.length == 2) {
-            sortPokemonByDateWithTwoAttr(attr[0], attr[1], $(this).attr("id").includes("desc"), data)
+        if (isDate) {
+            if (attr.length == 1) {
+                sortPokemonByDate(attr[0], $(this).attr("id").includes("desc"), data);
+            } else if (attr.length == 2) {
+                sortPokemonByDateWithTwoAttr(attr[0], attr[1], $(this).attr("id").includes("desc"), data)
+            }
+        } else {
+            if (attr.length == 1) {
+                sortPokemonByAttribute(attr[0], $(this).attr("id").includes("desc"), data);
+            } else if (attr.length == 2) {
+                sortPokemonByTwoAttr(attr[0], attr[1], $(this).attr("id").includes("desc"), data)
+            }
         }
     } else {
-        if (attr.length == 1) {
-            sortPokemonByAttribute(attr[0], $(this).attr("id").includes("desc"), data);
-        } else if (attr.length == 2) {
-            sortPokemonByTwoAttr(attr[0], attr[1], $(this).attr("id").includes("desc"), data)
+        if (isDate) {
+            sortEventByDate(attr[0], $(this).attr("id").includes("desc"), data);
+        } else {
+            sortEventByAttribute(attr[0], $(this).attr("id").includes("desc"), data);
         }
     }
+
 });
 
 
 function sortPokemonByAttribute(attribute, reversed, data) {
     if (!reversed) {
         $('.list .list-card-design').sort(function(a, b) {
-            return data[$(a).find("#card-id").text()][attribute] >= data[$(b).find("#card-id").text()][attribute] && !reversed ? 1 : -1;
+            return data[$(a).find("#card-id").text()][attribute] > data[$(b).find("#card-id").text()][attribute] ? 1 : -1;
         }).appendTo(".list");
     } else {
         $('.list .list-card-design').sort(function(a, b) {
-            return data[$(a).find("#card-id").text()][attribute] < data[$(b).find("#card-id").text()][attribute] && !reversed ? 1 : -1;
+            return data[$(a).find("#card-id").text()][attribute] < data[$(b).find("#card-id").text()][attribute] ? 1 : -1;
         }).appendTo(".list");
     }
 }
@@ -799,11 +878,11 @@ function sortPokemonByAttribute(attribute, reversed, data) {
 function sortPokemonByTwoAttr(attr1, attr2, reversed, data) {
     if (!reversed) {
         $('.list .list-card-design').sort(function(a, b) {
-            return data[$(a).find("#card-id").text()][attr1][attr2] >= data[$(b).find("#card-id").text()][attr1][attr2] && !reversed ? 1 : -1;
+            return data[$(a).find("#card-id").text()][attr1][attr2] > data[$(b).find("#card-id").text()][attr1][attr2] ? 1 : -1;
         }).appendTo(".list");
     } else {
         $('.list .list-card-design').sort(function(a, b) {
-            return data[$(a).find("#card-id").text()][attr1][attr2] < data[$(b).find("#card-id").text()][attr1][attr2] && !reversed ? 1 : -1;
+            return data[$(a).find("#card-id").text()][attr1][attr2] < data[$(b).find("#card-id").text()][attr1][attr2] ? 1 : -1;
         }).appendTo(".list");
     }
 
@@ -812,7 +891,7 @@ function sortPokemonByTwoAttr(attr1, attr2, reversed, data) {
 function sortPokemonByDate(attribute, reversed, data) {
     if (!reversed) {
         $('.list .list-card-design').sort(function(a, b) {
-            return new Date(data[$(a).find("#card-id").text()][attribute]) >= new Date(data[$(b).find("#card-id").text()][attribute]) ? 1 : -1;
+            return new Date(data[$(a).find("#card-id").text()][attribute]) > new Date(data[$(b).find("#card-id").text()][attribute]) ? 1 : -1;
         }).appendTo(".list");
     } else {
         $('.list .list-card-design').sort(function(a, b) {
@@ -824,12 +903,46 @@ function sortPokemonByDate(attribute, reversed, data) {
 function sortPokemonByDateWithTwoAttr(attr1, attr2, reversed, data) {
     if (!reversed) {
         $('.list .list-card-design').sort(function(a, b) {
-            return new Date(data[$(a).find("#card-id").text()][attr1][attr2]) >= new Date(data[$(b).find("#card-id").text()][attr1][attr2]) && !reversed ? 1 : -1;
+            return new Date(data[$(a).find("#card-id").text()][attr1][attr2]) > new Date(data[$(b).find("#card-id").text()][attr1][attr2]) ? 1 : -1;
         }).appendTo(".list");
     } else {
         $('.list .list-card-design').sort(function(a, b) {
-            return new Date(data[$(a).find("#card-id").text()][attr1][attr2]) < new Date(data[$(b).find("#card-id").text()][attr1][attr2]) && !reversed ? 1 : -1;
+            return new Date(data[$(a).find("#card-id").text()][attr1][attr2]) < new Date(data[$(b).find("#card-id").text()][attr1][attr2]) ? 1 : -1;
         }).appendTo(".list");
+    }
+}
+
+function sortEventByAttribute(attribute, reversed, data) {
+    if (!reversed) {
+        $(".event-div").each(function() {
+            $(this).children(".event-list-div").children(".event-card-design").sort(function(a, b) {
+                return data[$(a).find("#event-id").val()][attribute] > data[$(b).find("#event-id").val()][attribute] ? 1 : -1;
+            }).appendTo($(this).children(".event-list-div"));
+        });
+    } else {
+        $(".event-div").each(function() {
+            $(this).children(".event-list-div").children(".event-card-design").sort(function(a, b) {
+                return data[$(a).find("#event-id").val()][attribute] < data[$(b).find("#event-id").val()][attribute] ? 1 : -1;
+            }).appendTo($(this).children(".event-list-div"));
+
+        });
+    }
+}
+
+function sortEventByDate(attribute, reversed, data) {
+    if (!reversed) {
+        $(".event-div").each(function() {
+            $(this).children(".event-list-div").children(".event-card-design").sort(function(a, b) {
+                return new Date(data[$(a).find("#event-id").val()][attribute]) > new Date(data[$(b).find("#event-id").val()][attribute]) ? 1 : -1;
+            }).appendTo($(this).children(".event-list-div"));
+        });
+    } else {
+        $(".event-div").each(function() {
+            $(this).children(".event-list-div").children(".event-card-design").sort(function(a, b) {
+                return new Date(data[$(a).find("#event-id").val()][attribute]) < new Date(data[$(b).find("#event-id").val()][attribute]) ? 1 : -1;
+            }).appendTo($(this).children(".event-list-div"));
+
+        });
     }
 }
 

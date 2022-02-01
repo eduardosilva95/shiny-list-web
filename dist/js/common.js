@@ -1,4 +1,6 @@
 var redirect_url = null;
+const DEFAULT_IMAGE = "/img/default_badge_0.png"
+const TBA_DATE_TIMESTAMP = 253402300799000;
 
 /*-------------------------------------- LOGIN  ------------------------------------------------------------------------*/
 
@@ -151,6 +153,7 @@ function loadImageFromFirebase(imageUrl, target) {
     storage.ref().child(imageUrl).getDownloadURL().then(function(url) {
         document.getElementById(target).src = url;
     }).catch(function(error) {
+        document.getElementById(target).src = DEFAULT_IMAGE;
         console.log("Error getting the image from Firebase");
     });
 }
@@ -166,6 +169,7 @@ function loadImageFromFirebaseAndCache(imageUrl, target, id, compoundId) {
             document.getElementById(target).src = url;
             setImageOnFirebaseCache(id, url);
         }).catch(function(error) {
+            document.getElementById(target).src = DEFAULT_IMAGE;
             console.log("Error getting the image from Firebase");
         });
     }
@@ -380,6 +384,16 @@ $(function() {
 
         });
     });
+
+    $("#view-settings-btn").on("click", function() {
+        if (getCookie("appVersion")) {
+            $(".app-version").text("v" + getCookie("appVersion"));
+        }
+        $("#settings-modal-clear-data-success-label").css("display", "none");
+
+        $("#settings-modal").modal();
+    });
+
 });
 
 
@@ -432,6 +446,36 @@ function setPokemonPropertyDataOnCache(id, property, value) {
     sessionStorage.setItem("pokemonDataCache", JSON.stringify(cache));
 }
 
+function clearPokemonDataCache() {
+    if (sessionStorage.getItem("shinyListDataFlag")) {
+        sessionStorage.removeItem("shinyListDataFlag");
+    }
+    if (sessionStorage.getItem("luckyListDataFlag")) {
+        sessionStorage.removeItem("luckyListDataFlag");
+    }
+    if (sessionStorage.getItem("pokemonListDataFlag")) {
+        sessionStorage.removeItem("pokemonListDataFlag");
+    }
+    if (sessionStorage.getItem("pokemonDataCache")) {
+        sessionStorage.removeItem("pokemonDataCache");
+    }
+}
+
+
+
+/*-------------------------------------- SETTINGS ------------------------------------------------------------------------*/
+
+
+
+$(function() {
+    $("#settings-modal-clear-data-btn").on("click", function() {
+        clearPokemonDataCache();
+        $("#settings-modal-clear-data-success-label").css("display", "initial");
+    });
+});
+
+
+
 // AUX FUNCTIONS
 
 function sortObjectByKeys(o) {
@@ -440,6 +484,10 @@ function sortObjectByKeys(o) {
 
 function convertDateToText(date) {
     date = new Date(date);
+
+    if (date.getTime() === TBA_DATE_TIMESTAMP) {
+        return "TBA";
+    }
 
     return (date.getDate() < 10 ? '0' : '') + date.getDate() + "-" + ((date.getMonth() + 1) < 10 ? '0' : '') + (date.getMonth() + 1) + "-" + date.getFullYear() +
         " " + (date.getHours() < 10 ? '0' : '') + date.getHours() + ":" + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();

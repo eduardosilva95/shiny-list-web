@@ -12,8 +12,8 @@
     <link rel="icon" href="img/shinylist_icon.ico">
 
     <!-- Custom styles -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/v4-shims.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/v4-shims.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/shiny-simulator-styles.css">
     <link rel="stylesheet" href="css/styles.css">
@@ -73,10 +73,14 @@
 
         <% include ../views/shiny-simulator-pick-event.ejs %>
             <% include ../views/shiny-simulator-pick-pokemon.ejs %>
+                <% include ../views/preview-event-modal.ejs %>
+                    <% include ../views/premium-event-choose-modal.ejs %>
 
-                <br><br><br>
+                        <% include ../views/search-help-modal.ejs %>
 
-                <% include ../views/footer.ejs %>
+                            <br><br><br>
+
+                            <% include ../views/footer.ejs %>
 </body>
 
 </html>

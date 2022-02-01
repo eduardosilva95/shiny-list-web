@@ -1,5 +1,5 @@
 <div class="modal fade" id="pokemon-bio-modal" tabindex="-1" role="dialog" aria-labelledby="pokemon-bio-modal" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog" role="document" style="max-width: 600px;">
         <div class="modal-content">
             <div class="modal-body">
                 <p id="pokemon-bio-id" style="display: none;"></p>
@@ -29,10 +29,13 @@
                         <a class="nav-link active" id="pokemon-bio-tab" data-toggle="tab" href="#pokemon-bio-info-div" role="tab" aria-controls="info" aria-selected="true">Pokémon Bio</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" id="pokemon-stats-tab" data-toggle="tab" href="#pokemon-bio-stats-div" role="tab" aria-controls="stats" aria-selected="false">Pokémon Stats</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" id="pokemon-moves-tab" data-toggle="tab" href="#pokemon-bio-moves-div" role="tab" aria-controls="moves" aria-selected="false">Moves</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="pokemon-stats-tab" data-toggle="tab" href="#pokemon-bio-stats-div" role="tab" aria-controls="stats" aria-selected="false">Personal Stats</a>
+                        <a class="nav-link" id="pokemon-user-stats-tab" data-toggle="tab" href="#pokemon-bio-user-stats-div" role="tab" aria-controls="user-stats" aria-selected="false">User Stats</a>
                     </li>
                 </ul>
 
@@ -40,7 +43,7 @@
                     <div class="tab-pane fade show active pokemon-bio-info-div" id="pokemon-bio-info-div" role="tabpanel" aria-labelledby="pokemon-bio-tab">
                         <div class="row">
                             <div class="col-md">
-                                <p><strong># Pokedex: </strong><span id="pokemon-bio-pokedex-number"></span></p>
+                                <p><strong># Pokédex: </strong><span id="pokemon-bio-pokedex-number"></span></p>
                             </div>
                             <div class="col-md">
                                 <p><strong>Family: </strong><span id="pokemon-bio-family"></span></p>
@@ -67,17 +70,6 @@
                                 <p style="padding-top: 3px;"><strong>Weight: </strong><span id="pokemon-bio-weight"></span></p>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md">
-                                <p><strong>Attack: </strong><span id="pokemon-bio-base-stat-attack"></span></p>
-                            </div>
-                            <div class="col-md">
-                                <p><strong>Defense: </strong><span id="pokemon-bio-base-stat-defense"></span></p>
-                            </div>
-                            <div class="col-md">
-                                <p><strong>Stamina: </strong><span id="pokemon-bio-base-stat-stamina"></span></p>
-                            </div>
-                        </div>
                         <p><strong>Description: </strong><span id="pokemon-bio-description"></span></p>
                         <p><strong>Pokémon available since: </strong><span id="pokemon-bio-start-date"></span></p>
                         <p><strong>Shiny available since: </strong><span id="pokemon-bio-shiny-start-date"></span></p>
@@ -86,17 +78,75 @@
 
                     </div>
 
-
-                    <div class="tab-pane fade pokemon-bio-info-div" id="pokemon-bio-stats-div" role="tabpanel" aria-labelledby="pokemon-stats-tab">
-                        <div class="row">
+                    <div class="tab-pane fade pokemon-bio-stats-div" id="pokemon-bio-stats-div" role="tabpanel" aria-labelledby="pokemon-stats-tab">
+                        <div class="row" style="padding-top: 10px;">
                             <div class="col-md">
-                                <p><strong>Seen Before Shiny Release: </strong><span id="pokemon-stats-start-seen"></span></p>
-                                <p><strong>Current Seen: </strong><span id="pokemon-stats-current-seen"></span></p>
-                                <p><strong>Total: </strong><span id="pokemon-stats-checks-total"></span></p>
-                                <p><strong>Percentage (number): </strong><span id="pokemon-stats-checks-percentage"></span></p>
-                                <p><strong>Percentage (%): </strong><span id="pokemon-stats-checks-percentage-2"></span></p>
+                                <p><strong>Base Attack: </strong><span id="pokemon-bio-base-stat-attack"></span></p>
+                            </div>
+                            <div class="col-md">
+                                <p><strong>Base Defense: </strong><span id="pokemon-bio-base-stat-defense"></span></p>
+                            </div>
+                            <div class="col-md">
+                                <p><strong>Base Stamina: </strong><span id="pokemon-bio-base-stat-stamina"></span></p>
                             </div>
                         </div>
+
+                        <div class="cp-calculator-div">
+                            <p style="text-align: center;"><strong>Calculated CP (IVs + Level): </strong><span id="cp-calculator-result"></span></p>
+                            <div class="cp-calculator-input-div">
+                                <div style="text-align: end;">
+                                    <p><strong>Attack IV: </strong><input type="number" min="0" max="15" value="15" class="form-control cp-calc-input" id="attack-iv-input"></p>
+                                    <p><strong>Defense IV: </strong><input type="number" min="0" max="15" value="15" class="form-control cp-calc-input" id="defense-iv-input"></p>
+                                </div>
+                                <div style="text-align: end;">
+                                    <p><strong>Stamina IV: </strong><input type="number" min="0" max="15" value="15" class="form-control cp-calc-input" id="stamina-iv-input"></p>
+                                    <p><strong>Level: </strong><input type="number" min="1" max="55" value="40" class="form-control cp-calc-input" id="pokemon-level-input"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="max-cp-div">
+                            <span class="max-cp-title"><strong>Max CP</strong></span>
+                            <div class="max-cp-level-div">
+                                <div>
+                                    <p><strong>Max. CP (Lv. 15): </strong><span id="pokemon-bio-max-cp-15"></span></p>
+                                    <p><strong>Max. CP (Lv. 25): </strong><span id="pokemon-bio-max-cp-25"></span></p>
+                                    <p><strong>Max. CP (Lv. 50): </strong><span id="pokemon-bio-max-cp-50"></span></p>
+                                    <p><strong>Max. CP (Lv. 54): </strong><span id="pokemon-bio-max-cp-54"></span></p>
+                                </div>
+                                <div>
+                                    <p><strong>Max. CP (Lv. 20): </strong><span id="pokemon-bio-max-cp-20"></span></p>
+                                    <p><strong>Max. CP (Lv. 40): </strong><span id="pokemon-bio-max-cp-40"></span></p>
+                                    <p><strong>Max. CP (Lv. 51): </strong><span id="pokemon-bio-max-cp-51"></span></p>
+                                    <p><strong>Max. CP (Lv. 55): </strong><span id="pokemon-bio-max-cp-55"></span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--<div class="row" style="padding-top: 10px;">
+                            <div class="col-md">
+                                <p><strong>Max. CP (Lv. 15): </strong><span id="pokemon-bio-max-cp-15"></span></p>
+                            </div>
+                            <div class="col-md">
+                                <p><strong>Max. CP (Lv. 20): </strong><span id="pokemon-bio-max-cp-20"></span></p>
+                            </div>
+                            <div class="col-md">
+                                <p><strong>Max. CP (Lv. 25): </strong><span id="pokemon-bio-max-cp-25"></span></p>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-top: 10px;">
+                            <div class="col-md">
+                                <p><strong>Max. CP (Lv. 40): </strong><span id="pokemon-bio-max-cp-40"></span></p>
+                            </div>
+                            <div class="col-md">
+                                <p><strong>Max. CP (Lv. 50): </strong><span id="pokemon-bio-max-cp-50"></span></p>
+                            </div>
+                        </div>-->
+
+
+
+
+
                     </div>
 
 
@@ -115,6 +165,18 @@
                                 </div>
                                 <div class="pokemon-bio-moves-list" id="pokemon-charged-moves" style="padding-top: 10px;">
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade pokemon-bio-info-div" id="pokemon-bio-user-stats-div" role="tabpanel" aria-labelledby="pokemon-user-stats-tab">
+                        <div class="row">
+                            <div class="col-md">
+                                <p><strong>Seen Before Shiny Release: </strong><span id="pokemon-stats-start-seen"></span></p>
+                                <p><strong>Current Seen: </strong><span id="pokemon-stats-current-seen"></span></p>
+                                <p><strong>Total: </strong><span id="pokemon-stats-checks-total"></span></p>
+                                <p><strong>Percentage (number): </strong><span id="pokemon-stats-checks-percentage"></span></p>
+                                <p><strong>Percentage (%): </strong><span id="pokemon-stats-checks-percentage-2"></span></p>
                             </div>
                         </div>
                     </div>

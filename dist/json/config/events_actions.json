@@ -1,0 +1,66 @@
+{
+    "search": {
+        "SEARCH_EVENT_BY_NAME": {
+            "id": "SEARCH_EVENT_BY_NAME",
+            "title": "Event Name",
+            "description": "Search for the name of an event",
+            "enableFunc": ["eventName"]
+        },
+        "SEARCH_EVENT_BY_CATEGORY": {
+            "id": "SEARCH_EVENT_BY_CATEGORY",
+            "title": "Event Category",
+            "description": "Search for special events (Community Day, Go Fest, ...)",
+            "enableFunc": ["eventCategory"]
+        },
+        "SEARCH_EVENT_BY_YEAR": {
+            "id": "SEARCH_EVENT_BY_YEAR",
+            "title": "Year/YearStart/YearEnd",
+            "description": "Search for events that started/ended on that year (Year2019, YearStart2020, YearEnd2021, ...). You can also select a range of events with the character '-'. (Year2019-2020, YearStart2020-2021, YearEnd2021-2022, ...)",
+            "enableFunc": ["eventYear"]
+        }
+    },
+
+    "sort": {
+        "SORT_EVENT_BY_NAME_ASC": {
+            "id": "sort-event-name-asc",
+            "title": "Alphabetically (A -> Z)",
+            "icon": "fas fa-sort-alpha-down",
+            "attribute": "name"
+        },
+        "SORT_EVENT_BY_NAME_DESC": {
+            "id": "sort-event-name-desc",
+            "title": "Alphabetically (Z -> A)",
+            "icon": "fas fa-sort-alpha-down-alt",
+            "attribute": "name"
+        },
+        "SORT_EVENT_BY_START_DATE_ASC": {
+            "id": "sort-event-start-date-asc",
+            "title": "Start Date [Oldest]",
+            "icon": "far fa-clock",
+            "attribute": "startDate",
+            "isDateAttribute": true
+        },
+        "SORT_EVENT_BY_START_DATE_DESC": {
+            "id": "sort-event-start-date-desc",
+            "title": "Start Date [Most Recent]",
+            "icon": "far fa-clock",
+            "attribute": "startDate",
+            "isDateAttribute": true,
+            "active": true
+        },
+        "SORT_EVENT_BY_END_DATE_ASC": {
+            "id": "sort-event-end-date-asc",
+            "title": "End Date [Oldest]",
+            "icon": "fas fa-clock",
+            "attribute": "startDate",
+            "isDateAttribute": true
+        },
+        "SORT_EVENT_BY_END_DATE_DESC": {
+            "id": "sort-event-end-date-desc",
+            "title": "End Date [Most Recent]",
+            "icon": "fas fa-clock",
+            "attribute": "startDate",
+            "isDateAttribute": true
+        }
+    }
+}

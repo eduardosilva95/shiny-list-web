@@ -1,19 +1,52 @@
+<script type="text/javascript" src="js/list-actions.js"></script>
+
 <div class="container-fluid" id="events-div" style="display: none;">
 
     <button class="btn back-btn"><i class="fa fa-arrow-left"></i><span style="padding-left: 10px;">Back</span></button>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 cont">
+                <div class="left-actions-container" id="search-list-div">
+                    <div class="form-group" style="padding-right: 10px;">
+                        <a class="btn btn-outline-warning" id="list-search-help" data-toggle="modal" data-target="#search-help-modal"><i class="far fa-question-circle fa-lg"></i></a>
+                    </div>
+
+                    <div class="form-group has-search" style="width: 570px; padding-right: 25px;">
+                        <span class="fa fa-search form-control-feedback"></span>
+                        <input type="text" id="events-search-list-input" class="form-control float-left" placeholder="Search" autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                        <button type="button" class="btn btn-outline-warning" id="btn-search-events"><i class="fas fa-search"></i><span style="padding-left: 10px; ">Search</span></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 cont">
+                <div class="right-actions-container">
+                    <div id="sort-list-div">
+                        <div class="dropdown">
+                            <button class="btn btn-outline-warning dropdown-toggle" type="button" id="btn-sort-list" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-sort"></i><span style="padding-left: 10px; ">Sort</span>
+                        </button>
+                            <div class="dropdown-menu" id="sort-list-dropdown-div" aria-labelledby="btn-sort-list">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="container cont text-center">
         <h2 style="color: white; font-weight: bold;">Events</h2>
         <p style="color: #fff; font-size: 23px; opacity: .7">Active Events</p>
     </div>
 
-    <div class="row">
-        <div class="col-md-12 col-12">
-            <br>
-            <div class="row">
-                <div class="d-flex flex-row flex-nowrap" style="overflow-y: auto;" id="active-events-div"></div>
-
-            </div>
+    <div class="event-div active-event-div">
+        <span class="empty-event-list-div-label">No active events available</span>
+        <div class="event-list-div" id="active-events-div">
         </div>
     </div>
 
@@ -25,13 +58,9 @@
         <p style="color: #fff; font-size: 23px; opacity: .7">Upcoming Events</p>
     </div>
 
-    <div class="row">
-        <div class="col-md-12 col-12">
-            <br>
-            <div class="row">
-                <div class="d-flex flex-row flex-nowrap" style="overflow-y: auto;" id="future-events-div"></div>
-
-            </div>
+    <div class="event-div future-event-div">
+        <span class="empty-event-list-div-label">No future events available</span>
+        <div class="event-list-div" id="future-events-div">
         </div>
     </div>
 
@@ -42,8 +71,6 @@
     <div class="container cont text-center">
         <p style="color: #fff; font-size: 23px; opacity: .7">Past Events</p>
     </div>
-
-
 
 
 </div>

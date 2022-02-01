@@ -1,3 +1,7 @@
+// All the CP multipliers
+const cpms = [0.094, 0.135137432, 0.16639787, 0.192650919, 0.21573247, 0.236572661, 0.25572005, 0.273530381, 0.29024988, 0.306057377, 0.3210876, 0.335445036, 0.34921268, 0.362457751, 0.37523559, 0.387592406, 0.39956728, 0.411193551, 0.42250001, 0.432926419, 0.44310755, 0.4530599578, 0.46279839, 0.472336083, 0.48168495, 0.4908558, 0.49985844, 0.508701765, 0.51739395, 0.525942511, 0.53435433, 0.542635767, 0.55079269, 0.558830576, 0.56675452, 0.574569153, 0.58227891, 0.589887917, 0.59740001, 0.604818814, 0.61215729, 0.619399365, 0.62656713, 0.633644533, 0.64065295, 0.647576426, 0.65443563, 0.661214806, 0.667934, 0.674577537, 0.68116492, 0.687680648, 0.69414365, 0.700538673, 0.70688421, 0.713164996, 0.71939909, 0.725571552, 0.7317, 0.734741009, 0.73776948, 0.740785574, 0.74378943, 0.746781211, 0.74976104, 0.752729087, 0.75568551, 0.758630378, 0.76156384, 0.764486065, 0.76739717, 0.770297266, 0.7731865, 0.776064962, 0.77893275, 0.781790055, 0.78463697, 0.787473578, 0.7903, 0.7928039417, 0.7953, 0.797803917, 0.8003, 0.8028038926, 0.8053, 0.8078038685, 0.8103, 0.8128038447, 0.8153, 0.8178038212, 0.8203, 0.822803798, 0.8253, 0.8278037751, 0.8303, 0.8328037524, 0.8353, 0.83780373, 0.8403, 0.8428037079, 0.8453, 0.847803686, 0.8503, 0.8528036644, 0.8553, 0.857803643, 0.8603, 0.8628036219, 0.8653];
+
+
 /*-------------------------------------- LOAD DATA  ------------------------------------------------------------------------*/
 
 function openBioModal(pokemonID) {
@@ -152,9 +156,6 @@ function openBioModal(pokemonID) {
     $("#pokemon-bio-category").text(pokemonData.category.category_en);
     $("#pokemon-bio-start-date").text(processDateToBio(pokemonData.startDates.pokemonStartDate));
     $("#pokemon-bio-shiny-start-date").text(processDateToBio(pokemonData.startDates.shinyStartDate));
-    $("#pokemon-bio-base-stat-attack").text(pokemonData.pokemonStats.baseAttack);
-    $("#pokemon-bio-base-stat-defense").text(pokemonData.pokemonStats.baseDefense);
-    $("#pokemon-bio-base-stat-stamina").text(pokemonData.pokemonStats.baseStamina);
 
     var height = "??? m";
     if (pokemonData.pokemonDimensions.height >= 0) {
@@ -234,6 +235,24 @@ function openBioModal(pokemonID) {
     loadImages(imagesToLoad);
 
     $('#pokemon-bio-modal').modal();
+
+    /* SET POKEMON STATS DIV */
+
+    $("#pokemon-bio-base-stat-attack").text(pokemonData.pokemonStats.baseAttack);
+    $("#pokemon-bio-base-stat-defense").text(pokemonData.pokemonStats.baseDefense);
+    $("#pokemon-bio-base-stat-stamina").text(pokemonData.pokemonStats.baseStamina);
+
+    computeFormCP();
+
+    $("#pokemon-bio-max-cp-15").text(computePokemonCP(pokemonData.pokemonStats.baseAttack, pokemonData.pokemonStats.baseDefense, pokemonData.pokemonStats.baseStamina, 15, 15, 15, 15));
+    $("#pokemon-bio-max-cp-20").text(computePokemonCP(pokemonData.pokemonStats.baseAttack, pokemonData.pokemonStats.baseDefense, pokemonData.pokemonStats.baseStamina, 15, 15, 15, 20));
+    $("#pokemon-bio-max-cp-25").text(computePokemonCP(pokemonData.pokemonStats.baseAttack, pokemonData.pokemonStats.baseDefense, pokemonData.pokemonStats.baseStamina, 15, 15, 15, 25));
+    $("#pokemon-bio-max-cp-40").text(computePokemonCP(pokemonData.pokemonStats.baseAttack, pokemonData.pokemonStats.baseDefense, pokemonData.pokemonStats.baseStamina, 15, 15, 15, 40));
+    $("#pokemon-bio-max-cp-50").text(computePokemonCP(pokemonData.pokemonStats.baseAttack, pokemonData.pokemonStats.baseDefense, pokemonData.pokemonStats.baseStamina, 15, 15, 15, 50));
+    $("#pokemon-bio-max-cp-51").text(computePokemonCP(pokemonData.pokemonStats.baseAttack, pokemonData.pokemonStats.baseDefense, pokemonData.pokemonStats.baseStamina, 15, 15, 15, 51));
+    $("#pokemon-bio-max-cp-54").text(computePokemonCP(pokemonData.pokemonStats.baseAttack, pokemonData.pokemonStats.baseDefense, pokemonData.pokemonStats.baseStamina, 15, 15, 15, 54));
+    $("#pokemon-bio-max-cp-55").text(computePokemonCP(pokemonData.pokemonStats.baseAttack, pokemonData.pokemonStats.baseDefense, pokemonData.pokemonStats.baseStamina, 15, 15, 15, 55));
+
 }
 
 
@@ -245,14 +264,8 @@ function buildDynamicFamilyTree(familyTree, index) {
 
     var imagesToLoad = [];
 
-    var content = "<div class=\"pokemon-family-tree-path text-center\">";
-    if (familyTree.length == 1) {
-        content += "<div class=\"pokemon-family-tree-path-img-singular\">";
-    } else if (familyTree.length == 2) {
-        content += "<div class=\"pokemon-family-tree-path-img-double\">";
-    } else {
-        content += "<div class=\"pokemon-family-tree-path-img\">";
-    }
+    var content = "<div class=\"pokemon-family-tree-path\">";
+    content += "<div class=\"pokemon-family-tree-path-img\">";
 
     content += buildDynamicFamilyTreeMember(familyTree[0], index, 1, imagesToLoad);
     if (familyTree.length > 1) {
@@ -618,6 +631,53 @@ $(document).on('click', "#family-trees-div .pokemon-family-tree-img", function(e
     openBioModal(id);
 });
 
+$(document).on("change", "#attack-iv-input", function(e) {
+    computeFormCP();
+});
+
+$(document).on("change", "#defense-iv-input", function(e) {
+    computeFormCP();
+});
+
+$(document).on("change", "#stamina-iv-input", function(e) {
+    computeFormCP();
+});
+
+$(document).on("change", "#pokemon-level-input", function(e) {
+    computeFormCP();
+});
+
+function computeFormCP() {
+    $("#cp-calculator-result").text("");
+    var isValid = true;
+    var ivsValues = {};
+    for (ivStat of["attack", "defense", "stamina"]) {
+        var ivVal = parseInt($("#" + ivStat + "-iv-input").val());
+        if (isNaN(ivVal) || ivVal < 0 || ivVal > 15) {
+            isValid = false;
+            $("#" + ivStat + "-iv-input").toggleClass("red-border", true);
+        } else {
+            ivsValues[ivStat] = ivVal;
+            $("#" + ivStat + "-iv-input").toggleClass("red-border", false);
+        }
+    }
+
+    var levelVal = parseInt($("#pokemon-level-input").val());
+    if (isNaN(levelVal) || levelVal < 1 || levelVal > 55) {
+        isValid = false;
+        $("#pokemon-level-input").toggleClass("red-border", true);
+    } else {
+        $("#pokemon-level-input").toggleClass("red-border", false);
+    }
+
+    if (isValid) {
+        var baseAtk = parseInt($("#pokemon-bio-base-stat-attack").text());
+        var baseDef = parseInt($("#pokemon-bio-base-stat-defense").text());
+        var baseStam = parseInt($("#pokemon-bio-base-stat-stamina").text());
+        $("#cp-calculator-result").text(computePokemonCP(baseAtk, baseDef, baseStam, ivsValues.attack, ivsValues.defense, ivsValues.stamina, levelVal));
+    }
+}
+
 
 /*-------------------------------------- END USER ACTIONS  ------------------------------------------------------------------------*/
 
@@ -639,4 +699,9 @@ function getFamilyTreeLabel(familyMemberId) {
 
 function getFamilyMemberShinyQuantity(familyMemberId) {
     return parseInt(pokemon_data[familyMemberId].quantity);
+}
+
+function computePokemonCP(baseAtk, baseDef, baseStam, ivAtk, ivDef, ivSta, level) {
+    var cpm = cpms[level * 2 - 2];
+    return parseInt((baseAtk + ivAtk) * (Math.pow((baseDef + ivDef), 0.5) * Math.pow((baseStam + ivSta), 0.5) * Math.pow((cpm), 2)) / 10);
 }

@@ -68,7 +68,7 @@
                         <div class="dropdown-menu" id="profile-menu" aria-labelledby="profile-btn">
                             <a class="dropdown-item header" id="view-profile-btn"><i class="fas fa-user"></i><span style="padding-left: 10px;">Profile</span></a>
                             <a class="dropdown-item header" style="cursor: pointer;" id="view-medals-btn"><i class="fas fa-medal"></i><span style="padding-left: 10px;">Medals</span></a>
-                            <a class="dropdown-item header" style="cursor: pointer;"><i class="fas fa-cog"></i><span style="padding-left: 10px;">Settings</span></a>
+                            <a class="dropdown-item header" style="cursor: pointer;" id="view-settings-btn"><i class="fas fa-cog"></i><span style="padding-left: 10px;">Settings</span></a>
                             <div class="dropdown-divider"></div>
                             <button class="dropdown-item header" onclick="signOut();"><i class="fas fa-sign-out-alt"></i><span style="padding-left: 10px;">Sign out</span></button>
                         </div>
@@ -84,3 +84,4 @@
     <% include ../views/profile-modal.ejs %>
         <% include ../views/register-modal.ejs %>
             <% include ../views/medals-modal.ejs %>
+                <% include ../views/settings.ejs %>

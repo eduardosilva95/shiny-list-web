@@ -111,6 +111,7 @@
     justify-content: space-around;
     flex-flow: row wrap;
     align-items: stretch;
+    margin: 0 40px;
 }
 
 .list-card {
@@ -128,6 +129,7 @@
     background-clip: border-box;
     border-radius: .25rem;
     height: 350px;
+    width: 270px;
     margin-bottom: 14px;
     flex-grow: 1;
 }
@@ -196,6 +198,11 @@
     text-overflow: ellipsis;
     font-size: 18.75px;
     font-weight: 500;
+}
+
+.pokemon-card-footer {
+    display: flex;
+    justify-content: space-between;
 }
 
 .button-add {
@@ -314,7 +321,8 @@
     font-weight: bold;
 }
 
-.pokemon-bio-info-div {
+.pokemon-bio-info-div,
+.pokemon-bio-stats-div {
     padding-top: 10px;
     color: #fff;
     opacity: 0.7;
@@ -326,27 +334,18 @@
     height: 25px;
 }
 
+.pokemon-family-tree-path {
+    display: flex;
+    justify-content: center;
+}
+
 .pokemon-family-tree-path-img {
-    float: left;
+    position: relative;
     margin: 2px;
-    position: relative;
-}
-
-.pokemon-family-tree-path-img-singular {
-    float: left;
-    margin-left: calc((100% - 128px) / 2);
-    position: relative;
-}
-
-.pokemon-family-tree-path-img-double {
-    float: left;
-    margin-left: calc((100% - 290px) / 2);
-    position: relative;
 }
 
 .pokemon-family-tree-path-icon {
     position: relative;
-    float: left;
     padding-top: 60px;
 }
 
@@ -378,7 +377,7 @@
     position: absolute;
     width: 30px !important;
     height: 30px !important;
-    bottom: 40px;
+    top: 100px;
     right: 10px;
 }
 
@@ -427,6 +426,52 @@
     padding-left: 5px;
 }
 
+.cp-calculator-div {
+    border: 2px dashed #fff;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.cp-calculator-input-div {
+    display: flex;
+    justify-content: space-around;
+}
+
+.cp-calc-input {
+    display: initial;
+    height: 27px;
+    width: 70px;
+}
+
+.cp-calc-input.red-border {
+    border: 2px solid red !important;
+}
+
+.cp-calculator-result {
+    font-weight: bold;
+    color: #ffc107;
+    font-size: 16px;
+}
+
+.max-cp-div {
+    padding-top: 10px;
+}
+
+.max-cp-title {
+    display: block;
+    text-align: center;
+    color: #fff;
+    opacity: 0.7;
+    font-size: 14px;
+}
+
+.max-cp-level-div {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
 
 /* MOVE LIST */
 
@@ -443,6 +488,7 @@
     background-color: #545b62;
     background-clip: border-box;
     height: 250px;
+    width: 160px;
     margin-bottom: 14px;
     flex-grow: 1;
     padding: 10px;
@@ -561,6 +607,7 @@
     background-color: rgba(204, 132, 132, 0.3);
     background-clip: border-box;
     border-radius: .25rem;
+    width: 160px;
     height: 200px;
     margin-bottom: 14px;
 }

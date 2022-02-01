@@ -2,11 +2,10 @@ var pokemon_data = [];
 var pokemon_list = [];
 var event_data = {};
 
-var BASE_IMAGE_URL = "https://github.com/PokeMiners/pogo_assets/blob/master/Images/Pokemon/";
-
 var num_tries = 0;
 var num_shinies = 0;
 var SHINY_NUMBER = 1;
+var isPremium = false;
 
 var current, odds, encounters, shinies, streak, worst_streak, best_streak;
 var autochecking = false;
@@ -16,20 +15,18 @@ var sparkling = false;
 var noflash = false;
 
 
-function loadData(list, data, event) {
-    pokemons = data;
+function loadData(data, event, isPrem) {
+    data.forEach((pokemon) => {
+        pokemon = JSON.parse(pokemon);
+        loadImageFromFirebaseAndCache("pokemon_icons/" + pokemon.image.imageNormal, "pokemon_" + pokemon.id + "_normal", pokemon.id, null);
+        loadImageFromFirebaseAndCache("pokemon_icons/" + pokemon.image.imageShiny, "pokemon_" + pokemon.id + "_shiny", pokemon.id, "SHINY");
+        pokemon_list.push(pokemon.id);
+    });
 
-    for (var i = 0; i < pokemons.length; i++) {
-        p = JSON.parse(pokemons[i]);
-        pokemon_data.push(p);
-        $("#pokemon_" + p.id + "_normal").attr("src", BASE_IMAGE_URL + p.image.imageNormal + "?raw=true");
-        $("#pokemon_" + p.id + "_shiny").attr("src", BASE_IMAGE_URL + p.image.imageShiny + "?raw=true");
-    }
-
-    pokemon_list = list.split(',');
     event_data = JSON.parse(event);
 
     encounters = shinies = streak = worst_streak = 0;
+    isPremium = isPrem === "true";
 }
 
 $(function() {
@@ -199,7 +196,9 @@ function generateRandomBetweenTwoNum(min, max) {
 }
 
 function getPokemonShinyOdd(pokemon_id, pokemon_info) {
-    if (event_data.pokemon !== undefined && event_data.pokemon[pokemon_id].odd !== undefined) {
+    if (isPremium && event_data.pokemon !== undefined && event_data.pokemon[pokemon_id].premiumOdd) {
+        return parseInt(event_data.pokemon[pokemon_id].premiumOdd);
+    } else if (event_data.pokemon !== undefined && event_data.pokemon[pokemon_id].odd !== undefined) {
         return parseInt(event_data.pokemon[pokemon_id].odd);
     } else {
         return parseInt(pokemon_info.odds);

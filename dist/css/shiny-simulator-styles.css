@@ -1,6 +1,63 @@
-.event-card {
-    position: relative;
+/* ACTIONS DIV */
+
+.left-actions-container {
+    display: flex;
+    justify-content: flex-start;
 }
+
+.right-actions-container {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#list-search-help {
+    color: #ffc107;
+    cursor: pointer;
+}
+
+#list-search-help:hover {
+    color: black;
+}
+
+.has-search .form-control {
+    padding-left: 2.375rem;
+    width: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+    .has-search .form-control {
+        width: 100%;
+    }
+}
+
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+}
+
+.dropdown-sort-list.active {
+    background-color: #ffc107;
+}
+
+.search-filters-btn {
+    color: #ffc107 !important;
+    font-weight: bold;
+}
+
+.search-filters-btn:hover {
+    text-decoration: underline !important;
+    cursor: pointer;
+}
+
+
+/* EVENT */
 
 .cont {
     padding-top: 25px;
@@ -16,59 +73,132 @@
     margin-left: 0;
 }
 
-.overlay {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 100%;
+#events-div {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.event-list-div {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.event-card {
+    position: relative;
+}
+
+.event-card.event-card-premium {
+    background-color: #F3DD6A;
+}
+
+.event-card .card-title {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 95%;
+}
+
+.event-card.event-card-premium .card-title {
+    color: #88bc65;
+}
+
+.card-event-img {
+    height: 200px;
     width: 100%;
-    opacity: 0;
-    transition: .5s ease;
-    background-color: #008CBA;
 }
 
-.event-card:hover .overlay {
-    opacity: 1;
+.card-event-schedule {
+    color: #3bc1ed;
+    font-weight: bold;
 }
 
-.text {
+.event-card.event-card-premium .card-event-schedule {
+    color: #88bc65;
+}
+
+.card-event-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.empty-event-list-div-label {
+    font-size: 17px;
     color: white;
-    font-size: 20px;
+    opacity: .7;
+    font-style: italic;
+}
+
+.preview-event-modal-is-shiny-icon-caption {
+    width: 32px;
+}
+
+.preview-event-modal-is-shiny-icon-legend {
+    color: #fff;
+    opacity: 0.7;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#preview-event-modal-event-title {
+    color: #ffc109;
+}
+
+.preview-event-modal-pokemon-list {
+    margin: 0 10px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.preview-event-modal-pokemon {
+    margin: 10px;
+    position: relative;
+}
+
+.preview-event-modal-pokemon-label {
+    color: #fff;
+    opacity: 0.7;
+    font-size: 14px;
+}
+
+.new-shiny .preview-event-modal-pokemon-label {
+    color: gold;
+    font-weight: bold;
+}
+
+.preview-event-pokemon-new-shiny-icon {
+    width: 32px;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
+    top: 10px;
+    right: 10px;
 }
 
-::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+#event-title {
+    color: #fff;
+    opacity: 0.7;
+    font-size: 20px;
+    font-weight: bold;
 }
 
-
-/* Track */
-
- ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px grey;
-    border-radius: 5px;
+#event-medal {
+    width: 128px;
 }
 
-
-/* Handle */
-
- ::-webkit-scrollbar-thumb {
-    background: #d3d3d3;
-    border-radius: 10px;
+.premium-event-choose-pokemon-list-title {
+    color: #fff;
+    opacity: 0.7;
+    font-size: 16px;
+    font-weight: bold;
 }
 
+.event-exclusive-pokemon,
+.event-shiny-boosted-pokemon {
+    margin: 0 10px;
+    display: flex;
+    flex-wrap: wrap;
+}
 
-/* Handle on hover */
-
- ::-webkit-scrollbar-thumb:hover {
-    background: #e3e3e3;
+.event-choose-premium-btn-icon {
+    margin-right: 5px;
 }
 
 
@@ -211,21 +341,6 @@ input[type="checkbox"] {
     height: 100vh;
     background: white;
     pointer-events: none;
-}
-
-.card-event-schedule {
-    color: #3bc1ed;
-    font-weight: bold;
-}
-
-.card-event-featured-pokemon-btn {
-    color: black;
-    font-weight: bold;
-}
-
-.card-event-featured-pokemon-btn:hover {
-    color: #ffc109;
-    text-decoration: none;
 }
 
 
@@ -386,21 +501,4 @@ label {
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
-}
-
-#events-div {
-    margin-left: 20px;
-    margin-right: 20px;
-}
-
-.event-card .card-title {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    max-width: 95%;
-}
-
-.card-event-img {
-    height: 200px;
-    width: 100%;
 }

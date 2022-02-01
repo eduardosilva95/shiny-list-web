@@ -35,7 +35,7 @@
                 <button class="btn back-btn"><i class="fa fa-arrow-left"></i><span style="padding-left: 10px;">Back</span></button>
             </div>
 
-            <div id="encounter" style="height: 200px;">
+            <div id="encounter" style="height: 300px;">
                 <% pokemon_data.forEach(function(pokemon) { %>
                     <img id="pokemon_<%= pokemon.id %>_normal" class="pokemon-img" />
                     <img id="pokemon_<%= pokemon.id %>_shiny" class="pokemon-img">
@@ -89,7 +89,7 @@
             data.push('<%- JSON.stringify(pokemon).replace(/[\/\(\)\']/g, "\\$&") %>');
             '<% }); %>'
 
-            loadData('<%= pokemon_list %>', data, '<%- JSON.stringify(event).replace(/[\/\(\)\']/g, "\\$&") %>');
+            loadData(data, '<%- JSON.stringify(event).replace(/[\/\(\)\']/g, "\\$&") %>', '<%= isPremium %>');
         </script>
 
 
